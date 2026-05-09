@@ -1,0 +1,15 @@
+{
+    "name": "institute/registration-system",
+    "description": "Institute Registration System with Online Payment",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "phpmailer/phpmailer": "^6.8",
+        "dompdf/dompdf": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

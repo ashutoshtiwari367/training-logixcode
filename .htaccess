@@ -1,0 +1,11 @@
+RewriteEngine on
+Options -Indexes
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^$ index.php [NC,L]
+RewriteRule ^courses([/]?)$ /courses.php [NC,L]
+RewriteRule ^about([/]?)$ /about.php [NC,L]
+RewriteRule ^privacy-policy([/]?)$ /privacy-policy.php [NC,L]
+RewriteRule ^terms-and-condition([/]?)$ /terms-and-condition.php [NC,L]
+RewriteRule ^registration([/]?)$ /registration/index.php [NC,L]
+RewriteRule ^contact([/]?)$ /contact.php [NC,L]
