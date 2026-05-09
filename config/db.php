@@ -4,21 +4,20 @@
  * config/db.php
  */
 
-// ============================================================
-// LOCAL (XAMPP) — active for local development
-// ============================================================
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'training_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-
-// ============================================================
-// PRODUCTION (Hostinger) — uncomment below when deploying
-// ============================================================
-// define('DB_HOST', 'localhost');
-// define('DB_NAME', 'u447123054_institute_regi');
-// define('DB_USER', 'u447123054_institute_regi');
-// define('DB_PASS', 'U447123054_institute_regi');
+// Automatic Environment Detection
+if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
+    // LOCAL (XAMPP)
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'training_db');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+} else {
+    // PRODUCTION (Hostinger)
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'u447123054_institute_regi');
+    define('DB_USER', 'u447123054_institute_regi');
+    define('DB_PASS', 'U447123054_institute_regi');
+}
 
 define('INSTITUTE_NAME', 'Logixcode It Solution');
 define('DB_CHARSET', 'utf8mb4');
