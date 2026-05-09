@@ -8,7 +8,7 @@ require_once __DIR__ . '/../config/db.php';
 header('Content-Type: application/json');
 
 // Initialize response
-$response = ['success' => false, 'message' => ''];
+$response = ['status' => 'error', 'message' => ''];
 
 try {
     // Check if POST request
@@ -46,10 +46,10 @@ try {
         throw new Exception('This email is already registered. Please use a different email address.');
     }
 
-    // Validate phone number format
+    // Validate phone number format (Support 10 digits or +91 prefix)
     $phone = trim($_POST['phone']);
-    if (!preg_match('/^\+91[0-9]{10}$/', $phone)) {
-        throw new Exception('Invalid phone number format. Use +91XXXXXXXXXX');
+    if (!preg_match('/^(\+91)?[0-9]{10}$/', $phone)) {
+        throw new Exception('Invalid phone number format. Please enter a valid 10-digit number.');
     }
 
     // Validate date of birth
@@ -115,11 +115,12 @@ try {
     session_regenerate_id(true);
 
     // FIX: Return redirect URL so frontend knows where to go
-    $response['success']  = true;
+    $response['status']   = 'success';
     $response['message']  = 'Registration data validated successfully';
-    $response['redirect'] = 'https://training.logixcode.com/registration/payment.php';
+    $response['redirect'] = 'payment.php';
 
 } catch (Exception $e) {
+    $response['status']  = 'error';
     $response['message'] = $e->getMessage();
     error_log("Registration Error: " . $e->getMessage());
 }
