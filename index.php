@@ -1,14 +1,12 @@
 <?php 
 
-ini_set('display_errors', 0); // ✅ FIXED: Production me errors hide karo
+ini_set('display_errors', 1); // Temporary for debugging
 error_reporting(E_ALL);
+
+require __DIR__ . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require __DIR__ . '/vendor/phpmailer/phpmailer/src/Exception.php';
-require __DIR__ . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require __DIR__ . '/vendor/phpmailer/phpmailer/src/SMTP.php';
 
 
 /* =========================
