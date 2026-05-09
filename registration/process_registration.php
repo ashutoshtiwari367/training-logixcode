@@ -3,6 +3,9 @@
  * Process Registration Form
  * registration/process_registration.php
  */
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 require_once __DIR__ . '/../config/db.php';
 header('Content-Type: application/json');
@@ -112,7 +115,7 @@ try {
     $_SESSION['registration_timestamp'] = time();
 
     // FIX: Regenerate session ID to prevent session fixation
-    session_regenerate_id(true);
+    // session_regenerate_id(true);
 
     // FIX: Return redirect URL so frontend knows where to go
     $response['status']   = 'success';
