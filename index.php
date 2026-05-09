@@ -1,6 +1,6 @@
 <?php 
 
-ini_set('display_errors', 1); // Temporary for debugging
+ini_set('display_errors', 0); // Production me errors hide karo
 error_reporting(E_ALL);
 
 require __DIR__ . '/vendor/autoload.php';
