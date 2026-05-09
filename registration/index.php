@@ -375,10 +375,10 @@ define('PAYMENT_CURRENCY', 'INR');
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    window.location.href = data.redirect || 'https://training.logixcode.com/registration/payment.php';
+                if (data.status === 'success') {
+                    window.location.href = data.redirect;
                 } else {
-                    alert('Error: ' + data.message);
+                    alert(data.message || 'An error occurred. Please try again.');
                     // Phone field reset karo display ke liye (+91 hata do)
                     phoneInput.value = rawPhone;
                     submitBtn.disabled = false;
@@ -386,7 +386,7 @@ define('PAYMENT_CURRENCY', 'INR');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error(error);
                 alert('An error occurred. Please try again.');
                 phoneInput.value = rawPhone;
                 submitBtn.disabled = false;
