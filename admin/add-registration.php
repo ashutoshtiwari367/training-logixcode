@@ -279,52 +279,13 @@ textarea.form-control{resize:vertical;min-height:76px}
             — Confirmation email sent to <em><?= htmlspecialchars($registrationData['email']) ?></em>.
         </div>
     </div>
-
-    <!-- Receipt summary -->
-    <div class="rcpt">
-        <div class="rcpt-head">
-            <div>
-                <h3><?= htmlspecialchars($registrationData['firstName'].' '.$registrationData['lastName']) ?></h3>
-                <p><?= htmlspecialchars($registrationData['program']) ?> &nbsp;&middot;&nbsp; <?= htmlspecialchars($registrationData['registered_at']) ?></p>
-            </div>
-            <div class="rid-badge"><?= htmlspecialchars($registrationData['registration_id']) ?></div>
-        </div>
-
-        <div class="rrow"><div class="rk">Email</div>   <div class="rv"><?= htmlspecialchars($registrationData['email']) ?></div></div>
-        <div class="rrow"><div class="rk">Phone</div>   <div class="rv"><?= htmlspecialchars($registrationData['phone']) ?></div></div>
-        <div class="rrow"><div class="rk">DOB</div>     <div class="rv"><?= htmlspecialchars($registrationData['dob']) ?></div></div>
-        <div class="rrow"><div class="rk">Gender</div>  <div class="rv"><?= htmlspecialchars(ucfirst($registrationData['gender'])) ?></div></div>
-        <div class="rrow"><div class="rk">Address</div> <div class="rv"><?= htmlspecialchars($registrationData['address']) ?></div></div>
-        <div class="rrow"><div class="rk">Qualification</div><div class="rv"><?= htmlspecialchars($registrationData['qualification']) ?></div></div>
-        <div class="rrow"><div class="rk">College</div> <div class="rv"><?= htmlspecialchars($registrationData['college'] ?: '—') ?></div></div>
-        <div class="rrow">
-            <div class="rk">Amount Paid</div>
-            <div class="rv green">
-                &#8377;<?= number_format((float)$registrationData['amount'], 2) ?>
-                <span style="font-size:.72rem;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif;">
-                    (<?= strtoupper($registrationData['amount_words']) ?> RUPEES ONLY)
-                </span>
-            </div>
-        </div>
-        <div class="rrow">
-            <div class="rk">Payment Mode</div>
-            <div class="rv"><span class="badge-off"><i class="bi bi-cash-coin"></i> OFFLINE / Cash</span></div>
-        </div>
-        <div class="rrow">
-            <div class="rk">Status</div>
-            <div class="rv"><span class="badge-ok"><i class="bi bi-check-circle-fill"></i> CONFIRMED</span></div>
-        </div>
-
-        <div class="rcpt-foot">
-            <p>Logixcode IT Solution &nbsp;&middot;&nbsp; training.logixcode.com &nbsp;&middot;&nbsp; +91-8467898854</p>
-            <button class="btn-pdf" id="pdfBtn" onclick="makePDF()">
-                <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF
-            </button>
-        </div>
+    
+    <div class="flex gap-3 mb-4">
+        <a href="add-registration.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> New Registration</a>
+        <a href="dashboard.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-speedometer2"></i> Back to Dashboard</a>
     </div>
 
     <hr style="border:none;border-top:1px solid var(--border);margin:22px 0 20px">
-    <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;"><i class="bi bi-plus-circle"></i> Register another student below:</p>
     <?php endif; ?>
 
     <!-- ── FORM ── -->

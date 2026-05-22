@@ -2,6 +2,10 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/auth.php';
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+
 requireStudentLogin();
 
 $type = $_GET['type'] ?? '';
@@ -37,13 +41,11 @@ if ($type === 'id_card') {
 } elseif ($type === 'reg_letter') {
     // Generate Registration Letter using Dompdf inline
     require_once __DIR__ . '/../vendor/autoload.php';
-    use Dompdf\Dompdf;
-    use Dompdf\Options;
 
     $stmt = $pdo->prepare("
-        SELECT r.*, p.amount, p.payment_gateway_id, p.status as payment_status 
+        SELECT r.*, a.student_photo, a.aadhar_number, a.total_fees, a.admission_id, a.father_name, a.father_phone
         FROM registrations r 
-        LEFT JOIN payments p ON r.registration_id = p.registration_id 
+        LEFT JOIN admissions a ON r.registration_id = a.registration_id 
         WHERE r.registration_id = ?
     ");
     $stmt->execute([$_SESSION['student_registration_id']]);
@@ -53,9 +55,28 @@ if ($type === 'id_card') {
         die("Error: Registration record not found.");
     }
 
+    // Convert Logo to Base64
     $logoUrl = 'https://res.cloudinary.com/de7mh41io/image/upload/f_jpg,b_white,w_80/v1749888137/logixcode-logo';
     $logoData = @file_get_contents($logoUrl);
     $logoBase64 = $logoData ? 'data:image/jpeg;base64,' . base64_encode($logoData) : '';
+
+    // Convert Stamp to Base64 for DOMPDF
+    $stampPath = __DIR__ . '/../uploads/stamp.jpg';
+    $stampBase64 = '';
+    if (file_exists($stampPath)) {
+        $stampBase64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($stampPath));
+    }
+
+    // Convert Student Photo to Base64
+    $studentPhotoBase64 = '';
+    if (!empty($reg['student_photo'])) {
+        $photoPath = __DIR__ . '/../uploads/photos/' . $reg['student_photo'];
+        if (file_exists($photoPath)) {
+            $ext = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
+            $typeImg = ($ext === 'png') ? 'png' : 'jpeg';
+            $studentPhotoBase64 = 'data:image/' . $typeImg . ';base64,' . base64_encode(file_get_contents($photoPath));
+        }
+    }
 
     $html = '
     <!DOCTYPE html>
@@ -64,87 +85,103 @@ if ($type === 'id_card') {
         <meta charset="utf-8">
         <title>Registration Letter - ' . htmlspecialchars($reg['registration_id']) . '</title>
         <style>
-            body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 13px; color: #333; line-height: 1.5; margin: 0; padding: 20px; }
-            .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 20px; margin-bottom: 30px; position: relative; }
-            .logo { width: 80px; position: absolute; left: 0; top: 0; }
-            .institute-title { font-size: 24px; font-weight: bold; color: #0f172a; margin: 0; }
-            .institute-sub { font-size: 12px; color: #64748b; margin: 5px 0 0 0; }
-            .title { text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; background: #0284c7; color: #fff; padding: 5px; border-radius: 4px; }
-            .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            .info-table th { background: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; text-align: left; font-size: 11px; color: #475569; width: 30%; }
-            .info-table td { border: 1px solid #cbd5e1; padding: 8px; font-size: 12px; color: #1e293b; width: 70%; font-weight: bold; }
-            .section-title { font-size: 14px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 3px; margin: 20px 0 10px 0; }
-            .fee-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            .fee-table th { background: #0d9488; color: #fff; padding: 10px; text-align: center; border: 1px solid #0f766e; }
-            .fee-table td { padding: 15px 10px; text-align: center; border: 1px solid #cbd5e1; font-size: 16px; font-weight: bold; }
-            .footer { margin-top: 50px; font-size: 11px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 10px; }
-            .signature { margin-top: 80px; width: 100%; }
-            .sig-box { width: 200px; border-top: 1px solid #333; text-align: center; font-size: 12px; padding-top: 5px; }
-            .sig-right { float: right; }
+            /* DejaVu Sans is used for better Unicode (Rupee) support in Dompdf */
+            body { font-family: "DejaVu Sans", sans-serif; font-size: 11px; color: #333; line-height: 1.4; margin: 0; padding: 5px; }
+            .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 10px; margin-bottom: 20px; position: relative; }
+            .logo { width: 65px; position: absolute; left: 0; top: 0; }
+            .student-photo-box { width: 90px; height: 110px; border: 1px solid #cbd5e1; position: absolute; right: 0; top: 0; background-color: #f8fafc; }
+            .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+            .institute-title { font-size: 20px; font-weight: bold; color: #0f172a; margin: 0; }
+            .institute-sub { font-size: 10px; color: #64748b; margin: 3px 0 0 0; }
+            .title { text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 15px; background: #0f172a; color: #fff; padding: 5px; border-radius: 4px; }
+            .info-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+            .info-table th { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px; text-align: left; font-size: 10px; color: #475569; width: 30%; }
+            .info-table td { border: 1px solid #cbd5e1; padding: 6px; font-size: 11px; color: #1e293b; width: 70%; font-weight: bold; }
+            .section-title { font-size: 12px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 2px; margin: 12px 0 6px 0; }
+            .amount-val { font-size: 14px; color: #0f172a; }
+            .footer { margin-top: 30px; font-size: 9px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 8px; }
+            .signature { margin-top: 50px; width: 100%; }
+            .sig-box { width: 170px; border-top: 1px solid #333; text-align: center; font-size: 10px; padding-top: 4px; float: right; }
         </style>
     </head>
     <body>
         <div class="header">
             ' . ($logoBase64 ? '<img src="' . $logoBase64 . '" class="logo">' : '') . '
-            <h1 class="institute-title">LogixCode Enterprise</h1>
-            <p class="institute-sub">Advanced Training & Development Center<br>Kanpur, Uttar Pradesh - 208001</p>
+            <div class="student-photo-box">
+                ' . ($studentPhotoBase64 ? '<img src="' . $studentPhotoBase64 . '">' : '<div style="text-align:center;line-height:110px;color:#cbd5e1;font-size:9px;">PHOTO</div>') . '
+            </div>
+            <h1 class="institute-title">LogixCode IT Solution</h1>
+            <p class="institute-sub">Advanced Training & Development Center<br>2/1 HIG Swarn Jayanti Vihar, Koyla Nagar, Kanpur</p>
         </div>
-        <div class="title">STUDENT REGISTRATION LETTER</div>
         
-        <div class="section-title">1. Personal Information</div>
+        <div class="title">OFFICIAL REGISTRATION LETTER</div>
+        
+        <div class="section-title">1. Enrollment Details</div>
         <table class="info-table">
-            <tr><th>Registration ID</th><td style="color:#0284c7;">' . htmlspecialchars($reg['registration_id']) . '</td></tr>
-            <tr><th>Student Name</th><td>' . htmlspecialchars(strtoupper($reg['first_name'] . ' ' . $reg['last_name'])) . '</td></tr>
+            <tr><th>Registration ID</th><td style="color:#2563eb;">' . htmlspecialchars($reg['registration_id']) . '</td></tr>
+            ' . ($reg['admission_id'] ? '<tr><th>Admission ID</th><td style="color:#0d9488;">' . htmlspecialchars($reg['admission_id']) . '</td></tr>' : '') . '
+            <tr><th>Course Name</th><td style="color:#0d9488; font-size:12px;">' . htmlspecialchars(strtoupper($reg['program'])) . '</td></tr>
+        </table>
+
+        <div class="section-title">2. Personal Information</div>
+        <table class="info-table">
+            <tr><th>Student Full Name</th><td>' . htmlspecialchars(strtoupper($reg['first_name'] . ' ' . $reg['last_name'])) . '</td></tr>
+            <tr><th>Father\'s Name</th><td>' . htmlspecialchars(strtoupper($reg['father_name'] ?? 'Not Updated')) . '</td></tr>
+            <tr><th>Aadhar Number</th><td>' . htmlspecialchars($reg['aadhar_number'] ?? 'Not Updated') . '</td></tr>
             <tr><th>Date of Birth</th><td>' . ($reg['dob'] ? date('d-M-Y', strtotime($reg['dob'])) : '-') . '</td></tr>
             <tr><th>Gender</th><td>' . htmlspecialchars(ucfirst($reg['gender'])) . '</td></tr>
         </table>
 
-        <div class="section-title">2. Contact Details</div>
+        <div class="section-title">3. Contact Details</div>
         <table class="info-table">
-            <tr><th>Mobile Number</th><td>' . htmlspecialchars($reg['phone']) . '</td></tr>
+            <tr><th>Student Mobile</th><td>' . htmlspecialchars($reg['phone']) . '</td></tr>
+            <tr><th>Father\'s Mobile</th><td>' . htmlspecialchars($reg['father_phone'] ?? 'Not Updated') . '</td></tr>
             <tr><th>Email Address</th><td>' . htmlspecialchars($reg['email'] ?? '-') . '</td></tr>
-            <tr><th>Address</th><td>' . nl2br(htmlspecialchars($reg['address'] ?? '-')) . '</td></tr>
         </table>
 
-        <div class="section-title">3. Academic & Program Details</div>
+        <div class="section-title">4. Fee Structure</div>
         <table class="info-table">
-            <tr><th>Selected Program</th><td style="color:#0d9488;">' . htmlspecialchars(strtoupper($reg['program'])) . '</td></tr>
-            <tr><th>Highest Qualification</th><td>' . htmlspecialchars($reg['qualification'] ?? '-') . '</td></tr>
-            <tr><th>Percentage / CGPA</th><td>' . htmlspecialchars($reg['percentage'] ?? '-') . '</td></tr>
-            <tr><th>College / University</th><td>' . htmlspecialchars($reg['college'] ?? '-') . '</td></tr>
-            <tr><th>Year of Passing</th><td>' . htmlspecialchars($reg['year_of_passing'] ?? '-') . '</td></tr>
+            <tr><th>Total Course Fees</th><td class="amount-val">&#8377; ' . number_format($reg['total_fees'] ?? 0, 2) . '</td></tr>
         </table>
 
-        <div class="section-title">4. Payment Information</div>
-        <table class="fee-table">
-            <tr><th>REGISTRATION FEE</th><th>PAYMENT MODE</th><th>STATUS</th></tr>
-            <tr>
-                <td>₹' . number_format($reg['amount'] ?? 0, 2) . '</td>
-                <td>' . htmlspecialchars($reg['payment_mode']) . '</td>
-                <td>' . htmlspecialchars($reg['payment_status'] ?? 'PENDING') . '</td>
-            </tr>
+        <div class="section-title">5. Educational Details</div>
+        <table class="info-table">
+            <tr><th>Qualification</th><td>' . htmlspecialchars($reg['qualification'] ?? '-') . '</td></tr>
+            <tr><th>College / University</th><td>' . htmlspecialchars($reg['college'] ?? '-') . '</td></tr>
         </table>
-        <p style="font-size:10px; color:#64748b; text-align:center; margin-top:5px;">
-            * Note: This document is proof of your registration. Please keep it for future reference.
-        </p>
+
+        <div style="margin-top:15px; font-size:10px; color:#64748b;">
+            <p><strong>Declaration:</strong> I hereby declare that all the information provided above is true to the best of my knowledge. I agree to abide by the rules and regulations of LogixCode IT Solution during my training period.</p>
+        </div>
+
         <div class="signature">
-            <div class="sig-box sig-right">Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode Admin)</span></div>
+            <div style="float: right; width: 170px; text-align: center;">
+                ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" style="width: 70px; height: 70px; margin-bottom: 5px; display: inline-block;">' : '') . '
+                <div class="sig-box" style="float: none; width: 100%; border-top: 1px solid #333; padding-top: 4px; margin-top: 0;">
+                    Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode IT Solution)</span>
+                </div>
+            </div>
             <div style="clear:both;"></div>
         </div>
-        <div class="footer">Generated on ' . date('d M Y, h:i A') . ' | System Generated Document</div>
+
+        <div class="footer">
+            Generated on ' . date('d M Y, h:i A') . ' | This is a computer generated document.
+            <br>www.logixcode.com | +91-8467898854
+        </div>
     </body>
     </html>';
 
     $options = new Options();
     $options->set('isHtml5ParserEnabled', true);
     $options->set('isRemoteEnabled', true);
+    $options->set('defaultFont', 'DejaVu Sans'); // Required for Rupee symbol
     $dompdf = new Dompdf($options);
     
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
-    // Output the generated PDF to Browser
-    $filename = 'Registration_' . $reg['registration_id'] . '.pdf';
+    
+    $filename = 'Registration_Letter_' . $reg['registration_id'] . '.pdf';
 
     while (ob_get_level()) {
         ob_end_clean();

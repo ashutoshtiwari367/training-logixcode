@@ -28,7 +28,7 @@ function hasRole($role) {
  */
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: /admin/login.php');
+        header('Location: ' . BASE_URL . 'admin/login.php');
         exit;
     }
 }

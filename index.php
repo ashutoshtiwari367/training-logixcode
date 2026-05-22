@@ -4,6 +4,7 @@ ini_set('display_errors', 0); // Production me errors hide karo
 error_reporting(E_ALL);
 
 require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config/db.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -34,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($student_name && $phone && $interest){
         sendAdmissionEmail($student_name, $phone, $interest);
-        header("Location: /?submitted=1");
+        header("Location: " . BASE_URL . "?submitted=1");
         exit;
     }
 }

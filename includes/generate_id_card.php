@@ -12,13 +12,30 @@ use Dompdf\Options;
  * @return string Path to the generated PDF
  */
 function generateStudentIdCard($pdo, $registrationId) {
-    // Fetch student data
+    // Fetch student data from registrations
     $stmt = $pdo->prepare("SELECT * FROM registrations WHERE registration_id = ?");
     $stmt->execute([$registrationId]);
     $student = $stmt->fetch();
 
     if (!$student || empty($student['student_id'])) {
         throw new Exception("Student not found or Student ID not generated.");
+    }
+
+    // Check if there is a photo in the admissions table for this registration
+    $stmt = $pdo->prepare("SELECT student_photo FROM admissions WHERE registration_id = ? LIMIT 1");
+    $stmt->execute([$registrationId]);
+    $admission = $stmt->fetch();
+    
+    $photoBase64 = '';
+    if ($admission && !empty($admission['student_photo'])) {
+        $photoPath = __DIR__ . '/../uploads/photos/' . $admission['student_photo'];
+        if (file_exists($photoPath)) {
+            $ext = strtolower(pathinfo($photoPath, PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png'])) {
+                $type = ($ext === 'png') ? 'png' : 'jpeg';
+                $photoBase64 = 'data:image/' . $type . ';base64,' . base64_encode(file_get_contents($photoPath));
+            }
+        }
     }
 
     // Convert Logo to Base64
@@ -33,89 +50,190 @@ function generateStudentIdCard($pdo, $registrationId) {
     <head>
         <meta charset="utf-8">
         <style>
-            body { font-family: "Helvetica", sans-serif; margin: 0; padding: 0; }
-            .id-card-container {
-                width: 250px;
-                height: 400px;
-                border: 2px solid #0d9488;
-                border-radius: 10px;
-                margin: 20px auto;
-                text-align: center;
+            @page { margin: 0; }
+            body { 
+                font-family: "Helvetica", sans-serif; 
+                margin: 0; 
+                padding: 0; 
+                background-color: #000;
+            }
+            .card {
+                width: 250pt;
+                height: 400pt;
+                background-color: #000;
                 position: relative;
                 overflow: hidden;
             }
-            .header {
-                background: #0d9488;
-                color: white;
-                padding: 10px 0;
-            }
-            .header img { width: 40px; margin-bottom: 5px; }
-            .header h3 { margin: 0; font-size: 14px; text-transform: uppercase; }
-            .header p { margin: 0; font-size: 8px; }
-            .photo {
-                width: 100px;
-                height: 100px;
-                background: #e2e8f0;
-                border: 3px solid #0d9488;
+            /* White Top Section with Curve */
+            .top-bg {
+                position: absolute;
+                top: -160pt;
+                left: -25pt;
+                width: 300pt;
+                height: 310pt;
+                background-color: #fff;
                 border-radius: 50%;
-                margin: 15px auto;
-                line-height: 100px;
-                color: #94a3b8;
-                font-size: 12px;
+                z-index: 1;
+            }
+            .header-content {
+                position: absolute;
+                top: 20pt;
+                width: 100%;
+                text-align: center;
+                z-index: 2;
+            }
+            .logo {
+                width: 35pt;
+                margin-bottom: 2pt;
+            }
+            .brand {
+                font-size: 20pt;
+                font-weight: bold;
+                color: #03c4ce;
+                letter-spacing: 1pt;
+                margin: 0;
+            }
+            /* Photo Area - Circular and Small */
+            .photo-frame {
+                position: absolute;
+                top: 90pt;
+                left: 75pt;
+                width: 100pt;
+                height: 100pt;
+                border: 3pt solid #2c3e50;
+                border-radius: 50%;
+                z-index: 3;
+                background-color: #fff;
                 overflow: hidden;
             }
-            .details { padding: 0 15px; }
-            .name { font-size: 18px; font-weight: bold; color: #1e293b; margin: 5px 0; text-transform: uppercase; }
-            .role { font-size: 12px; color: #0ea5e9; font-weight: bold; margin-bottom: 10px; }
-            .info-row { text-align: left; font-size: 10px; margin-bottom: 4px; color: #334155; }
-            .info-row strong { color: #0f172a; display: inline-block; width: 60px; }
+            .photo-frame img {
+                width: 100pt;
+                height: 100pt;
+                border-radius: 50%;
+            }
+            .photo-placeholder {
+                width: 100pt;
+                height: 100pt;
+                background-color: #f1f5f9;
+                text-align: center;
+                padding-top: 40pt;
+                color: #94a3b8;
+                font-size: 10pt;
+                font-weight: bold;
+            }
+            /* Info Area */
+            .info-container {
+                position: absolute;
+                top: 210pt;
+                width: 100%;
+                text-align: center;
+                color: #fff;
+                z-index: 4;
+            }
+            .student-name {
+                font-size: 18pt;
+                font-weight: bold;
+                margin-bottom: 2pt;
+                text-transform: uppercase;
+                color: #fff;
+            }
+            .role-title {
+                font-size: 11pt;
+                color: #fff;
+                letter-spacing: 2pt;
+                margin-bottom: 12pt;
+                opacity: 0.9;
+                font-weight: normal;
+            }
+            .details-table {
+                width: 85%;
+                margin: 0 auto;
+                font-size: 10pt;
+                color: #fff;
+                border-collapse: collapse;
+            }
+            .details-table td {
+                padding: 5pt 0;
+                vertical-align: top;
+            }
+            .label {
+                width: 60pt;
+                text-align: left;
+                font-weight: normal;
+                opacity: 0.7;
+                padding-left: 15pt !important;
+            }
+            .value {
+                text-align: left;
+                font-weight: bold;
+                padding-left: 5pt !important;
+            }
+            /* Bottom White Curve */
+            .bottom-curve-left {
+                position: absolute;
+                bottom: -50pt;
+                left: -60pt;
+                width: 160pt;
+                height: 120pt;
+                background-color: #fff;
+                border-radius: 50%;
+                z-index: 1;
+            }
+            /* Website Footer */
             .footer {
                 position: absolute;
-                bottom: 0;
-                width: 100%;
-                background: #0f172a;
-                color: white;
-                font-size: 9px;
-                padding: 8px 0;
+                bottom: 10pt;
+                right: 15pt;
+                color: #fff;
+                font-size: 9pt;
+                z-index: 5;
+                text-align: right;
             }
-            .barcode-area { margin-top: 10px; }
-            .barcode { letter-spacing: 2px; font-family: monospace; font-size: 11px; background: #f1f5f9; padding: 3px; border-radius: 3px;}
+            .globe-icon {
+                width: 10pt;
+                vertical-align: middle;
+                margin-right: 3pt;
+            }
         </style>
     </head>
     <body>
-        <div class="id-card-container">
-            <div class="header">
-                ' . ($logoBase64 ? '<img src="' . $logoBase64 . '">' : '') . '
-                <h3>LogixCode Enterprise</h3>
-                <p>Training & Development Center</p>
-            </div>
+        <div class="card">
+            <!-- Background Shapes -->
+            <div class="top-bg"></div>
+            <div class="bottom-curve-left"></div>
             
-            <div class="photo">
-                STUDENT
+            <div class="header-content">
+                ' . ($logoBase64 ? '<img src="' . $logoBase64 . '" class="logo">' : '') . '
+                <div class="brand">LOGIXCODE</div>
             </div>
-            
-            <div class="details">
-                <div class="name">' . htmlspecialchars($student['first_name'] . ' ' . $student['last_name']) . '</div>
-                <div class="role">STUDENT</div>
+
+            <div class="photo-frame">
+                ' . ($photoBase64 ? '<img src="' . $photoBase64 . '">' : '<div class="photo-placeholder">PHOTO</div>') . '
+            </div>
+
+            <div class="info-container">
+                <div class="student-name">' . htmlspecialchars($student['first_name'] . ' ' . $student['last_name']) . '</div>
+                <div class="role-title">' . htmlspecialchars($student['program']) . '</div>
                 
-                <div class="info-row">
-                    <strong>ID No:</strong> ' . htmlspecialchars($student['student_id']) . '
-                </div>
-                <div class="info-row">
-                    <strong>Program:</strong> ' . htmlspecialchars(substr($student['program'], 0, 20)) . '...
-                </div>
-                <div class="info-row">
-                    <strong>Phone:</strong> ' . htmlspecialchars($student['phone']) . '
-                </div>
-                
-                <div class="barcode-area">
-                    <span class="barcode">*' . htmlspecialchars($student['student_id']) . '*</span>
-                </div>
+                <table class="details-table">
+                    <tr>
+                        <td class="label">ID No</td>
+                        <td class="value">' . htmlspecialchars($student['student_id']) . '</td>
+                    </tr>
+                    <tr>
+                        <td class="label">E-mail</td>
+                        <td class="value">' . htmlspecialchars($student['email']) . '</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Phone</td>
+                        <td class="value">' . htmlspecialchars($student['phone']) . '</td>
+                    </tr>
+                </table>
             </div>
-            
+
             <div class="footer">
-                Valid for Course Duration<br>
-                support@institute.com
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiPjwvY2lyY2xlPjxsaW5lIHgxPSIyIiB5MT0iMTIiIHgyPSIyMiIgeTI9IjEyIj48L2xpbmU+PHBhdGggZD0iTTEyIDJhMTUuMyAxNS4zIDAgMCAxIDQgMTBBMTUuMyAxNS4zIDAgMCAxIDEyIDIyYTE1LjMgMTUuMyAwIDAgMS00LTEwQTE1LjMgMTUuMyAwIDAgMSAxMiAyWiI+PC9wYXRoPjwvc3ZnPg==" class="globe-icon">
+                <strong>www.logixcode.com</strong>
             </div>
         </div>
     </body>
@@ -128,9 +246,8 @@ function generateStudentIdCard($pdo, $registrationId) {
     $dompdf = new Dompdf($options);
     
     $dompdf->loadHtml($html);
-    // Custom paper size for ID card (approx CR80 size: 2.125 x 3.375 inches, but we use a bit larger for readability)
-    // 250x400 px is roughly 187x300 pt
-    $dompdf->setPaper(array(0, 0, 200, 320), 'portrait');
+    // Exact dimensions for the card as defined in HTML
+    $dompdf->setPaper(array(0, 0, 250, 400), 'portrait');
     $dompdf->render();
     
     // Save PDF to a file

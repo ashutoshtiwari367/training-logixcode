@@ -5,21 +5,23 @@
  */
 
 // Automatic Environment Detection
-if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
+if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1' || strpos($_SERVER['REQUEST_URI'], '/training/') !== false) {
     // LOCAL (XAMPP)
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'training_db');
     define('DB_USER', 'root');
     define('DB_PASS', '');
+    define('BASE_URL', '/training/');
 } else {
     // PRODUCTION (Hostinger)
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'u447123054_institute_regi');
     define('DB_USER', 'u447123054_institute_regi');
     define('DB_PASS', 'U447123054_institute_regi');
+    define('BASE_URL', '/');
 }
 
-define('INSTITUTE_NAME', 'Logixcode It Solution');
+if (!defined('INSTITUTE_NAME')) define('INSTITUTE_NAME', 'Logixcode It Solution');
 define('DB_CHARSET', 'utf8mb4');
 
 // Registration & Payment Configuration

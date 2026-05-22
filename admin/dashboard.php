@@ -288,6 +288,9 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
           <a href="download_registration_pdf.php?id=<?= $reg['registration_id'] ?>" target="_blank" class="text-slate-400 hover:text-emerald-500 p-1.5" title="Download Registration PDF">
             <span class="material-symbols-outlined text-xl">picture_as_pdf</span>
           </a>
+          <a href="download_feeslip_pdf.php?id=<?= $reg['registration_id'] ?>" target="_blank" class="text-slate-400 hover:text-teal-500 p-1.5" title="Download Fee Slip">
+            <span class="material-symbols-outlined text-xl">receipt_long</span>
+          </a>
           <button onclick="viewDetails('<?= $reg['registration_id'] ?>')" class="text-slate-400 hover:text-primary p-1.5">
             <span class="material-symbols-outlined text-xl">visibility</span>
           </button>
@@ -309,7 +312,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
 
 <!-- Footer -->
 <footer class="mt-auto p-8 border-t border-slate-200 dark:border-slate-800 text-center">
-  <p class="text-slate-400 text-xs font-medium uppercase tracking-widest">© 2026 LogixCode Enterprise • All Rights Reserved</p>
+  <p class="text-slate-400 text-xs font-medium uppercase tracking-widest">© 2026 LogixCode IT Solution • All Rights Reserved</p>
 </footer>
 
 </main>

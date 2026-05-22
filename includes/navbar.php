@@ -1,3 +1,12 @@
+<?php
+if (!defined('BASE_URL')) {
+    if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1' || strpos($_SERVER['REQUEST_URI'], '/training/') !== false) {
+        define('BASE_URL', '/training/');
+    } else {
+        define('BASE_URL', '/');
+    }
+}
+?>
 <!-- 
 <html>
 <head>
@@ -488,12 +497,14 @@
         
         function isActive($path) {
             global $currentPath;
+            $fullPath = BASE_URL . ltrim($path, '/');
+            $fullPath = rtrim($fullPath, '/') ?: '/';
         
-            if ($path === '/') {
-                return $currentPath === '/';
+            if ($fullPath === '/') {
+                return $currentPath === '/' || $currentPath === rtrim(BASE_URL, '/');
             }
         
-            return $currentPath === $path || strpos($currentPath, $path) === 0;
+            return $currentPath === $fullPath || strpos($currentPath, $fullPath) === 0;
         }
         
         function navClass($path) {
@@ -508,27 +519,27 @@
     <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center gap-8">
 
-      <a href="/" class="group relative text-sm font-semibold <?= navClass('/') ?>">
+      <a href="<?= BASE_URL ?>" class="group relative text-sm font-semibold <?= navClass('/') ?>">
         Home
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/') ?> bg-[#03c4ce] transition-all duration-300"></span>
       </a>
 
-      <a href="/about" class="group relative text-sm font-semibold <?= navClass('/about') ?>">
+      <a href="<?= BASE_URL ?>about" class="group relative text-sm font-semibold <?= navClass('/about') ?>">
         About
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/about') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
       </a>
 
-      <a href="/courses" class="group relative text-sm font-semibold <?= navClass('/courses') ?>">
+      <a href="<?= BASE_URL ?>courses" class="group relative text-sm font-semibold <?= navClass('/courses') ?>">
         Courses
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/courses') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
       </a>
 
-      <a href="/registration" class="group relative text-sm font-semibold <?= navClass('/registration') ?>">
+      <a href="<?= BASE_URL ?>registration" class="group relative text-sm font-semibold <?= navClass('/registration') ?>">
         Registration
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/registration') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
       </a>
 
-      <a href="/contact" class="group relative text-sm font-semibold <?= navClass('/contact') ?>">
+      <a href="<?= BASE_URL ?>contact" class="group relative text-sm font-semibold <?= navClass('/contact') ?>">
         Contact
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/contact') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
       </a>
@@ -539,7 +550,7 @@
     <div class="flex items-center gap-3">
 
       <!-- Brochure Button -->
-      <a href="/Logixcode-Brochure.pdf" download class="hidden md:block">
+      <a href="<?= BASE_URL ?>Logixcode-Brochure.pdf" download class="hidden md:block">
         <button class="rounded-xl bg-[#03c4ce] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[#03c4ce]/20 hover:bg-[#03c4ce]/90 transition-all">
           <div class="flex flex-row">
             Download Brochure &nbsp;
@@ -559,13 +570,13 @@
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden md:hidden px-6 pb-6 animate-fadeIn bg-white">
     <nav class="flex flex-col gap-4 mt-4">
-      <a href="/" class="text-sm font-semibold text-slate-700">Home</a>
-      <a href="/about" class="text-sm font-semibold text-slate-700">About</a>
-      <a href="/courses" class="text-sm font-semibold text-slate-700">Courses</a>
-      <a href="/registration" class="text-sm font-semibold text-slate-700">Registration</a>
-      <a href="/contact" class="text-sm font-semibold text-slate-700">Contact</a>
+      <a href="<?= BASE_URL ?>" class="text-sm font-semibold text-slate-700">Home</a>
+      <a href="<?= BASE_URL ?>about" class="text-sm font-semibold text-slate-700">About</a>
+      <a href="<?= BASE_URL ?>courses" class="text-sm font-semibold text-slate-700">Courses</a>
+      <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-slate-700">Registration</a>
+      <a href="<?= BASE_URL ?>contact" class="text-sm font-semibold text-slate-700">Contact</a>
 
-      <a href="/Logixcode-Brochure.pdf" download>
+      <a href="<?= BASE_URL ?>Logixcode-Brochure.pdf" download>
         <button class="mt-3 w-full rounded-xl bg-[#03c4ce] px-3 py-2 text-sm font-bold text-white">
           Download Brochure
         </button>

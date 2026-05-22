@@ -32,6 +32,13 @@ $logoUrl = 'https://res.cloudinary.com/de7mh41io/image/upload/f_jpg,b_white,w_80
 $logoData = @file_get_contents($logoUrl);
 $logoBase64 = $logoData ? 'data:image/jpeg;base64,' . base64_encode($logoData) : '';
 
+// Convert Stamp to Base64 for DOMPDF
+$stampPath = __DIR__ . '/../uploads/stamp.jpg';
+$stampBase64 = '';
+if (file_exists($stampPath)) {
+    $stampBase64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($stampPath));
+}
+
 // Generate HTML Content
 $html = '
 <!DOCTYPE html>
@@ -40,7 +47,7 @@ $html = '
     <meta charset="utf-8">
     <title>Registration Letter - ' . htmlspecialchars($reg['registration_id']) . '</title>
     <style>
-        body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 13px; color: #333; line-height: 1.5; margin: 0; padding: 20px; }
+        body { font-family: "DejaVu Sans", sans-serif; font-size: 13px; color: #333; line-height: 1.5; margin: 0; padding: 20px; }
         .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 20px; margin-bottom: 30px; position: relative; }
         .logo { width: 80px; position: absolute; left: 0; top: 0; }
         .institute-title { font-size: 24px; font-weight: bold; color: #0f172a; margin: 0; }
@@ -69,7 +76,7 @@ $html = '
 
     <div class="header">
         ' . ($logoBase64 ? '<img src="' . $logoBase64 . '" class="logo">' : '') . '
-        <h1 class="institute-title">LogixCode Enterprise</h1>
+        <h1 class="institute-title">LogixCode IT Solution</h1>
         <p class="institute-sub">Advanced Training & Development Center<br>Kanpur, Uttar Pradesh - 208001</p>
     </div>
 
@@ -107,7 +114,7 @@ $html = '
             <th>STATUS</th>
         </tr>
         <tr>
-            <td>₹' . number_format($reg['amount'] ?? 0, 2) . '</td>
+            <td>&#8377;' . number_format($reg['amount'] ?? 0, 2) . '</td>
             <td>' . htmlspecialchars($reg['payment_mode']) . '</td>
             <td>' . htmlspecialchars($reg['payment_status'] ?? 'PENDING') . '</td>
         </tr>
@@ -117,7 +124,12 @@ $html = '
     </p>
 
     <div class="signature">
-        <div class="sig-box sig-right">Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode Admin)</span></div>
+        <div class="sig-right" style="width: 200px; text-align: center;">
+            ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" style="width: 80px; height: 80px; margin-bottom: 5px; display: inline-block;">' : '') . '
+            <div class="sig-box" style="width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 0;">
+                Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode Admin)</span>
+            </div>
+        </div>
         <div style="clear:both;"></div>
     </div>
 
@@ -132,6 +144,7 @@ $html = '
 $options = new Options();
 $options->set('isHtml5ParserEnabled', true);
 $options->set('isRemoteEnabled', true); // allow remote images if any
+$options->set('defaultFont', 'DejaVu Sans'); // Required for Rupee symbol
 $dompdf = new Dompdf($options);
 
 $dompdf->loadHtml($html);

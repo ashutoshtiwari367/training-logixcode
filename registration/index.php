@@ -369,7 +369,7 @@ define('PAYMENT_CURRENCY', 'INR');
             // AJAX submit
             const formData = new FormData(form);
 
-            fetch('/registration/process_registration.php', {
+            fetch('process_registration.php', {
                 method: 'POST',
                 body: formData
             })

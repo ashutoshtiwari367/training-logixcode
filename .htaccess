@@ -1,11 +1,20 @@
 RewriteEngine on
 Options -Indexes
+
+# Disable HTTPS redirect on localhost
+RewriteCond %{HTTP_HOST} !^localhost$ [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1$ [NC]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 RewriteRule ^$ index.php [NC,L]
-RewriteRule ^courses([/]?)$ /courses.php [NC,L]
-RewriteRule ^about([/]?)$ /about.php [NC,L]
-RewriteRule ^privacy-policy([/]?)$ /privacy-policy.php [NC,L]
-RewriteRule ^terms-and-condition([/]?)$ /terms-and-condition.php [NC,L]
-RewriteRule ^registration([/]?)$ /registration/index.php [NC,L]
-RewriteRule ^contact([/]?)$ /contact.php [NC,L]
+RewriteRule ^courses([/]?)$ courses.php [NC,L]
+RewriteRule ^about([/]?)$ about.php [NC,L]
+RewriteRule ^privacy-policy([/]?)$ privacy-policy.php [NC,L]
+RewriteRule ^terms-and-condition([/]?)$ terms-and-condition.php [NC,L]
+RewriteRule ^registration([/]?)$ registration/index.php [NC,L]
+RewriteRule ^contact([/]?)$ contact.php [NC,L]
+
+# Portal Rewrites
+RewriteRule ^admin/?$ admin/dashboard.php [NC,L]
+RewriteRule ^student/?$ student/index.php [NC,L]

@@ -20,11 +20,11 @@ define('SMTP_FROM_EMAIL', 'info@logixcode.com');
 define('SMTP_FROM_NAME', 'Logixcode IT Solution');
 
 // Institute Details
-define('INSTITUTE_NAME', 'Logixcode IT Solution');
-define('INSTITUTE_EMAIL', 'info@logixcode.com');
-define('INSTITUTE_PHONE', '+91-8467898854');
-define('INSTITUTE_ADDRESS', '2/1 HIG Swarn Jayanti Vihar, Koyla Nagar, Kanpur');
-define('INSTITUTE_WEBSITE', 'https://training.logixcode.com');
+if (!defined('INSTITUTE_NAME')) define('INSTITUTE_NAME', 'Logixcode IT Solution');
+if (!defined('INSTITUTE_EMAIL')) define('INSTITUTE_EMAIL', 'info@logixcode.com');
+if (!defined('INSTITUTE_PHONE')) define('INSTITUTE_PHONE', '+91-8467898854');
+if (!defined('INSTITUTE_ADDRESS')) define('INSTITUTE_ADDRESS', '2/1 HIG Swarn Jayanti Vihar, Koyla Nagar, Kanpur');
+if (!defined('INSTITUTE_WEBSITE')) define('INSTITUTE_WEBSITE', 'https://training.logixcode.com');
 
 // BCC Admin Email
 define('BCC_EMAIL', 'ashutoshtiwari9453@gmail.com');

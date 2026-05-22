@@ -120,7 +120,7 @@ try {
     // FIX: Return redirect URL so frontend knows where to go
     $response['status']   = 'success';
     $response['message']  = 'Registration data validated successfully';
-    $response['redirect'] = '/registration/payment.php';
+    $response['redirect'] = 'payment.php';
 
 } catch (Exception $e) {
     $response['status']  = 'error';
