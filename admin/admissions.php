@@ -24,20 +24,30 @@ if ($status) {
 
 $sql .= " ORDER BY created_at DESC";
 
+// Fetch admissions
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
-$admissions = $stmt->fetchAll();
+$admissions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Stats
-$stats = $pdo->query("
-    SELECT 
-        COUNT(*) as total,
-        SUM(CASE WHEN fee_status='PAID' THEN 1 ELSE 0 END) as paid,
-        SUM(CASE WHEN fee_status='PARTIAL' THEN 1 ELSE 0 END) as partial,
-        SUM(CASE WHEN fee_status='PENDING' THEN 1 ELSE 0 END) as pending,
-        SUM(paid_amount + registered_amount) as total_revenue
-    FROM admissions
-")->fetch();
+// Initialise stats with safe defaults
+$stats = [
+    'total'   => 0,
+    'paid'    => 0,
+    'partial' => 0,
+    'pending' => 0,
+    'total_revenue' => 0,
+];
+
+if ($admissions) {
+    $statsStmt = $pdo->query("SELECT
+        COUNT(*) AS total,
+        SUM(CASE WHEN fee_status='PAID' THEN 1 ELSE 0 END) AS paid,
+        SUM(CASE WHEN fee_status='PARTIAL' THEN 1 ELSE 0 END) AS partial,
+        SUM(CASE WHEN fee_status='PENDING' THEN 1 ELSE 0 END) AS pending,
+        SUM(paid_amount + registered_amount) AS total_revenue
+    FROM admissions");
+    $stats = $statsStmt->fetch(PDO::FETCH_ASSOC) + $stats;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
