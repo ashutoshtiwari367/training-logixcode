@@ -4,7 +4,7 @@
  * config/db.php
  */
 
-<?php
+
 // Automatic Environment Detection
 $httpHost = $_SERVER['HTTP_HOST'] ?? '';
 $requestUri = $_SERVER['REQUEST_URI'] ?? '';
