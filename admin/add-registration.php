@@ -130,325 +130,232 @@ $techCourses    = ['Full Stack Development','Java Programming','Python Developme
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Offline Registration — Logixcode</title>
-<link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Offline Registration - LogixCode Admin</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-:root {
-    --ink:     #0f172a;
-    --ink2:    #334155;
-    --muted:   #64748b;
-    --border:  #e2e8f0;
-    --surf:    #ffffff;
-    --bg:      #f1f5f9;
-    --accent:  #2563eb;
-    --accent2: #1d4ed8;
-    --green:   #16a34a;
-    --red:     #dc2626;
-    --radius:  12px;
-    --shadow:  0 1px 3px rgba(0,0,0,.06),0 4px 18px rgba(0,0,0,.08);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-
-/* topbar */
-.topbar{background:var(--surf);border-bottom:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:1rem;color:var(--ink);text-decoration:none}
-.brand img{height:32px}
-.btn-back{display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:8px;border:1px solid var(--border);background:var(--surf);color:var(--ink2);font-size:.82rem;font-weight:500;text-decoration:none;transition:.15s}
-.btn-back:hover{background:var(--bg);color:var(--ink)}
-
-/* layout */
-.wrap{max-width:840px;margin:0 auto;padding:30px 18px 64px}
-
-/* heading */
-.pg-head{margin-bottom:24px}
-.pg-head h1{font-size:1.45rem;font-weight:700}
-.pg-head p{font-size:.85rem;color:var(--muted);margin-top:3px}
-
-/* card */
-.card{background:var(--surf);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
-
-/* section label */
-.slabel{display:flex;align-items:center;gap:7px;padding:15px 22px 12px;border-bottom:1px solid var(--border);font-weight:600;font-size:.73rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.slabel i{font-size:.95rem;color:var(--accent)}
-
-/* grid */
-.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.fc{padding:15px 22px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
-.fc:nth-child(even){border-right:none}
-.fc.full{grid-column:1/-1;border-right:none}
-.fc.last-row,.fc.full:last-child{border-bottom:none}
-
-label{display:block;font-size:.74rem;font-weight:600;color:var(--ink2);margin-bottom:5px;letter-spacing:.02em}
-label .req{color:var(--red);margin-left:2px}
-.form-control,.form-select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.875rem;color:var(--ink);background:var(--surf);outline:none;transition:border-color .15s,box-shadow .15s}
-.form-control:focus,.form-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.11)}
-textarea.form-control{resize:vertical;min-height:76px}
-
-/* amount */
-.amtwrap{position:relative}
-.amtwrap .sym{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-weight:600;color:var(--muted);pointer-events:none;font-size:.88rem}
-.amtwrap input{padding-left:24px;font-family:'DM Mono',monospace}
-.amt-preview{margin-top:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px}
-.amt-preview .big{font-family:'DM Mono',monospace;font-size:1.35rem;font-weight:700;color:var(--green)}
-.amt-preview .lbl{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-
-/* checkbox */
-.chkrow{display:flex;align-items:center;gap:9px}
-.chkrow input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
-.chkrow span{font-size:.875rem;color:var(--ink2)}
-
-/* submit bar */
-.subbar{padding:18px 22px;background:var(--bg);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.btn-save{display:inline-flex;align-items:center;gap:7px;padding:10px 26px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:.875rem;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
-.btn-save:hover{background:var(--accent2)}
-.btn-save:active{transform:scale(.98)}
-
-/* alerts */
-.alert{display:flex;gap:11px;padding:13px 18px;border-radius:var(--radius);font-size:.875rem;margin-bottom:14px;border:1px solid transparent}
-.alert i{font-size:1.05rem;flex-shrink:0;margin-top:1px}
-.alert-success{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
-.alert-danger {background:#fef2f2;border-color:#fecaca;color:#991b1b}
-.alert-info   {background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
-
-/* receipt card */
-.rcpt{background:var(--surf);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
-.rcpt-head{background:linear-gradient(120deg,#1e3a8a 0%,#2563eb 100%);color:#fff;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.rcpt-head h3{font-size:1.05rem;font-weight:700;margin-bottom:2px}
-.rcpt-head p {font-size:.78rem;opacity:.8}
-.rid-badge{font-family:'DM Mono',monospace;font-size:.95rem;font-weight:600;background:rgba(255,255,255,.15);padding:6px 15px;border-radius:100px;letter-spacing:.04em;white-space:nowrap}
-
-.rrow{display:flex;border-bottom:1px solid var(--border)}
-.rrow:last-child{border-bottom:none}
-.rk{width:165px;flex-shrink:0;padding:11px 18px;font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;background:#fafafa;border-right:1px solid var(--border);display:flex;align-items:center}
-.rv{padding:11px 18px;font-size:.875rem;color:var(--ink);flex:1;display:flex;align-items:center;gap:7px}
-.rv.green{font-family:'DM Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--green)}
-.badge-off{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:#f1f5f9;border:1px solid var(--border);border-radius:100px;font-size:.73rem;font-weight:600;color:var(--ink2)}
-.badge-ok {display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:100px;font-size:.73rem;font-weight:700;color:var(--green)}
-
-.rcpt-foot{padding:15px 22px;background:#fafafa;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.rcpt-foot p{font-size:.75rem;color:var(--muted)}
-.btn-pdf{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;background:var(--red);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .15s}
-.btn-pdf:hover{background:#b91c1c}
-.btn-pdf:disabled{opacity:.6;cursor:not-allowed}
-
-@media(max-width:620px){
-    .fgrid{grid-template-columns:1fr}
-    .fc,.fc:nth-child(even){border-right:none}
-    .rk{width:120px}
-    .rcpt-head{flex-direction:column;align-items:flex-start}
-}
+    body { font-family: 'Public Sans', sans-serif; background-color: #f8fafd; }
 </style>
 </head>
-<body>
+<body class="flex min-h-screen">
 
-<nav class="topbar">
-    <a href="#" class="brand">
-        <img src="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp" alt="Logixcode IT Solution">
-        Logixcode IT Solution
-    </a>
-    <a href="dashboard.php" class="btn-back"><i class="bi bi-arrow-left"></i> Dashboard</a>
-</nav>
+<?php include "sidebar.php" ?>
 
-<div class="wrap">
-
-    <div class="pg-head">
-        <h1>Offline Registration</h1>
-        <p>Cash / in-person — enter student details and collect payment manually.</p>
-    </div>
-
-    <?php if ($error): ?>
-    <div class="alert alert-danger">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <span><?= htmlspecialchars($error) ?></span>
-    </div>
-    <?php endif; ?>
-
-    <?php if ($registrationData): ?>
-    <!-- SUCCESS -->
-    <div class="alert alert-success">
-        <i class="bi bi-check-circle-fill"></i>
+<main class="flex-1 ml-72 min-h-screen p-8 flex flex-col">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
         <div>
-            <strong>Registration saved!</strong> &nbsp;ID: <code><?= htmlspecialchars($registrationData['registration_id']) ?></code>
-            — Confirmation email sent to <em><?= htmlspecialchars($registrationData['email']) ?></em>.
+            <h2 class="text-2xl font-bold text-slate-800">Offline Registration Form</h2>
+            <p class="text-slate-500 text-sm">Enter student details and collect registration fees manually</p>
         </div>
-    </div>
-    
-    <div class="flex gap-3 mb-4">
-        <a href="add-registration.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> New Registration</a>
-        <a href="dashboard.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-speedometer2"></i> Back to Dashboard</a>
+        <div class="text-slate-500 text-sm font-medium">Home / New Registration</div>
     </div>
 
-    <hr style="border:none;border-top:1px solid var(--border);margin:22px 0 20px">
-    <?php endif; ?>
-
-    <!-- ── FORM ── -->
-    <div class="alert alert-info">
-        <i class="bi bi-info-circle-fill"></i>
-        <span>Offline / cash registration — no online payment required.</span>
-    </div>
-
-    <form method="POST" action="">
-        <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
-
-        <!-- Personal -->
-        <div class="card">
-            <div class="slabel"><i class="bi bi-person-vcard"></i> Personal Information</div>
-            <div class="fgrid">
-                <div class="fc">
-                    <label>First Name <span class="req">*</span></label>
-                    <input type="text" class="form-control" name="firstName" value="<?= htmlspecialchars($_POST['firstName'] ?? '') ?>" required>
-                </div>
-                <div class="fc">
-                    <label>Last Name <span class="req">*</span></label>
-                    <input type="text" class="form-control" name="lastName" value="<?= htmlspecialchars($_POST['lastName'] ?? '') ?>" required>
-                </div>
-                <div class="fc">
-                    <label>Email Address <span class="req">*</span></label>
-                    <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
-                </div>
-                <div class="fc">
-                    <label>Phone <span class="req">*</span> <span style="font-weight:400;color:var(--muted)">(+91XXXXXXXXXX)</span></label>
-                    <input type="tel" class="form-control" name="phone" pattern="^\+91[0-9]{10}$" placeholder="+91XXXXXXXXXX" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" required>
-                </div>
-                <div class="fc">
-                    <label>Date of Birth <span class="req">*</span></label>
-                    <input type="date" class="form-control" name="dob" value="<?= htmlspecialchars($_POST['dob'] ?? '') ?>" required>
-                </div>
-                <div class="fc">
-                    <label>Gender <span class="req">*</span></label>
-                    <select class="form-select" name="gender" required>
-                        <option value="">Select</option>
-                        <?php foreach(['male'=>'Male','female'=>'Female','other'=>'Other'] as $v=>$l): ?>
-                        <option value="<?=$v?>" <?=(($_POST['gender']??'')===$v?'selected':'')?>><?=$l?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="fc full last-row">
-                    <label>Address <span class="req">*</span></label>
-                    <textarea class="form-control" name="address" required><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
-                </div>
-            </div>
+    <div class="max-w-4xl mx-auto w-full bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-slate-50 border-b border-slate-200 p-6 flex items-center justify-between">
+            <span class="text-sm font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">person_add</span> Student Registration Details
+            </span>
+            <a href="dashboard.php" class="bg-white border text-slate-500 hover:text-slate-800 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">arrow_back</span> Back to Dashboard
+            </a>
         </div>
 
-        <!-- Education -->
-        <div class="card">
-            <div class="slabel"><i class="bi bi-mortarboard"></i> Educational Background</div>
-            <div class="fgrid">
-                <div class="fc">
-                    <label>Qualification <span class="req">*</span></label>
-                    <select class="form-select" name="qualification" required>
-                        <option value="">Select</option>
-                        <?php foreach($qualifications as $q): ?>
-                        <option value="<?=$q?>" <?=(($_POST['qualification']??'')===$q?'selected':'')?>><?=$q?></option>
-                        <?php endforeach; ?>
-                    </select>
+        <div class="p-8">
+            <!-- Alerts -->
+            <?php if ($error): ?>
+                <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-8 flex items-center gap-3">
+                    <span class="material-symbols-outlined">error</span> <?= htmlspecialchars($error) ?>
                 </div>
-                <div class="fc">
-                    <label>Percentage / CGPA</label>
-                    <input type="text" class="form-control" name="percentage" value="<?= htmlspecialchars($_POST['percentage'] ?? '') ?>">
-                </div>
-                <div class="fc last-row">
-                    <label>College / University</label>
-                    <input type="text" class="form-control" name="college" value="<?= htmlspecialchars($_POST['college'] ?? '') ?>">
-                </div>
-                <div class="fc last-row">
-                    <label>Year of Passing</label>
-                    <input type="text" class="form-control" name="yearOfPassing" pattern="^[0-9]{4}$" placeholder="YYYY" value="<?= htmlspecialchars($_POST['yearOfPassing'] ?? '') ?>">
-                </div>
-            </div>
-        </div>
+            <?php endif; ?>
 
-        <!-- Program -->
-        <div class="card">
-            <div class="slabel"><i class="bi bi-laptop"></i> Program Selection</div>
-            <div class="fgrid">
-                <div class="fc full last-row">
-                    <label>Select Program <span class="req">*</span></label>
-                    <select class="form-select" name="program" required>
-                        <option value="">Select Program</option>
-                        <optgroup label="── Training Programs">
-                            <?php foreach($trainingProgs as $p): ?>
-                            <option value="<?=$p?>" <?=(($_POST['program']??'')===$p?'selected':'')?>><?=$p?></option>
-                            <?php endforeach; ?>
-                        </optgroup>
-                        <optgroup label="── Technology Courses">
-                            <?php foreach($techCourses as $p): ?>
-                            <option value="<?=$p?>" <?=(($_POST['program']??'')===$p?'selected':'')?>><?=htmlspecialchars($p)?></option>
-                            <?php endforeach; ?>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payment -->
-        <div class="card">
-            <div class="slabel"><i class="bi bi-cash-stack"></i> Payment Details</div>
-            <div class="fgrid">
-                <div class="fc last-row">
-                    <label>Registration Fee (&#8377;) <span class="req">*</span></label>
-                    <div class="amtwrap">
-                        <span class="sym">&#8377;</span>
-                        <input type="number" class="form-control" name="amount" id="amountInput"
-                               value="<?= htmlspecialchars($_POST['amount'] ?? '500') ?>" min="0" step="1" required>
+            <?php if ($registrationData): ?>
+                <!-- SUCCESS -->
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-6 rounded-xl mb-8 flex flex-col items-center justify-center text-center">
+                    <span class="material-symbols-outlined text-5xl mb-2 text-emerald-500">check_circle</span>
+                    <h3 class="font-bold text-xl mb-1">Registration Saved!</h3>
+                    <p class="mb-4">Registration ID: <code class="font-mono bg-emerald-100/50 px-2 py-0.5 rounded text-emerald-800 font-bold"><?= htmlspecialchars($registrationData['registration_id']) ?></code></p>
+                    <p class="text-sm text-emerald-600/90 mb-6">Confirmation email sent to <strong><?= htmlspecialchars($registrationData['email']) ?></strong>.</p>
+                    
+                    <div class="flex gap-4">
+                        <button id="pdfBtn" onclick="makePDF()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-md">
+                            <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF Receipt
+                        </button>
+                        <a href="add-registration.php" class="bg-white border hover:bg-slate-50 text-slate-700 font-bold px-6 py-2.5 rounded-xl transition-colors shadow-sm">
+                            New Registration
+                        </a>
                     </div>
-                    <div class="amt-preview">
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="" class="space-y-8">
+                <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+
+                <!-- 1. Personal Details -->
+                <section>
+                    <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
+                        <span class="material-symbols-outlined text-primary">person</span> 1. Personal Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <div class="lbl">Amount to Collect</div>
-                            <div class="big" id="amtBig">&#8377;<?= number_format((float)($_POST['amount'] ?? 500),2) ?></div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">First Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="firstName" value="<?= htmlspecialchars($_POST['firstName'] ?? '') ?>" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Last Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="lastName" value="<?= htmlspecialchars($_POST['lastName'] ?? '') ?>" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Email Address <span class="text-red-500">*</span></label>
+                            <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Phone <span class="text-red-500">*</span> <span class="text-xs font-normal text-slate-400">(Format: +91XXXXXXXXXX)</span></label>
+                            <input type="tel" name="phone" pattern="^\+91[0-9]{10}$" placeholder="+91XXXXXXXXXX" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Date of Birth <span class="text-red-500">*</span></label>
+                            <input type="date" name="dob" value="<?= htmlspecialchars($_POST['dob'] ?? '') ?>" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Gender <span class="text-red-500">*</span></label>
+                            <select name="gender" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                <option value="">Select Gender</option>
+                                <?php foreach(['male'=>'Male','female'=>'Female','other'=>'Other'] as $v=>$l): ?>
+                                <option value="<?=$v?>" <?=(($_POST['gender']??'')===$v?'selected':'')?>><?=$l?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Address <span class="text-red-500">*</span></label>
+                            <textarea name="address" required rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
                         </div>
                     </div>
-                </div>
-                <div class="fc last-row" style="display:flex;align-items:center;justify-content:center">
-                    <div style="text-align:center">
-                        <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:8px">Payment Mode</div>
-                        <span class="badge-off" style="font-size:.88rem;padding:8px 18px"><i class="bi bi-cash-coin"></i> &nbsp;OFFLINE / Cash</span>
-                        <div style="font-size:.75rem;color:var(--muted);margin-top:8px">No online payment needed</div>
+                </section>
+
+                <!-- 2. Academic Background -->
+                <section>
+                    <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
+                        <span class="material-symbols-outlined text-primary">school</span> 2. Educational Background
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Qualification <span class="text-red-500">*</span></label>
+                            <select name="qualification" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                <option value="">Select Qualification</option>
+                                <?php foreach($qualifications as $q): ?>
+                                <option value="<?=$q?>" <?=(($_POST['qualification']??'')===$q?'selected':'')?>><?=$q?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Percentage / CGPA</label>
+                            <input type="text" name="percentage" value="<?= htmlspecialchars($_POST['percentage'] ?? '') ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">College / University</label>
+                            <input type="text" name="college" value="<?= htmlspecialchars($_POST['college'] ?? '') ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Year of Passing</label>
+                            <input type="text" name="yearOfPassing" pattern="^[0-9]{4}$" placeholder="YYYY" value="<?= htmlspecialchars($_POST['yearOfPassing'] ?? '') ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Program Selection -->
+                <section>
+                    <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
+                        <span class="material-symbols-outlined text-primary">laptop_mac</span> 3. Program Selection
+                    </h3>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Select Program <span class="text-red-500">*</span></label>
+                        <select name="program" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                            <option value="">Select Program</option>
+                            <optgroup label="── Training Programs">
+                                <?php foreach($trainingProgs as $p): ?>
+                                <option value="<?=$p?>" <?=(($_POST['program']??'')===$p?'selected':'')?>><?=$p?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="── Technology Courses">
+                                <?php foreach($techCourses as $p): ?>
+                                <option value="<?=$p?>" <?=(($_POST['program']??'')===$p?'selected':'')?>><?=htmlspecialchars($p)?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- 4. Fee & Payment -->
+                <section>
+                    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-slate-800 shadow-sm">
+                        <h3 class="flex items-center gap-2 text-lg font-bold mb-4 text-blue-900">
+                            <span class="material-symbols-outlined">payments</span> 4. Payment Details
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Registration Fee <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2 text-slate-500 font-bold">₹</span>
+                                    <input type="number" id="amountInput" name="amount" value="<?= htmlspecialchars($_POST['amount'] ?? '500') ?>" min="0" step="1" required class="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 font-bold text-slate-800">
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between bg-white border rounded-xl p-4 shadow-xs">
+                                <div>
+                                    <span class="block text-xs font-bold text-slate-400 uppercase tracking-wide">Payment Mode</span>
+                                    <span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold mt-1">
+                                        <i class="bi bi-cash-coin"></i> OFFLINE / Cash
+                                    </span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="block text-xs font-bold text-slate-400 uppercase tracking-wide">To Collect</span>
+                                    <span id="amtBig" class="text-xl font-bold text-blue-700">₹<?= number_format((float)($_POST['amount'] ?? 500), 2) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Additional Information -->
+                <section>
+                    <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
+                        <span class="material-symbols-outlined text-primary">chat_bubble</span> 5. Additional Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Prior Experience</label>
+                            <textarea name="experience" rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20"><?= htmlspecialchars($_POST['experience'] ?? '') ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Motivation</label>
+                            <textarea name="motivation" rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20"><?= htmlspecialchars($_POST['motivation'] ?? '') ?></textarea>
+                        </div>
+                        <div class="md:col-span-2 flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <input type="checkbox" name="updates" id="updates" <?= isset($_POST['updates']) ? 'checked' : '' ?> class="w-4 h-4 text-primary focus:ring-primary rounded">
+                            <label for="updates" class="text-sm font-medium text-slate-700 cursor-pointer">Send email updates and notifications to student</label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submit Bar -->
+                <div class="flex justify-between items-center pt-6 border-t">
+                    <span class="text-xs text-slate-400"><span class="text-red-500">*</span> Required fields</span>
+                    <div class="flex gap-4">
+                        <a href="dashboard.php" class="px-6 py-2.5 rounded-xl border font-bold text-slate-600 hover:bg-slate-50 transition-colors">Cancel</a>
+                        <button type="submit" class="bg-primary hover:bg-teal-700 text-white font-bold px-8 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">save</span> Save Registration
+                        </button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-
-        <!-- Additional -->
-        <div class="card">
-            <div class="slabel"><i class="bi bi-chat-text"></i> Additional Information</div>
-            <div class="fgrid">
-                <div class="fc">
-                    <label>Prior Experience</label>
-                    <textarea class="form-control" name="experience"><?= htmlspecialchars($_POST['experience'] ?? '') ?></textarea>
-                </div>
-                <div class="fc">
-                    <label>Motivation</label>
-                    <textarea class="form-control" name="motivation"><?= htmlspecialchars($_POST['motivation'] ?? '') ?></textarea>
-                </div>
-                <div class="fc full last-row">
-                    <div class="chkrow">
-                        <input type="checkbox" name="updates" id="updates" <?= isset($_POST['updates']) ? 'checked' : '' ?>>
-                        <span>Send email updates and notifications to student</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Submit -->
-        <div class="card">
-            <div class="subbar">
-                <span style="font-size:.78rem;color:var(--muted)"><span class="req">*</span> Required fields</span>
-                <button type="submit" class="btn-save">
-                    <i class="bi bi-save2-fill"></i> Save Registration
-                </button>
-            </div>
-        </div>
-    </form>
-
-</div><!-- /wrap -->
+    </div>
+</main>
 
 <!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -599,7 +506,7 @@ function makePDF() {
             alert('PDF error: ' + e.message);
         }
         btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-file-earmark-pdf-fill"></i> Download PDF';
+        btn.innerHTML = '<i class="bi bi-file-earmark-pdf-fill"></i> Download PDF Receipt';
     }, 150);
 }
 <?php endif; ?>

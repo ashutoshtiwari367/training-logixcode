@@ -117,10 +117,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($student_name) || empty($phone)) {
-        $error = "Student name and phone are required!";
+    if (empty($student_name) || empty($phone) || empty($email)) {
+        $error = "Student name, phone, and email are required!";
     } elseif (!$error) {
         try {
+            $pdo->beginTransaction();
+
+            if (empty($post_reg_id)) {
+                // Generate a new registration ID for Direct Admission
+                $post_reg_id = generateRegistrationId();
+
+                // Split name
+                $parts = explode(' ', $student_name, 2);
+                $first_name = trim($parts[0]);
+                $last_name = isset($parts[1]) ? trim($parts[1]) : '';
+
+                // Map fields
+                $reg_dob = !empty($dob) ? $dob : '2000-01-01';
+                $reg_gender = !empty($gender) ? strtolower($gender) : 'other';
+                if (!in_array($reg_gender, ['male', 'female', 'other'])) {
+                    $reg_gender = 'other';
+                }
+                $reg_address = !empty($permanent_address) ? $permanent_address : (!empty($local_address) ? $local_address : 'N/A');
+                $reg_qualification = !empty($degree) ? $degree : 'Other';
+                $reg_program = !empty($course_name) ? $course_name : 'Training';
+
+                // Insert into registrations
+                $stmtReg = $pdo->prepare("INSERT INTO registrations (
+                    registration_id, first_name, last_name, email, phone, dob, gender,
+                    address, qualification, percentage, college, program, payment_mode, created_at
+                ) VALUES (
+                    ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, 'N/A', ?, ?, 'OFFLINE', NOW()
+                )");
+
+                $stmtReg->execute([
+                    $post_reg_id, $first_name, $last_name, $email, $phone, $reg_dob, $reg_gender,
+                    $reg_address, $reg_qualification, $college_name, $reg_program
+                ]);
+
+                // Insert into payments
+                $stmtPay = $pdo->prepare("INSERT INTO payments (
+                    registration_id, payment_gateway_id, amount, currency, status, created_at
+                ) VALUES (
+                    ?, ?, ?, 'INR', 'OFFLINE', NOW()
+                )");
+
+                $stmtPay->execute([
+                    $post_reg_id, 'OFFLINE-' . time(), $new_paid
+                ]);
+            }
+
             $sql = "INSERT INTO admissions (
                 admission_id, registration_id, student_name, father_name, dob, gender, student_photo, aadhar_number, medical_condition,
                 email, phone, father_phone, local_address, permanent_address,
@@ -144,10 +191,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total_fees, $reg_amt, $new_paid, $payment_mode, $balance_amount, $fee_status
             ]);
             
+            $pdo->commit();
+
             $success = "Admission completed successfully! Admission ID: " . $admission_id;
             header("refresh:2;url=admissions.php");
             
-        } catch(PDOException $e) {
+        } catch(Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
             $error = "Database Error: " . $e->getMessage();
         }
     }
@@ -273,8 +325,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                            <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" class="w-full px-4 py-2 border rounded-lg">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Email Address <span class="text-red-500">*</span></label>
+                            <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Student Mobile <span class="text-red-500">*</span></label>

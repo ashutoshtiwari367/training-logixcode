@@ -72,165 +72,147 @@ $csrfToken = generateCSRF();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assign Student — Logixcode Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; --sidebar: #0f172a; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #1e293b; }
-        .sidebar { background: var(--sidebar); min-height: 100vh; color: #fff; padding: 20px; }
-        .sidebar .nav-link { color: #94a3b8; padding: 12px 15px; border-radius: 8px; margin-bottom: 5px; transition: 0.2s; }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
-        .sidebar .nav-link i { margin-right: 10px; }
-        .main-content { padding: 30px; }
-        .card { border: none; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .btn-primary { background: var(--primary); border: none; padding: 10px 25px; border-radius: 8px; font-weight: 600; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .table thead th { background: #f1f5f9; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; color: #64748b; padding: 15px; }
-        .table tbody td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
-    </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Assign Student - LogixCode Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Public Sans', sans-serif; background-color: #f8fafd; }
+</style>
 </head>
-<body>
+<body class="flex min-h-screen">
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar d-none d-md-block">
-            <div class="mb-4 text-center">
-                <img src="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp" alt="Logo" style="height: 40px;">
-                <h6 class="mt-2 text-white">Admin Portal</h6>
-            </div>
-            <nav class="nav flex-column">
-                <a href="dashboard.php" class="nav-link"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                <a href="admissions.php" class="nav-link"><i class="bi bi-people"></i> Admissions</a>
-                <a href="add-registration.php" class="nav-link"><i class="bi bi-person-plus"></i> New Registration</a>
-                <a href="assign-student.php" class="nav-link active"><i class="bi bi-key"></i> Student Assign</a>
-                <hr class="text-white-50">
-                <a href="logout.php" class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
-            </nav>
+<?php include "sidebar.php" ?>
+
+<main class="flex-1 ml-72 min-h-screen p-8 flex flex-col">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h2 class="text-2xl font-bold text-slate-800">Assign Student Credentials</h2>
+            <p class="text-slate-500 text-sm">Create credentials and auto-generate ID cards for enrolled students</p>
         </div>
-
-        <!-- Main Content -->
-        <div class="col-md-10 main-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold">Assign Student Credentials</h4>
-                <div class="text-muted small">Home / Student Assign</div>
-            </div>
-
-            <?php if ($success): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i> <?= $success ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php endif; ?>
-
-            <?php if ($error): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= $error ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <?php endif; ?>
-
-            <div class="row">
-                <!-- Assignment Form -->
-                <div class="col-md-5">
-                    <div class="card p-4 mb-4">
-                        <h6 class="fw-bold mb-3">Assign Details</h6>
-                        <form method="POST" action="">
-                            <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
-                            
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Select Registration ID</label>
-                                <select name="registration_id" class="form-select" id="regSelector" required>
-                                    <option value="">-- Choose Student --</option>
-                                    <?php foreach ($pending as $p): ?>
-                                    <option value="<?= $p['registration_id'] ?>" data-name="<?= $p['first_name'] . ' ' . $p['last_name'] ?>" data-email="<?= $p['email'] ?>" data-prog="<?= $p['program'] ?>">
-                                        <?= $p['registration_id'] ?> - <?= $p['first_name'] ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-                            <div id="studentInfo" class="mb-3 p-3 bg-light rounded d-none">
-                                <div class="small mb-1"><strong>Name:</strong> <span id="infoName"></span></div>
-                                <div class="small mb-1"><strong>Email:</strong> <span id="infoEmail"></span></div>
-                                <div class="small"><strong>Program:</strong> <span id="infoProg"></span></div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Custom Student ID</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">ID</span>
-                                    <input type="text" name="student_id" class="form-control" id="stuIdInput" placeholder="STU-2026-0001" required>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="genId()">Auto</button>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label small fw-bold">Assign Password</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input type="text" name="password" class="form-control" id="passInput" placeholder="SecretPassword" required>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="genPass()">Random</button>
-                                </div>
-                            </div>
-
-                            <button type="submit" name="assign_student" class="btn btn-primary w-100 py-2">
-                                <i class="bi bi-person-check-fill me-2"></i> Assign & Send Mail
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Pending Table -->
-                <div class="col-md-7">
-                    <div class="card p-0">
-                        <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
-                            <h6 class="fw-bold m-0">Pending Assignments</h6>
-                            <span class="badge bg-primary rounded-pill"><?= count($pending) ?></span>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover m-0">
-                                <thead>
-                                    <tr>
-                                        <th>Reg ID</th>
-                                        <th>Student</th>
-                                        <th>Program</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if (count($pending) > 0): ?>
-                                    <?php foreach ($pending as $p): ?>
-                                    <tr>
-                                        <td class="fw-bold small"><?= $p['registration_id'] ?></td>
-                                        <td>
-                                            <div class="fw-bold"><?= $p['first_name'] ?> <?= $p['last_name'] ?></div>
-                                            <div class="small text-muted"><?= $p['email'] ?></div>
-                                        </td>
-                                        <td class="small"><?= $p['program'] ?></td>
-                                        <td>
-                                            <button onclick="pickStudent('<?= $p['registration_id'] ?>')" class="btn btn-sm btn-outline-primary py-1">Assign</button>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                    <?php else: ?>
-                                    <tr>
-                                        <td colspan="4" class="text-center py-5 text-muted">No pending assignments found.</td>
-                                    </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="text-slate-500 text-sm font-medium">Home / Student Assign</div>
     </div>
-</div>
+
+    <!-- Alert Messages -->
+    <?php if ($success): ?>
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl mb-6 flex items-center gap-3">
+            <span class="material-symbols-outlined">check_circle</span> <?= htmlspecialchars($success) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($error): ?>
+        <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6 flex items-center gap-3">
+            <span class="material-symbols-outlined">error</span> <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Assignment Form Column (5 cols) -->
+        <div class="lg:col-span-5">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-purple-600">badge</span> Assign Details
+                </h3>
+                
+                <form method="POST" action="">
+                    <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Select Registration ID</label>
+                        <select name="registration_id" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20" id="regSelector" required>
+                            <option value="">-- Choose Student --</option>
+                            <?php foreach ($pending as $p): ?>
+                            <option value="<?= $p['registration_id'] ?>" data-name="<?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name']) ?>" data-email="<?= htmlspecialchars($p['email']) ?>" data-prog="<?= htmlspecialchars($p['program']) ?>">
+                                <?= htmlspecialchars($p['registration_id']) ?> - <?= htmlspecialchars($p['first_name']) ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- Selected Student Card Details -->
+                    <div id="studentInfo" class="mb-4 p-4 bg-slate-50 border border-slate-200 rounded-xl hidden">
+                        <div class="text-sm mb-1.5"><strong class="text-slate-500">Name:</strong> <span id="infoName" class="font-semibold text-slate-800"></span></div>
+                        <div class="text-sm mb-1.5"><strong class="text-slate-500">Email:</strong> <span id="infoEmail" class="font-semibold text-slate-800"></span></div>
+                        <div class="text-sm"><strong class="text-slate-500">Program:</strong> <span id="infoProg" class="font-semibold text-slate-800"></span></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Custom Student ID</label>
+                        <div class="flex gap-2">
+                            <span class="bg-slate-100 border border-r-0 rounded-l-lg px-3 py-2 text-slate-500 flex items-center font-bold text-sm">ID</span>
+                            <input type="text" name="student_id" class="flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary/20" id="stuIdInput" placeholder="STU-2026-0001" required>
+                            <button type="button" class="bg-slate-100 border hover:bg-slate-200 px-4 py-2 rounded-lg font-bold text-slate-700 text-sm transition-colors" onclick="genId()">Auto</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Assign Password</label>
+                        <div class="flex gap-2">
+                            <span class="bg-slate-100 border border-r-0 rounded-l-lg px-3 py-2 text-slate-500 flex items-center"><span class="material-symbols-outlined text-base">lock</span></span>
+                            <input type="text" name="password" class="flex-1 px-4 py-2 border rounded-r-lg focus:ring-2 focus:ring-primary/20" id="passInput" placeholder="SecretPassword" required>
+                            <button type="button" class="bg-slate-100 border hover:bg-slate-200 px-4 py-2 rounded-lg font-bold text-slate-700 text-sm transition-colors" onclick="genPass()">Random</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" name="assign_student" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">person_check</span> Assign & Send Mail
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Pending Table Column (7 cols) -->
+        <div class="lg:col-span-7">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-slate-500">pending_actions</span> Pending Assignments
+                    </h3>
+                    <span class="bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-full text-xs"><?= count($pending) ?></span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Reg ID</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student Details</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Program</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <?php if (count($pending) > 0): ?>
+                            <?php foreach ($pending as $p): ?>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-bold text-slate-400"><?= htmlspecialchars($p['registration_id']) ?></td>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-slate-800 text-sm"><?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name']) ?></div>
+                                    <div class="text-xs text-slate-400"><?= htmlspecialchars($p['email']) ?></div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= htmlspecialchars($p['program']) ?></td>
+                                <td class="px-6 py-4 text-center">
+                                    <button onclick="pickStudent('<?= htmlspecialchars($p['registration_id']) ?>')" class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">Assign</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="text-center py-12 text-slate-400">No pending assignments found.</td>
+                            </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
 
 <script>
     const selector = document.getElementById('regSelector');
@@ -245,12 +227,12 @@ $csrfToken = generateCSRF();
             infoName.textContent = opt.dataset.name;
             infoEmail.textContent = opt.dataset.email;
             infoProg.textContent = opt.dataset.prog;
-            infoDiv.classList.remove('d-none');
+            infoDiv.classList.remove('hidden');
             // Auto fill suggest ID if empty
             if (!document.getElementById('stuIdInput').value) genId();
             if (!document.getElementById('passInput').value) genPass();
         } else {
-            infoDiv.classList.add('d-none');
+            infoDiv.classList.add('hidden');
         }
     });
 
