@@ -44,11 +44,11 @@ try {
     ];
     
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-    
-} catch (PDOException $e) {
-    error_log("Database Connection Error: " . $e->getMessage());
-    die("Database connection failed. Please contact administrator.");
-}
+    } catch (PDOException $e) {
+        error_log("Database Connection Error: " . $e->getMessage());
+        echo "❌ DB connection failed: " . $e->getMessage();
+        exit;
+    }
 
 /**
  * Generate unique registration ID
