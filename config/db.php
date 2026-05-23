@@ -4,8 +4,12 @@
  * config/db.php
  */
 
+<?php
 // Automatic Environment Detection
-if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1' || strpos($_SERVER['REQUEST_URI'], '/training/') !== false) {
+$httpHost = $_SERVER['HTTP_HOST'] ?? '';
+$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+if ($httpHost === 'localhost' || $httpHost === '127.0.0.1' || strpos($requestUri, '/training/') !== false) {
+    // LOCAL (XAMPP)
     // LOCAL (XAMPP)
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'training_db');
@@ -15,8 +19,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1'
 } else {
     // PRODUCTION (Hostinger)
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'u447123054_institute_regi');
-    define('DB_USER', 'u447123054_institute_regi');
+    define('DB_NAME', 'u447123054_assesment');
+    define('DB_USER', 'u447123054_assesment');
     define('DB_PASS', 'U447123054_institute_regi');
     define('BASE_URL', '/');
 }
