@@ -19,9 +19,9 @@ if ($httpHost === 'localhost' || $httpHost === '127.0.0.1' || strpos($requestUri
 } else {
     // PRODUCTION (Hostinger)
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'u447123054_assesment');
-    define('DB_USER', 'u447123054_assesment');
-    define('DB_PASS', 'U447123054_institute_regi');
+    define('DB_NAME', 'u447123054_institute_regi');
+    define('DB_USER', 'u447123054_institute_regi');
+    define('DB_PASS', 'Mu$k@n1106');
     define('BASE_URL', '/');
 }
 
