@@ -4,7 +4,6 @@
  * admin/assign-student.php
  */
 
-session_start();
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/mail.php';
@@ -13,50 +12,76 @@ require_once __DIR__ . '/../includes/generate_id_card.php';
 requireLogin();
 
 $success = '';
-$error = '';
+$error   = '';
+$warnings = [];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
     try {
         if (!validateCSRF($_POST['csrf_token'])) {
-            throw new Exception("Invalid security token");
+            throw new Exception("Invalid security token. Please refresh and try again.");
         }
 
-        $regId = $_POST['registration_id'];
+        $regId    = trim($_POST['registration_id']);
         $studentId = trim($_POST['student_id']);
-        $password = trim($_POST['password']);
+        $password  = trim($_POST['password']);
 
         if (empty($regId) || empty($studentId) || empty($password)) {
             throw new Exception("All fields are required.");
         }
 
+        // Validate Student ID format (basic)
+        if (!preg_match('/^[A-Z0-9\-]+$/', strtoupper($studentId))) {
+            throw new Exception("Invalid Student ID format. Use letters, numbers and hyphens only.");
+        }
+
+        // Check for duplicate Student ID
+        $chk = $pdo->prepare("SELECT registration_id FROM registrations WHERE student_id = ? AND registration_id != ?");
+        $chk->execute([$studentId, $regId]);
+        if ($chk->fetch()) {
+            throw new Exception("Student ID '{$studentId}' is already assigned to another student.");
+        }
+
         // Hash password
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        // Update registration record
+        // === STEP 1: Update registration record (CRITICAL - must succeed) ===
         $stmt = $pdo->prepare("UPDATE registrations SET student_id = ?, password_hash = ? WHERE registration_id = ?");
         $stmt->execute([$studentId, $passwordHash, $regId]);
 
-        // Get student details for email
+        // Get student details
         $stmt = $pdo->prepare("SELECT * FROM registrations WHERE registration_id = ?");
         $stmt->execute([$regId]);
         $student = $stmt->fetch();
 
-        // Generate ID Card
-        $idCardPath = generateStudentIdCard($pdo, $regId);
+        if (!$student) {
+            throw new Exception("Registration record not found after update.");
+        }
 
-        // Send Email
-        $emailData = [
-            'firstName' => $student['first_name'],
-            'lastName' => $student['last_name'],
-            'email' => $student['email'],
-            'student_id' => $studentId,
-            'raw_password' => $password
-        ];
+        $success = "Student ID <strong>{$studentId}</strong> assigned to <strong>{$student['first_name']} {$student['last_name']}</strong> successfully!";
 
-        sendCredentialEmail($emailData, $regId, $idCardPath);
+        // === STEP 2: Generate ID Card (optional - warn if fails) ===
+        $idCardPath = null;
+        try {
+            $idCardPath = generateStudentIdCard($pdo, $regId);
+        } catch (Exception $e) {
+            $warnings[] = "ID Card generation failed: " . $e->getMessage();
+        }
 
-        $success = "Student ID ({$studentId}) assigned successfully to {$student['first_name']}. Email sent.";
+        // === STEP 3: Send Credential Email (optional - warn if fails) ===
+        try {
+            $emailData = [
+                'firstName'    => $student['first_name'],
+                'lastName'     => $student['last_name'],
+                'email'        => $student['email'],
+                'student_id'   => $studentId,
+                'raw_password' => $password
+            ];
+            sendCredentialEmail($emailData, $regId, $idCardPath);
+            $success .= " Credential email sent to {$student['email']}";
+        } catch (Exception $e) {
+            $warnings[] = "Email could not be sent (" . $e->getMessage() . "). Credentials are saved — share manually: ID: <strong>{$studentId}</strong>, Password: <strong>{$password}</strong>";
+        }
 
     } catch (Exception $e) {
         $error = $e->getMessage();

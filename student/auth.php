@@ -3,7 +3,7 @@
  * Student Authentication Functions
  * student/auth.php
  */
-session_start();
+// session_start(); // Handled by config/auth.php
 
 function loginStudent($student) {
     $_SESSION['student_logged_in'] = true;
