@@ -18,10 +18,10 @@ if ($httpHost === 'localhost' || $httpHost === '127.0.0.1' || strpos($requestUri
     define('BASE_URL', '/training/');
 } else {
     // PRODUCTION (Hostinger)
-    define('DB_HOST', 'localhost');
+    define('DB_HOST', 'srv2108.hstgr.io');
     define('DB_NAME', 'u447123054_institute_regi');
     define('DB_USER', 'u447123054_institute_regi');
-    define('DB_PASS', 'Logixcode@2024');
+    define('DB_PASS', 'Mu$k@n1106');
     define('BASE_URL', '/');
 }
 
