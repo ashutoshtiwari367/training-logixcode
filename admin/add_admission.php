@@ -15,6 +15,7 @@ $student_name = '';
 $email = '';
 $phone = '';
 $course_name = '';
+$counselor_name = 'Direct / Self';
 $registered_amount = 0.00;
 
 // Fetch Registration data if reg_id provided
@@ -33,6 +34,7 @@ if ($reg_id) {
         $email = $regData['email'];
         $phone = $regData['phone'];
         $course_name = $regData['program'];
+        $counselor_name = $regData['counselor_name'] ?? 'Direct / Self';
         // Only consider SUCCESS or OFFLINE payments as valid paid amounts
         if ($regData['p_status'] === 'SUCCESS' || $regData['p_status'] === 'OFFLINE') {
             $registered_amount = (float)$regData['paid_amount'];
@@ -76,6 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Requirements
     $hostel_required = $_POST['hostel_required'] ?? 'No';
     $laptop_required = $_POST['laptop_required'] ?? 'No';
+    
+    // Counselor Name — inherited from registration (not editable on admission form)
+    // Will use $counselor_name set from GET pre-fill (or fallback to 'Direct / Self')
     
     // Fee Details
     $total_fees = (float)($_POST['total_fees'] ?? 0);
@@ -145,15 +150,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Insert into registrations
                 $stmtReg = $pdo->prepare("INSERT INTO registrations (
                     registration_id, first_name, last_name, email, phone, dob, gender,
-                    address, qualification, percentage, college, program, payment_mode, created_at
+                    address, qualification, percentage, college, program, counselor_name, payment_mode, created_at
                 ) VALUES (
                     ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, 'N/A', ?, ?, 'OFFLINE', NOW()
+                    ?, ?, 'N/A', ?, ?, ?, 'OFFLINE', NOW()
                 )");
 
                 $stmtReg->execute([
                     $post_reg_id, $first_name, $last_name, $email, $phone, $reg_dob, $reg_gender,
-                    $reg_address, $reg_qualification, $college_name, $reg_program
+                    $reg_address, $reg_qualification, $college_name, $reg_program, $counselor_name
                 ]);
 
                 // Insert into payments
@@ -172,13 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 admission_id, registration_id, student_name, father_name, dob, gender, student_photo, aadhar_number, medical_condition,
                 email, phone, father_phone, local_address, permanent_address,
                 college_name, degree, branch, current_semester, course_name,
-                hostel_required, laptop_required,
+                hostel_required, laptop_required, counselor_name,
                 total_fees, registered_amount, paid_amount, payment_mode, balance_amount, fee_status
             ) VALUES (
                 ?, ?, ?, ?, ?, ?, ?, ?, ?, 
                 ?, ?, ?, ?, ?, 
                 ?, ?, ?, ?, ?, 
-                ?, ?, 
+                ?, ?, ?,
                 ?, ?, ?, ?, ?, ?
             )";
             
@@ -187,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $admission_id, $post_reg_id, $student_name, $father_name, $dob, $gender, $photo_filename, $aadhar_number, $medical_condition,
                 $email, $phone, $father_phone, $local_address, $permanent_address,
                 $college_name, $degree, $branch, $current_semester, $course_name,
-                $hostel_required, $laptop_required,
+                $hostel_required, $laptop_required, $counselor_name,
                 $total_fees, $reg_amt, $new_paid, $payment_mode, $balance_amount, $fee_status
             ]);
             
@@ -383,8 +388,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
                         <span class="material-symbols-outlined text-primary">add_circle</span> 4. Additional Requirements
                     </h3>
-                    <div class="flex gap-8">
-                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl flex-1">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl">
                             <span class="material-symbols-outlined text-slate-400">bed</span>
                             <div>
                                 <p class="text-sm font-bold text-slate-700">Hostel Required?</p>
@@ -394,7 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl flex-1">
+                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl">
                             <span class="material-symbols-outlined text-slate-400">laptop_mac</span>
                             <div>
                                 <p class="text-sm font-bold text-slate-700">Laptop Required (Rent)?</p>
@@ -402,6 +407,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="laptop_required" value="Yes" class="text-primary focus:ring-primary"> Yes</label>
                                     <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="laptop_required" value="No" checked class="text-primary focus:ring-primary"> No</label>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- Counselor info badge (read-only — set during registration) -->
+                        <div class="flex items-start gap-3 bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                            <span class="material-symbols-outlined text-blue-400 mt-0.5">support_agent</span>
+                            <div>
+                                <p class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-1">Counselor (from Registration)</p>
+                                <p class="text-sm font-semibold text-slate-700"><?= htmlspecialchars($counselor_name ?: 'Direct / Self') ?></p>
+                                <input type="hidden" name="counselor_name" value="<?= htmlspecialchars($counselor_name ?: 'Direct / Self') ?>">
                             </div>
                         </div>
                     </div>

@@ -244,6 +244,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student Name</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Contact</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Program</th>
+      <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Counselor</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Payment</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Amount</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Date</th>
@@ -268,6 +269,24 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
           <p class="text-xs text-slate-400"><a target="_blank" href="tel:<?= htmlspecialchars($reg['phone']) ?>"><?= htmlspecialchars($reg['phone']) ?></a></p>
         </td>
         <td class="px-6 py-4 text-sm"><?= htmlspecialchars($reg['program']) ?></td>
+        <td class="px-6 py-4">
+          <?php
+            $saved_counselor = $reg['counselor_name'] ?? 'Direct / Self';
+            $predefined_counselors = ["Direct / Self", "Muskan Yadav", "Anjali Tripathi", "Saloni Singh", "Sanjana Kushwaha", "Vijaylal"];
+            $is_custom_counselor = !empty($saved_counselor) && !in_array($saved_counselor, $predefined_counselors);
+          ?>
+          <select onchange="updateCounselor('<?= $reg['registration_id'] ?>', this.value)" 
+                  data-prev="<?= htmlspecialchars($saved_counselor) ?>"
+                  class="px-2 py-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-200">
+            <?php foreach ($predefined_counselors as $pc): ?>
+              <option value="<?= $pc ?>" <?= ($saved_counselor === $pc) ? 'selected' : '' ?>><?= $pc ?></option>
+            <?php endforeach; ?>
+            <?php if ($is_custom_counselor): ?>
+              <option value="<?= htmlspecialchars($saved_counselor) ?>" selected><?= htmlspecialchars($saved_counselor) ?></option>
+            <?php endif; ?>
+            <option value="Custom_Prompt">+ Add Custom...</option>
+          </select>
+        </td>
         <td class="px-6 py-4">
           <?php if ($reg['payment_status'] === 'SUCCESS'): ?>
             <span class="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-[11px] font-bold">PAID</span>
@@ -358,6 +377,12 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
   </div>
 </div>
 
+<!-- Success/Error Toast Notification -->
+<div id="counselorToast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-lg font-bold flex items-center gap-2 text-sm">
+  <span class="material-symbols-outlined text-white">check_circle</span>
+  <span id="counselorToastMessage">Counselor updated successfully!</span>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 function viewDetails(registrationId) {
@@ -367,6 +392,74 @@ function viewDetails(registrationId) {
     .then(r => r.text())
     .then(html => { document.getElementById('modalContent').innerHTML = html; })
     .catch(() => { document.getElementById('modalContent').innerHTML = '<div class="alert alert-danger">Error loading details</div>'; });
+}
+
+function updateCounselor(registrationId, value) {
+  let selectEl = event.target;
+  let prevValue = selectEl.getAttribute('data-prev') || 'Direct / Self';
+  
+  if (value === 'Custom_Prompt') {
+    let customName = prompt("Enter Custom Counselor Name:");
+    if (customName && customName.trim() !== '') {
+      customName = customName.trim();
+      // Add custom option to select and set as selected
+      let opt = document.createElement('option');
+      opt.value = customName;
+      opt.textContent = customName;
+      opt.selected = true;
+      selectEl.insertBefore(opt, selectEl.options[selectEl.options.length - 1]);
+      value = customName;
+    } else {
+      // Revert selection
+      selectEl.value = prevValue;
+      return;
+    }
+  }
+  
+  // Save value in case of success
+  selectEl.setAttribute('data-prev', value);
+
+  // Send AJAX request
+  let formData = new FormData();
+  formData.append('registration_id', registrationId);
+  formData.append('counselor_name', value);
+
+  fetch('update-registration-counselor.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      showToast(data.message, 'success');
+    } else {
+      showToast(data.message || 'Error updating counselor', 'error');
+      selectEl.value = prevValue;
+    }
+  })
+  .catch(err => {
+    showToast('Failed to connect to server', 'error');
+    selectEl.value = prevValue;
+  });
+}
+
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('counselorToast');
+  const toastMsg = document.getElementById('counselorToastMessage');
+  
+  toastMsg.textContent = msg;
+  if (type === 'success') {
+    toast.className = toast.className.replace('bg-rose-600', 'bg-emerald-600');
+  } else {
+    toast.className = toast.className.replace('bg-emerald-600', 'bg-rose-600');
+  }
+  
+  // Slide up and fade in
+  toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+  
+  setTimeout(() => {
+    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+  }, 3000);
 }
 </script>
 </body>

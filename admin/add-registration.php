@@ -74,16 +74,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'updates'      => isset($_POST['updates']) ? 1 : 0,
         ];
 
+        // Counselor Name logic
+        $counselor_name = trim($_POST['counselor_name'] ?? 'Direct / Self');
+        if ($counselor_name === 'Other') {
+            $counselor_name = trim($_POST['counselor_other'] ?? 'Direct / Self');
+            if (empty($counselor_name)) {
+                $counselor_name = 'Direct / Self';
+            }
+        }
+        $fd['counselor_name'] = $counselor_name;
+
         $registrationId = generateRegistrationId();
 
         $pdo->prepare("INSERT INTO registrations (
             registration_id,first_name,last_name,email,phone,dob,gender,
             address,qualification,percentage,college,year_of_passing,
-            program,experience,motivation,updates_opt_in,payment_mode,created_at
+            program,experience,motivation,updates_opt_in,payment_mode,counselor_name,created_at
         ) VALUES (
             :rid,:fn,:ln,:email,:phone,:dob,:gender,
             :addr,:qual,:pct,:col,:yop,
-            :prog,:exp,:mot,:upd,'OFFLINE',NOW()
+            :prog,:exp,:mot,:upd,'OFFLINE',:counselor,NOW()
         )")->execute([
             ':rid'=>$registrationId, ':fn'=>$fd['firstName'],  ':ln'=>$fd['lastName'],
             ':email'=>$fd['email'],  ':phone'=>$fd['phone'],   ':dob'=>$fd['dob'],
@@ -91,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':pct'=>$fd['percentage'],':col'=>$fd['college'],  ':yop'=>$fd['yearOfPassing'],
             ':prog'=>$fd['program'], ':exp'=>$fd['experience'],':mot'=>$fd['motivation'],
             ':upd'=>$fd['updates'],
+            ':counselor'=>$fd['counselor_name']
         ]);
 
         $pdo->prepare("INSERT INTO payments (
@@ -321,10 +332,10 @@ $techCourses    = ['Full Stack Development','Java Programming','Python Developme
                     </div>
                 </section>
 
-                <!-- 5. Additional Information -->
+                <!-- 5. Additional Information & Counselor -->
                 <section>
                     <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
-                        <span class="material-symbols-outlined text-primary">chat_bubble</span> 5. Additional Information
+                        <span class="material-symbols-outlined text-primary">chat_bubble</span> 5. Additional Information & Counselor
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -334,6 +345,19 @@ $techCourses    = ['Full Stack Development','Java Programming','Python Developme
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Motivation</label>
                             <textarea name="motivation" rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20"><?= htmlspecialchars($_POST['motivation'] ?? '') ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Admission Counselor</label>
+                            <select name="counselor_name" id="counselor_select" onchange="checkCounselor(this.value)" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 bg-white">
+                                <option value="Direct / Self">Direct / Self</option>
+                                <option value="Muskan Yadav">Muskan Yadav</option>
+                                <option value="Anjali Tripathi">Anjali Tripathi</option>
+                                <option value="Saloni Singh">Saloni Singh</option>
+                                <option value="Sanjana Kushwaha">Sanjana Kushwaha</option>
+                                <option value="Vijaylal">Vijaylal</option>
+                                <option value="Other">Other / Custom Name</option>
+                            </select>
+                            <input type="text" name="counselor_other" id="counselor_other" placeholder="Enter Counselor Name" class="hidden mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 bg-white">
                         </div>
                         <div class="md:col-span-2 flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                             <input type="checkbox" name="updates" id="updates" <?= isset($_POST['updates']) ? 'checked' : '' ?> class="w-4 h-4 text-primary focus:ring-primary rounded">
@@ -510,6 +534,18 @@ function makePDF() {
     }, 150);
 }
 <?php endif; ?>
+
+function checkCounselor(val) {
+    const customInput = document.getElementById('counselor_other');
+    if (val === 'Other') {
+        customInput.classList.remove('hidden');
+        customInput.required = true;
+        customInput.focus();
+    } else {
+        customInput.classList.add('hidden');
+        customInput.required = false;
+    }
+}
 </script>
 </body>
 </html>

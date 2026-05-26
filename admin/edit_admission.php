@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hostel_required = $_POST['hostel_required'] ?? 'No';
     $laptop_required = $_POST['laptop_required'] ?? 'No';
     
+    // Counselor Name — read from hidden field (set during registration, not editable here)
+    $counselor_name = trim($_POST['counselor_name'] ?? $adm['counselor_name'] ?? 'Direct / Self');
+    
     // Fee Details
     $total_fees = (float)($_POST['total_fees'] ?? 0);
     $reg_amt = (float)($_POST['registered_amount'] ?? 0);
@@ -105,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 student_name=?, father_name=?, dob=?, gender=?, student_photo=?, aadhar_number=?, medical_condition=?,
                 email=?, phone=?, father_phone=?, local_address=?, permanent_address=?,
                 college_name=?, degree=?, branch=?, current_semester=?, course_name=?,
-                hostel_required=?, laptop_required=?,
+                hostel_required=?, laptop_required=?, counselor_name=?,
                 total_fees=?, paid_amount=?, payment_mode=?, balance_amount=?, fee_status=?
                 WHERE admission_id=?";
                 
@@ -114,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $student_name, $father_name, $dob, $gender, $photo_filename, $aadhar_number, $medical_condition,
                 $email, $phone, $father_phone, $local_address, $permanent_address,
                 $college_name, $degree, $branch, $current_semester, $course_name,
-                $hostel_required, $laptop_required,
+                $hostel_required, $laptop_required, $counselor_name,
                 $total_fees, $paid_amount, $payment_mode, $balance_amount, $fee_status,
                 $id
             ]);
@@ -298,13 +301,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </section>
 
-                <!-- 4. Extra Requirements -->
+                <!-- 4. Extra Requirements & Counselor Details -->
                 <section>
                     <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 mb-6 pb-2 border-b">
-                        <span class="material-symbols-outlined text-primary">add_circle</span> 4. Additional Requirements
+                        <span class="material-symbols-outlined text-primary">add_circle</span> 4. Additional Requirements & Counselor Details
                     </h3>
-                    <div class="flex gap-8">
-                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl flex-1">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl">
                             <span class="material-symbols-outlined text-slate-400">bed</span>
                             <div>
                                 <p class="text-sm font-bold text-slate-700">Hostel Required?</p>
@@ -314,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl flex-1">
+                        <div class="flex items-center gap-3 bg-slate-50 border p-4 rounded-xl">
                             <span class="material-symbols-outlined text-slate-400">laptop_mac</span>
                             <div>
                                 <p class="text-sm font-bold text-slate-700">Laptop Required (Rent)?</p>
@@ -322,6 +325,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="laptop_required" value="Yes" <?= $adm['laptop_required']=='Yes'?'checked':'' ?> class="text-primary focus:ring-primary"> Yes</label>
                                     <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="laptop_required" value="No" <?= $adm['laptop_required']=='No'?'checked':'' ?> class="text-primary focus:ring-primary"> No</label>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- Counselor info badge (read-only — set during registration) -->
+                        <div class="flex items-start gap-3 bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                            <span class="material-symbols-outlined text-blue-400 mt-0.5">support_agent</span>
+                            <div>
+                                <p class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-1">Counselor (from Registration)</p>
+                                <p class="text-sm font-semibold text-slate-700"><?= htmlspecialchars($adm['counselor_name'] ?: 'Direct / Self') ?></p>
+                                <input type="hidden" name="counselor_name" value="<?= htmlspecialchars($adm['counselor_name'] ?: 'Direct / Self') ?>">
                             </div>
                         </div>
                     </div>
