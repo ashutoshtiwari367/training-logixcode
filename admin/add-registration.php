@@ -350,11 +350,9 @@ $techCourses    = ['Full Stack Development','Java Programming','Python Developme
                             <label class="block text-sm font-bold text-slate-700 mb-2">Admission Counselor</label>
                             <select name="counselor_name" id="counselor_select" onchange="checkCounselor(this.value)" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 bg-white">
                                 <option value="Direct / Self">Direct / Self</option>
-                                <option value="Muskan Yadav">Muskan Yadav</option>
-                                <option value="Anjali Tripathi">Anjali Tripathi</option>
-                                <option value="Saloni Singh">Saloni Singh</option>
-                                <option value="Sanjana Kushwaha">Sanjana Kushwaha</option>
-                                <option value="Vijaylal">Vijaylal</option>
+                                <option value="Nitin">Nitin</option>
+                                <option value="Ashutosh">Ashutosh</option>
+                                <option value="Kanchan">Kanchan</option>
                                 <option value="Other">Other / Custom Name</option>
                             </select>
                             <input type="text" name="counselor_other" id="counselor_other" placeholder="Enter Counselor Name" class="hidden mt-2 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20 bg-white">

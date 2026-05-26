@@ -272,7 +272,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
         <td class="px-6 py-4">
           <?php
             $saved_counselor = $reg['counselor_name'] ?? 'Direct / Self';
-            $predefined_counselors = ["Direct / Self", "Muskan Yadav", "Anjali Tripathi", "Saloni Singh", "Sanjana Kushwaha", "Vijaylal"];
+            $predefined_counselors = ["Direct / Self", "Nitin", "Ashutosh", "Kanchan"];
             $is_custom_counselor = !empty($saved_counselor) && !in_array($saved_counselor, $predefined_counselors);
           ?>
           <select onchange="updateCounselor('<?= $reg['registration_id'] ?>', this.value)" 
