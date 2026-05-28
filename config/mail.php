@@ -426,7 +426,7 @@ function sendCredentialEmail($studentData, $registrationId, $idCardPath = null) 
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log("Credential Email Error: {$mail->ErrorInfo}");
+        error_log("Credential Email Error | To: {$studentData['email']} | SMTP: {$mail->ErrorInfo} | Exception: {$e->getMessage()}");
         return false;
     }
 }

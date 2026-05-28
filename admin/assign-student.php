@@ -77,10 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
                 'student_id'   => $studentId,
                 'raw_password' => $password
             ];
-            sendCredentialEmail($emailData, $regId, $idCardPath);
-            $success .= " Credential email sent to {$student['email']}";
+            $mailSent = sendCredentialEmail($emailData, $regId, $idCardPath);
+            if ($mailSent) {
+                $success .= " ✉️ Credential email sent to <strong>{$student['email']}</strong>.";
+            } else {
+                $warnings[] = "⚠️ Email could not be sent to <strong>{$student['email']}</strong> (SMTP error — check server logs). Share credentials manually: ID: <strong>{$studentId}</strong> | Password: <strong>{$password}</strong>";
+            }
         } catch (Exception $e) {
-            $warnings[] = "Email could not be sent (" . $e->getMessage() . "). Credentials are saved — share manually: ID: <strong>{$studentId}</strong>, Password: <strong>{$password}</strong>";
+            $warnings[] = "⚠️ Email error: " . $e->getMessage() . ". Share manually — ID: <strong>{$studentId}</strong> | Password: <strong>{$password}</strong>";
         }
 
     } catch (Exception $e) {
@@ -124,15 +128,24 @@ $csrfToken = generateCSRF();
 
     <!-- Alert Messages -->
     <?php if ($success): ?>
-        <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl mb-6 flex items-center gap-3">
-            <span class="material-symbols-outlined">check_circle</span> <?= htmlspecialchars($success) ?>
+        <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl mb-4 flex items-center gap-3">
+            <span class="material-symbols-outlined">check_circle</span> <span><?= $success ?></span>
         </div>
     <?php endif; ?>
 
     <?php if ($error): ?>
-        <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-6 flex items-center gap-3">
+        <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl mb-4 flex items-center gap-3">
             <span class="material-symbols-outlined">error</span> <?= htmlspecialchars($error) ?>
         </div>
+    <?php endif; ?>
+
+    <?php if (!empty($warnings)): ?>
+        <?php foreach ($warnings as $warn): ?>
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl mb-4 flex items-start gap-3">
+            <span class="material-symbols-outlined mt-0.5">warning</span>
+            <span><?= $warn ?></span>
+        </div>
+        <?php endforeach; ?>
     <?php endif; ?>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
