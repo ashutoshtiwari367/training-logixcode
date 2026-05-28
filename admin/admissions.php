@@ -173,11 +173,15 @@ if ($admissions) {
                                  class="flex items-center gap-1 text-xs bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-200 font-bold transition-colors" title="Edit Admission">
                                   <span class="material-symbols-outlined" style="font-size:15px;">edit</span> Edit
                               </a>
-                              <a href="download_admission_pdf.php?id=<?= urlencode($adm['admission_id']) ?>" 
-                                 class="flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-200 font-bold transition-colors" title="Download PDF">
-                                  <span class="material-symbols-outlined" style="font-size:15px;">download</span> PDF
-                              </a>
-                          </div>
+                               <a href="download_admission_pdf.php?id=<?= urlencode($adm['admission_id']) ?>" 
+                                  class="flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-200 font-bold transition-colors" title="Download Admission PDF">
+                                   <span class="material-symbols-outlined" style="font-size:15px;">download</span> PDF
+                               </a>
+                               <a href="download_idcard_pdf.php?id=<?= urlencode($adm['admission_id']) ?>" 
+                                  class="flex items-center gap-1 text-xs bg-purple-100 text-purple-700 px-3 py-1.5 rounded-lg hover:bg-purple-200 font-bold transition-colors" title="Download ID Card">
+                                   <span class="material-symbols-outlined" style="font-size:15px;">badge</span> ID Card
+                               </a>
+                           </div>
                       </td>
                   </tr>
                   <?php endforeach; ?>
