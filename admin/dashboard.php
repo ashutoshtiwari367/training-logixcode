@@ -311,6 +311,11 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
           <a href="download_feeslip_pdf.php?id=<?= $reg['registration_id'] ?>" target="_blank" class="text-slate-400 hover:text-teal-500 p-1.5" title="Download Fee Slip">
             <span class="material-symbols-outlined text-xl">receipt_long</span>
           </a>
+          <?php if (!empty($reg['student_id'])): ?>
+          <a href="download_idcard_pdf.php?reg_id=<?= urlencode($reg['registration_id']) ?>" target="_blank" class="text-slate-400 hover:text-purple-600 p-1.5 shrink-0" title="Download Student ID Card (<?= htmlspecialchars($reg['student_id']) ?>)">
+            <span class="material-symbols-outlined text-xl">badge</span>
+          </a>
+          <?php endif; ?>
           <?php
             $waPhone = preg_replace('/[^0-9]/', '', $reg['phone']);
             // WhatsApp needs country code without +
