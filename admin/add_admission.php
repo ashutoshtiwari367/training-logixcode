@@ -12,9 +12,21 @@ $success = '';
 // Pre-fill variables
 $reg_id = $_GET['reg_id'] ?? '';
 $student_name = '';
+$father_name = '';
+$dob = '';
+$gender = '';
+$aadhar_number = '';
+$medical_condition = '';
 $email = '';
 $phone = '';
+$father_phone = '';
+$local_address = '';
+$permanent_address = '';
+$college_name = '';
 $course_name = '';
+$degree = '';
+$branch = '';
+$current_semester = '';
 $counselor_name = 'Direct / Self';
 $registered_amount = 0.00;
 
@@ -35,6 +47,12 @@ if ($reg_id) {
         $phone = $regData['phone'];
         $course_name = $regData['program'];
         $counselor_name = $regData['counselor_name'] ?? 'Direct / Self';
+        $dob = $regData['dob'] ?? '';
+        $gender = $regData['gender'] ?? '';
+        $permanent_address = $regData['address'] ?? '';
+        $college_name = $regData['college'] ?? '';
+        $degree = $regData['qualification'] ?? '';
+        
         // Only consider SUCCESS or OFFLINE payments as valid paid amounts
         if ($regData['p_status'] === 'SUCCESS' || $regData['p_status'] === 'OFFLINE') {
             $registered_amount = (float)$regData['paid_amount'];
@@ -284,28 +302,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Father's Name</label>
-                                    <input type="text" name="father_name" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                    <input type="text" name="father_name" value="<?= htmlspecialchars($father_name) ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Date of Birth</label>
-                                    <input type="date" name="dob" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                    <input type="date" name="dob" value="<?= htmlspecialchars($dob) ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Gender</label>
                                     <select name="gender" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
                                         <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
+                                        <option value="Male" <?= strtolower($gender) === 'male' ? 'selected' : '' ?>>Male</option>
+                                        <option value="Female" <?= strtolower($gender) === 'female' ? 'selected' : '' ?>>Female</option>
+                                        <option value="Other" <?= strtolower($gender) === 'other' ? 'selected' : '' ?>>Other</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Aadhar Number</label>
-                                    <input type="text" name="aadhar_number" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                    <input type="text" name="aadhar_number" value="<?= htmlspecialchars($aadhar_number) ?>" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Any Medical Condition?</label>
-                                    <input type="text" name="medical_condition" placeholder="If none, leave blank" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
+                                    <input type="text" name="medical_condition" value="<?= htmlspecialchars($medical_condition) ?>" placeholder="If none, leave blank" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/20">
                                 </div>
                             </div>
                         </div>
@@ -339,16 +357,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Father's / Alt Mobile</label>
-                            <input type="text" name="father_phone" class="w-full px-4 py-2 border rounded-lg">
+                            <input type="text" name="father_phone" value="<?= htmlspecialchars($father_phone) ?>" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div class="md:col-span-3 grid grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-2">Local Address (Hostel/PG/Room)</label>
-                                <textarea name="local_address" rows="2" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                                <textarea name="local_address" rows="2" class="w-full px-4 py-2 border rounded-lg"><?= htmlspecialchars($local_address) ?></textarea>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-2">Permanent Address</label>
-                                <textarea name="permanent_address" rows="2" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                                <textarea name="permanent_address" rows="2" class="w-full px-4 py-2 border rounded-lg"><?= htmlspecialchars($permanent_address) ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -362,7 +380,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="md:col-span-2">
                             <label class="block text-sm font-bold text-slate-700 mb-2">College / University Name</label>
-                            <input type="text" name="college_name" class="w-full px-4 py-2 border rounded-lg">
+                            <input type="text" name="college_name" value="<?= htmlspecialchars($college_name) ?>" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Course Enrolled (Training)</label>
@@ -370,15 +388,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">College Degree (e.g. B.Tech, BCA)</label>
-                            <input type="text" name="degree" class="w-full px-4 py-2 border rounded-lg">
+                            <input type="text" name="degree" value="<?= htmlspecialchars($degree) ?>" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Branch / Specialization</label>
-                            <input type="text" name="branch" class="w-full px-4 py-2 border rounded-lg">
+                            <input type="text" name="branch" value="<?= htmlspecialchars($branch) ?>" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Current Semester/Year</label>
-                            <input type="text" name="current_semester" class="w-full px-4 py-2 border rounded-lg">
+                            <input type="text" name="current_semester" value="<?= htmlspecialchars($current_semester) ?>" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                     </div>
                 </section>
