@@ -236,9 +236,9 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
     <span class="material-symbols-outlined text-sm">download</span> Export CSV
   </a>
 </div>
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-  <thead class="bg-slate-50 dark:bg-slate-800/50">
+<div class="overflow-auto max-h-[600px] relative">
+<table class="w-full text-left border-collapse">
+  <thead class="bg-slate-100 dark:bg-slate-800 sticky top-0 z-10 shadow-sm">
     <tr>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Reg ID</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student Name</th>
