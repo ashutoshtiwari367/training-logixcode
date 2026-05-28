@@ -47,6 +47,15 @@ function sendConfirmationEmail($studentData, $registrationId, $paymentStatus) {
         $mail->Port       = SMTP_PORT;
         $mail->CharSet    = 'UTF-8';
 
+        // Bypass SSL certificate verification for local environments
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
         // Recipients
         $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
         $mail->addAddress($studentData['email'], $studentData['firstName'] . ' ' . $studentData['lastName']);
@@ -401,6 +410,15 @@ function sendCredentialEmail($studentData, $registrationId, $idCardPath = null) 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = SMTP_PORT;
         $mail->CharSet    = 'UTF-8';
+
+        // Bypass SSL certificate verification for local environments
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
 
         // Recipients
         $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
