@@ -57,31 +57,31 @@ $html = '
     <meta charset="utf-8">
     <title>Admission Form - ' . htmlspecialchars($adm['admission_id']) . '</title>
     <style>
-        body { font-family: "DejaVu Sans", sans-serif; font-size: 11px; color: #333; line-height: 1.4; margin: 0; padding: 15px; }
-        .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 12px; margin-bottom: 20px; position: relative; }
-        .logo { width: 70px; position: absolute; left: 0; top: 0; }
-        .institute-title { font-size: 20px; font-weight: bold; color: #0f172a; margin: 0; }
-        .institute-sub { font-size: 10px; color: #64748b; margin: 5px 0 0 0; }
-        
-        .title { text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 15px; background: #0284c7; color: #fff; padding: 4px; border-radius: 4px; }
-        
-        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        .info-table th { background: #f8fafc; border: 1px solid #cbd5e1; padding: 5px 8px; text-align: left; font-size: 9.5px; color: #475569; width: 30%; }
-        .info-table td { border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 10.5px; color: #1e293b; width: 70%; font-weight: bold; }
-        
-        .photo-box { width: 90px; height: 110px; border: 1px solid #cbd5e1; position: absolute; right: 20px; top: 145px; background: #f8fafc; text-align: center; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .photo-box span { display: inline-block; margin-top: 45px; color: #94a3b8; font-size: 9px; }
+        body { font-family: "DejaVu Sans", sans-serif; font-size: 9.5px; color: #333; line-height: 1.3; margin: 0; padding: 10px; }
+        .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 6px; margin-bottom: 10px; position: relative; }
+        .logo { width: 60px; position: absolute; left: 0; top: 0; }
+        .institute-title { font-size: 17px; font-weight: bold; color: #0f172a; margin: 0; }
+        .institute-sub { font-size: 9px; color: #64748b; margin: 3px 0 0 0; }
 
-        .section-title { font-size: 12px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 3px; margin: 15px 0 8px 0; }
-        
-        .fee-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        .fee-table th { background: #0d9488; color: #fff; padding: 6px; text-align: center; border: 1px solid #0f766e; font-size: 9.5px; }
-        .fee-table td { padding: 8px 6px; text-align: center; border: 1px solid #cbd5e1; font-size: 12.5px; font-weight: bold; }
-        
-        .footer { margin-top: 25px; font-size: 9px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 10px; }
-        .signature { margin-top: 45px; width: 100%; }
-        .sig-box { width: 200px; border-top: 1px solid #333; text-align: center; font-size: 10px; padding-top: 5px; }
+        .title { text-align: center; font-size: 12px; font-weight: bold; margin-bottom: 10px; background: #0284c7; color: #fff; padding: 3px; border-radius: 3px; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        .info-table th { background: #f8fafc; border: 1px solid #cbd5e1; padding: 3px 6px; text-align: left; font-size: 8.5px; color: #475569; width: 30%; }
+        .info-table td { border: 1px solid #cbd5e1; padding: 3px 6px; font-size: 9px; color: #1e293b; width: 70%; font-weight: bold; }
+
+        .photo-box { width: 85px; height: 105px; border: 1px solid #cbd5e1; position: absolute; right: 15px; top: 155px; background: #f8fafc; text-align: center; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-box span { display: inline-block; margin-top: 42px; color: #94a3b8; font-size: 8px; }
+
+        .section-title { font-size: 10px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 2px; margin: 8px 0 5px 0; }
+
+        .fee-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        .fee-table th { background: #0d9488; color: #fff; padding: 4px; text-align: center; border: 1px solid #0f766e; font-size: 8.5px; }
+        .fee-table td { padding: 5px 4px; text-align: center; border: 1px solid #cbd5e1; font-size: 11px; font-weight: bold; }
+
+        .footer { margin-top: 10px; font-size: 8px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 6px; }
+        .signature { margin-top: 20px; width: 100%; }
+        .sig-box { width: 180px; border-top: 1px solid #333; text-align: center; font-size: 9px; padding-top: 4px; }
         .sig-left { float: left; }
         .sig-right { float: right; }
     </style>
