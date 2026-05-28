@@ -57,31 +57,31 @@ $html = '
     <meta charset="utf-8">
     <title>Admission Form - ' . htmlspecialchars($adm['admission_id']) . '</title>
     <style>
-        body { font-family: "DejaVu Sans", sans-serif; font-size: 13px; color: #333; line-height: 1.5; margin: 0; padding: 20px; }
-        .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 20px; margin-bottom: 30px; position: relative; }
-        .logo { width: 80px; position: absolute; left: 0; top: 0; }
-        .institute-title { font-size: 24px; font-weight: bold; color: #0f172a; margin: 0; }
-        .institute-sub { font-size: 12px; color: #64748b; margin: 5px 0 0 0; }
+        body { font-family: "DejaVu Sans", sans-serif; font-size: 11px; color: #333; line-height: 1.4; margin: 0; padding: 15px; }
+        .header { text-align: center; border-bottom: 2px solid #0d9488; padding-bottom: 12px; margin-bottom: 20px; position: relative; }
+        .logo { width: 70px; position: absolute; left: 0; top: 0; }
+        .institute-title { font-size: 20px; font-weight: bold; color: #0f172a; margin: 0; }
+        .institute-sub { font-size: 10px; color: #64748b; margin: 5px 0 0 0; }
         
-        .title { text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; background: #0284c7; color: #fff; padding: 5px; border-radius: 4px; }
+        .title { text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 15px; background: #0284c7; color: #fff; padding: 4px; border-radius: 4px; }
         
-        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .info-table th { background: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; text-align: left; font-size: 11px; color: #475569; width: 30%; }
-        .info-table td { border: 1px solid #cbd5e1; padding: 8px; font-size: 12px; color: #1e293b; width: 70%; font-weight: bold; }
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .info-table th { background: #f8fafc; border: 1px solid #cbd5e1; padding: 5px 8px; text-align: left; font-size: 9.5px; color: #475569; width: 30%; }
+        .info-table td { border: 1px solid #cbd5e1; padding: 5px 8px; font-size: 10.5px; color: #1e293b; width: 70%; font-weight: bold; }
         
-        .photo-box { width: 100px; height: 120px; border: 1px solid #cbd5e1; position: absolute; right: 20px; top: 120px; background: #f8fafc; text-align: center; }
+        .photo-box { width: 90px; height: 110px; border: 1px solid #cbd5e1; position: absolute; right: 20px; top: 145px; background: #f8fafc; text-align: center; }
         .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .photo-box span { display: inline-block; margin-top: 50px; color: #94a3b8; font-size: 10px; }
+        .photo-box span { display: inline-block; margin-top: 45px; color: #94a3b8; font-size: 9px; }
 
-        .section-title { font-size: 14px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 3px; margin: 20px 0 10px 0; }
+        .section-title { font-size: 12px; font-weight: bold; color: #0d9488; border-bottom: 1px solid #0d9488; padding-bottom: 3px; margin: 15px 0 8px 0; }
         
-        .fee-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .fee-table th { background: #0d9488; color: #fff; padding: 10px; text-align: center; border: 1px solid #0f766e; }
-        .fee-table td { padding: 15px 10px; text-align: center; border: 1px solid #cbd5e1; font-size: 16px; font-weight: bold; }
+        .fee-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        .fee-table th { background: #0d9488; color: #fff; padding: 6px; text-align: center; border: 1px solid #0f766e; font-size: 9.5px; }
+        .fee-table td { padding: 8px 6px; text-align: center; border: 1px solid #cbd5e1; font-size: 12.5px; font-weight: bold; }
         
-        .footer { margin-top: 50px; font-size: 11px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 10px; }
-        .signature { margin-top: 80px; width: 100%; }
-        .sig-box { width: 200px; border-top: 1px solid #333; text-align: center; font-size: 12px; padding-top: 5px; }
+        .footer { margin-top: 25px; font-size: 9px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 10px; }
+        .signature { margin-top: 45px; width: 100%; }
+        .sig-box { width: 200px; border-top: 1px solid #333; text-align: center; font-size: 10px; padding-top: 5px; }
         .sig-left { float: left; }
         .sig-right { float: right; }
     </style>
