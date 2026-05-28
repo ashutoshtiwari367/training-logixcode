@@ -110,7 +110,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
 <style>body { font-family: 'Public Sans', sans-serif; }</style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
-<div class="flex min-h-screen overflow-hidden">
+<div class="flex min-h-screen overflow-x-hidden">
 
 <?php include "sidebar.php" ?>
 
