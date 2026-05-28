@@ -114,7 +114,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
 
 <?php include "sidebar.php" ?>
 
-<main class="flex-1 ml-72 min-h-screen flex flex-col">
+<main class="flex-1 ml-72 min-h-screen flex flex-col min-w-0">
 
 <!-- Header -->
 <header class="h-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-40">
