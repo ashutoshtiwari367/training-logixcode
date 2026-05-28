@@ -92,9 +92,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
     }
 }
 
+// Handle unassign submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unassign_student'])) {
+    try {
+        if (!validateCSRF($_POST['csrf_token'])) {
+            throw new Exception("Invalid security token. Please refresh and try again.");
+        }
+
+        $unassignRegId = trim($_POST['unassign_registration_id']);
+
+        if (empty($unassignRegId)) {
+            throw new Exception("Registration ID is required to remove assignment.");
+        }
+
+        // Set student_id and password_hash back to NULL
+        $stmt = $pdo->prepare("UPDATE registrations SET student_id = NULL, password_hash = NULL WHERE registration_id = ?");
+        $stmt->execute([$unassignRegId]);
+
+        $success = "Student assignment removed successfully for Registration ID <strong>" . htmlspecialchars($unassignRegId) . "</strong>!";
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+}
+
 // Fetch pending registrations (those without a student_id)
 $stmt = $pdo->query("SELECT registration_id, first_name, last_name, email, program FROM registrations WHERE student_id IS NULL OR student_id = '' ORDER BY created_at DESC");
 $pending = $stmt->fetchAll();
+
+// Fetch assigned registrations (those with a student_id)
+$stmt = $pdo->query("SELECT registration_id, student_id, first_name, last_name, email, program FROM registrations WHERE student_id IS NOT NULL AND student_id != '' ORDER BY created_at DESC");
+$assigned = $stmt->fetchAll();
 
 $csrfToken = generateCSRF();
 ?>
@@ -241,6 +268,57 @@ $csrfToken = generateCSRF();
                             <?php else: ?>
                             <tr>
                                 <td colspan="4" class="text-center py-12 text-slate-400">No pending assignments found.</td>
+                            </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Assigned Students Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mt-8">
+                <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-emerald-600">group</span> Assigned Students
+                    </h3>
+                    <span class="bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full text-xs"><?= count($assigned) ?></span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student ID</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Reg ID</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student Details</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Program</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <?php if (count($assigned) > 0): ?>
+                            <?php foreach ($assigned as $a): ?>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 text-sm font-bold text-purple-700"><?= htmlspecialchars($a['student_id']) ?></td>
+                                <td class="px-6 py-4 text-sm font-bold text-slate-400"><?= htmlspecialchars($a['registration_id']) ?></td>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-slate-800 text-sm"><?= htmlspecialchars($a['first_name'] . ' ' . $a['last_name']) ?></div>
+                                    <div class="text-xs text-slate-400"><?= htmlspecialchars($a['email']) ?></div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-slate-600"><?= htmlspecialchars($a['program']) ?></td>
+                                <td class="px-6 py-4 text-center">
+                                    <form method="POST" action="" onsubmit="return confirm('Are you sure you want to remove this student assignment? The student will no longer be able to log in with these credentials.');" class="inline">
+                                        <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+                                        <input type="hidden" name="unassign_registration_id" value="<?= htmlspecialchars($a['registration_id']) ?>">
+                                        <button type="submit" name="unassign_student" class="bg-red-100 text-red-700 hover:bg-red-200 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+                                            Unassign
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <tr>
+                                <td colspan="5" class="text-center py-12 text-slate-400">No assigned students found.</td>
                             </tr>
                             <?php endif; ?>
                         </tbody>
