@@ -237,8 +237,8 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
   </a>
 </div>
 <div class="overflow-auto max-h-[600px] relative">
-<table class="w-full text-left border-collapse">
-  <thead class="bg-slate-100 dark:bg-slate-800 sticky top-0 z-10 shadow-sm">
+<table class="w-full text-left border-collapse min-w-[1200px]">
+  <thead class="bg-slate-100 dark:bg-slate-800 sticky top-0 z-10 shadow-sm whitespace-nowrap">
     <tr>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Reg ID</th>
       <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Student Name</th>
@@ -300,8 +300,9 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
           <?= (!empty($reg['amount']) && $reg['amount'] > 0) ? '₹'.number_format($reg['amount'],2) : '<span class="text-slate-400">—</span>' ?>
         </td>
         <td class="px-6 py-4 text-sm"><?= date('d M Y', strtotime($reg['created_at'])) ?></td>
-        <td class="px-6 py-4 text-right flex items-center justify-end gap-2">
-          <a href="add_admission.php?reg_id=<?= $reg['registration_id'] ?>" class="text-xs bg-purple-100 text-purple-600 px-3 py-1.5 rounded-lg hover:bg-purple-200 font-bold transition-colors">
+        <td class="px-6 py-4 text-right whitespace-nowrap">
+          <div class="flex items-center justify-end gap-2">
+            <a href="add_admission.php?reg_id=<?= $reg['registration_id'] ?>" class="text-xs bg-purple-100 text-purple-600 px-3 py-1.5 rounded-lg hover:bg-purple-200 font-bold transition-colors">
             Convert
           </a>
           <a href="download_registration_pdf.php?id=<?= $reg['registration_id'] ?>" target="_blank" class="text-slate-400 hover:text-emerald-500 p-1.5" title="Download Registration PDF">
@@ -338,6 +339,7 @@ $programs = $pdo->query("SELECT DISTINCT program FROM registrations ORDER BY pro
           <button onclick="viewDetails('<?= $reg['registration_id'] ?>')" class="text-slate-400 hover:text-primary p-1.5 shrink-0" title="View Registration Details">
             <span class="material-symbols-outlined text-xl">visibility</span>
           </button>
+          </div>
         </td>
       </tr>
       <?php endforeach; ?>
