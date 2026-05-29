@@ -98,6 +98,8 @@ $html = '
         .sig-box { width: 220px; border-top: 1px solid #333; text-align: center; font-size: 12px; padding-top: 5px; }
         .sig-left { float: left; }
         .sig-right { float: right; }
+        .stamp-container { height: 75px; text-align: center; margin-bottom: 5px; }
+        .stamp-img { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; display: inline-block; }
     </style>
 </head>
 <body>
@@ -159,7 +161,9 @@ $html = '
 
     <div class="signature">
         <div class="sig-right" style="width: 220px; text-align: center;">
-            ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" style="width: 80px; height: 80px; margin-bottom: 5px; display: inline-block;">' : '') . '
+            <div class="stamp-container">
+                ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" class="stamp-img">' : '') . '
+            </div>
             <div class="sig-box" style="width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 0;">
                 Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode IT Solution)</span>
             </div>

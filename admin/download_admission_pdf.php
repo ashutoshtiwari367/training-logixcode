@@ -84,6 +84,8 @@ $html = '
         .sig-box { width: 180px; border-top: 1px solid #333; text-align: center; font-size: 9px; padding-top: 4px; }
         .sig-left { float: left; }
         .sig-right { float: right; }
+        .sig-space { height: 65px; text-align: center; }
+        .stamp-img { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; display: inline-block; }
     </style>
 </head>
 <body>
@@ -147,9 +149,14 @@ $html = '
     </p>
 
     <div class="signature">
-        <div class="sig-box sig-left">Student\'s Signature</div>
+        <div class="sig-left">
+            <div class="sig-space"></div>
+            <div class="sig-box">Student\'s Signature</div>
+        </div>
         <div class="sig-right" style="width: 200px; text-align: center;">
-            ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" style="width: 80px; height: 80px; margin-bottom: 5px; display: inline-block;">' : '') . '
+            <div class="sig-space">
+                ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" class="stamp-img">' : '') . '
+            </div>
             <div class="sig-box" style="width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 0;">
                 Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode Admin)</span>
             </div>
