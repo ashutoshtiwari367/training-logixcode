@@ -102,8 +102,8 @@ if ($type === 'id_card') {
             .footer { margin-top: 30px; font-size: 9px; color: #64748b; text-align: center; border-top: 1px solid #cbd5e1; padding-top: 8px; }
             .signature { margin-top: 50px; width: 100%; }
             .sig-box { width: 170px; border-top: 1px solid #333; text-align: center; font-size: 10px; padding-top: 4px; float: right; }
-            .stamp-container { height: 75px; text-align: center; margin-bottom: 5px; }
-            .stamp-img { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; display: inline-block; }
+            .stamp-container { height: 110px; text-align: center; margin-bottom: 5px; }
+            .stamp-img { width: 110px; height: 110px; object-fit: contain; display: inline-block; }
         </style>
     </head>
     <body>

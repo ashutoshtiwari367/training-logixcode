@@ -98,8 +98,8 @@ $html = '
         .sig-box { width: 220px; border-top: 1px solid #333; text-align: center; font-size: 12px; padding-top: 5px; }
         .sig-left { float: left; }
         .sig-right { float: right; }
-        .stamp-container { height: 75px; text-align: center; margin-bottom: 5px; }
-        .stamp-img { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; display: inline-block; }
+        .stamp-container { height: 110px; text-align: center; margin-bottom: 5px; }
+        .stamp-img { width: 110px; height: 110px; object-fit: contain; display: inline-block; }
     </style>
 </head>
 <body>
