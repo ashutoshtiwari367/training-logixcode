@@ -45,7 +45,7 @@ if ($type === 'id_card') {
     $stmt = $pdo->prepare("
         SELECT r.*, a.student_photo, a.aadhar_number, a.total_fees, a.admission_id, a.father_name, a.father_phone
         FROM registrations r 
-        LEFT JOIN admissions a ON r.registration_id = a.registration_id 
+        LEFT JOIN admissions a ON r.registration_id = a.registration_id COLLATE utf8mb4_unicode_ci
         WHERE r.registration_id = ?
     ");
     $stmt->execute([$_SESSION['student_registration_id']]);

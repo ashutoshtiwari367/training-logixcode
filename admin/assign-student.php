@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
         $stmt = $pdo->prepare("
             SELECT r.*, a.email as admission_email, a.student_name as admission_name
             FROM registrations r
-            LEFT JOIN admissions a ON r.registration_id = a.registration_id
+            LEFT JOIN admissions a ON r.registration_id = a.registration_id COLLATE utf8mb4_unicode_ci
             WHERE r.registration_id = ?
         ");
         $stmt->execute([$regId]);
