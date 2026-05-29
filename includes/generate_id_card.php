@@ -17,14 +17,17 @@ function generateStudentIdCard($pdo, $registrationId) {
     $stmt->execute([$registrationId]);
     $student = $stmt->fetch();
 
-    if (!$student || empty($student['student_id'])) {
-        throw new Exception("Student not found or Student ID not generated.");
+    if (!$student) {
+        throw new Exception("Student registration record not found.");
     }
 
-    // Check if there is a photo in the admissions table for this registration
-    $stmt = $pdo->prepare("SELECT student_photo FROM admissions WHERE registration_id = ? LIMIT 1");
+    // Check if there is a photo and admission ID in the admissions table for this registration
+    $stmt = $pdo->prepare("SELECT admission_id, student_photo FROM admissions WHERE registration_id = ? LIMIT 1");
     $stmt->execute([$registrationId]);
     $admission = $stmt->fetch();
+
+    // Determine the ID to display on the card (Student ID -> Admission ID -> Registration ID)
+    $displayId = !empty($student['student_id']) ? $student['student_id'] : ($admission && !empty($admission['admission_id']) ? $admission['admission_id'] : $student['registration_id']);
     
     $photoBase64 = '';
     if ($admission && !empty($admission['student_photo'])) {
@@ -218,7 +221,7 @@ function generateStudentIdCard($pdo, $registrationId) {
                 <table class="details-table">
                     <tr>
                         <td class="label">ID No</td>
-                        <td class="value">' . htmlspecialchars($student['student_id']) . '</td>
+                        <td class="value">' . htmlspecialchars($displayId) . '</td>
                     </tr>
                     <tr>
                         <td class="label">E-mail</td>
@@ -256,7 +259,7 @@ function generateStudentIdCard($pdo, $registrationId) {
         mkdir($outputDir, 0755, true);
     }
     
-    $filePath = $outputDir . '/' . $student['student_id'] . '_ID.pdf';
+    $filePath = $outputDir . '/' . $displayId . '_ID.pdf';
     file_put_contents($filePath, $dompdf->output());
     
     return $filePath;
