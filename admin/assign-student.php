@@ -4,6 +4,11 @@
  * admin/assign-student.php
  */
 
+// Temporary debug — remove after fixing live server error
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/mail.php';
@@ -50,10 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
         $stmt->execute([$studentId, $passwordHash, $regId]);
 
         // Get student details (merge with admissions to get the correct finalized email and name)
+        // COLLATE applied on both sides to fix MariaDB utf8mb4_uca1400_ai_ci vs utf8mb4_unicode_ci mismatch
         $stmt = $pdo->prepare("
             SELECT r.*, a.email as admission_email, a.student_name as admission_name
             FROM registrations r
-            LEFT JOIN admissions a ON r.registration_id = a.registration_id COLLATE utf8mb4_unicode_ci
+            LEFT JOIN admissions a 
+                ON CONVERT(r.registration_id USING utf8mb4) = CONVERT(a.registration_id USING utf8mb4)
             WHERE r.registration_id = ?
         ");
         $stmt->execute([$regId]);
