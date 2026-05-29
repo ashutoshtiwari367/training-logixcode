@@ -161,9 +161,7 @@ $html = '
 
     <div class="signature">
         <div class="sig-right" style="width: 220px; text-align: center;">
-            <div class="stamp-container">
-                ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" class="stamp-img">' : '') . '
-            </div>
+            <div class="stamp-container"></div>
             <div class="sig-box" style="width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 0;">
                 Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode IT Solution)</span>
             </div>

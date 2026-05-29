@@ -154,9 +154,7 @@ $html = '
             <div class="sig-box">Student\'s Signature</div>
         </div>
         <div class="sig-right" style="width: 200px; text-align: center;">
-            <div class="sig-space">
-                ' . ($stampBase64 ? '<img src="' . $stampBase64 . '" class="stamp-img">' : '') . '
-            </div>
+            <div class="sig-space"></div>
             <div class="sig-box" style="width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 0;">
                 Authorized Signatory<br><span style="font-size:9px; color:#64748b;">(LogixCode Admin)</span>
             </div>
