@@ -49,8 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
         $stmt = $pdo->prepare("UPDATE registrations SET student_id = ?, password_hash = ? WHERE registration_id = ?");
         $stmt->execute([$studentId, $passwordHash, $regId]);
 
-        // Get student details
-        $stmt = $pdo->prepare("SELECT * FROM registrations WHERE registration_id = ?");
+        // Get student details (merge with admissions to get the correct finalized email and name)
+        $stmt = $pdo->prepare("
+            SELECT r.*, a.email as admission_email, a.student_name as admission_name
+            FROM registrations r
+            LEFT JOIN admissions a ON r.registration_id = a.registration_id
+            WHERE r.registration_id = ?
+        ");
         $stmt->execute([$regId]);
         $student = $stmt->fetch();
 
@@ -58,7 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
             throw new Exception("Registration record not found after update.");
         }
 
-        $success = "Student ID <strong>{$studentId}</strong> assigned to <strong>{$student['first_name']} {$student['last_name']}</strong> successfully!";
+        // Determine recipient details (finalized admission email overrides initial registration email)
+        $recipientEmail = !empty($student['admission_email']) ? trim($student['admission_email']) : trim($student['email']);
+        $recipientName  = !empty($student['admission_name']) ? trim($student['admission_name']) : ($student['first_name'] . ' ' . $student['last_name']);
+
+        // Split name into first and last name for greeting
+        $parts = explode(' ', $recipientName, 2);
+        $recipientFirstName = trim($parts[0]);
+        $recipientLastName  = isset($parts[1]) ? trim($parts[1]) : '';
+
+        $success = "Student ID <strong>{$studentId}</strong> assigned to <strong>{$recipientName}</strong> successfully!";
 
         // === STEP 2: Generate ID Card (optional - warn if fails) ===
         $idCardPath = null;
@@ -71,17 +85,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student'])) {
         // === STEP 3: Send Credential Email (optional - warn if fails) ===
         try {
             $emailData = [
-                'firstName'    => $student['first_name'],
-                'lastName'     => $student['last_name'],
-                'email'        => $student['email'],
+                'firstName'    => $recipientFirstName,
+                'lastName'     => $recipientLastName,
+                'email'        => $recipientEmail,
                 'student_id'   => $studentId,
                 'raw_password' => $password
             ];
             $mailSent = sendCredentialEmail($emailData, $regId, $idCardPath);
             if ($mailSent) {
-                $success .= " ✉️ Credential email sent to <strong>{$student['email']}</strong>.";
+                $success .= " ✉️ Credential email sent to <strong>{$recipientEmail}</strong>.";
             } else {
-                $warnings[] = "⚠️ Email could not be sent to <strong>{$student['email']}</strong> (SMTP error — check server logs). Share credentials manually: ID: <strong>{$studentId}</strong> | Password: <strong>{$password}</strong>";
+                $warnings[] = "⚠️ Email could not be sent to <strong>{$recipientEmail}</strong> (SMTP error — check server logs). Share credentials manually: ID: <strong>{$studentId}</strong> | Password: <strong>{$password}</strong>";
             }
         } catch (Exception $e) {
             $warnings[] = "⚠️ Email error: " . $e->getMessage() . ". Share manually — ID: <strong>{$studentId}</strong> | Password: <strong>{$password}</strong>";

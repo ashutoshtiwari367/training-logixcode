@@ -34,7 +34,7 @@ try {
     echo "ID Card generation FAILED: " . $e->getMessage() . "\n";
 }
 
-// 3. Send Credential Email
+// 3. Send Credential Email with verbose debugging enabled
 echo "Sending email to " . $student['email'] . "...\n";
 $emailData = [
     'firstName'    => $student['first_name'],
@@ -44,7 +44,38 @@ $emailData = [
     'raw_password' => 'TestPass123'
 ];
 
-$mailSent = sendCredentialEmail($emailData, $student['registration_id'], $idCardPath);
+// Let's create a custom mailer instance here to capture verbose SMTP logs
+$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+try {
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.hostinger.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'info@logixcode.com';
+    $mail->Password   = 'Mu$k@n1106';
+    $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+    $mail->CharSet    = 'UTF-8';
+    $mail->SMTPDebug  = 3; // Verbose output
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    );
+    $mail->setFrom('info@logixcode.com', 'Logixcode IT Solution');
+    $mail->addAddress($student['email']);
+    $mail->isHTML(true);
+    $mail->Subject = '🔐 Test SMTP Connection';
+    $mail->Body    = 'Test body';
+    if ($idCardPath && file_exists($idCardPath)) {
+        $mail->addAttachment($idCardPath, 'Student_ID_Card.pdf');
+    }
+    $mailSent = $mail->send();
+} catch (Exception $e) {
+    $mailSent = false;
+    echo "SMTP ERROR: " . $e->getMessage() . "\n";
+}
 
 if ($mailSent) {
     echo "SUCCESS: Credential email sent successfully!\n";
