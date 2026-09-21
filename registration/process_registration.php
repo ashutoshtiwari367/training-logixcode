@@ -6,8 +6,14 @@
 error_reporting(0);
 ini_set('display_errors', 0);
 
+// Buffer output to prevent any stray output from breaking JSON
+ob_start();
+
 session_start();
 require_once __DIR__ . '/../config/db.php';
+
+// Clean any output buffered so far (e.g. DB error messages) and set JSON header
+ob_clean();
 header('Content-Type: application/json');
 
 // Initialize response
@@ -103,7 +109,7 @@ try {
         'gender'        => $_POST['gender'],
         'address'       => sanitizeInput($_POST['address']),
         'qualification' => sanitizeInput($_POST['qualification']),
-        'percentage'    => $percentage,
+        'percentage'    => $rawPercentage,  // FIX: use the extracted string value
         'college'       => !empty($_POST['college']) ? sanitizeInput($_POST['college']) : null,
         'yearOfPassing' => !empty($_POST['yearOfPassing']) ? sanitizeInput($_POST['yearOfPassing']) : null,
         'program'       => sanitizeInput($_POST['program']),

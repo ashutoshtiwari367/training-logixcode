@@ -46,7 +46,16 @@ try {
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
     } catch (PDOException $e) {
         error_log("Database Connection Error: " . $e->getMessage());
-        echo "❌ DB connection failed: " . $e->getMessage();
+        // Do NOT echo anything here — it will corrupt JSON API responses
+        // If this is an AJAX/API request, return JSON error
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) || 
+            (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) ||
+            basename($_SERVER['PHP_SELF']) === 'process_registration.php') {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Database connection failed. Please try again later.']);
+        } else {
+            echo "<div style='color:red;font-family:sans-serif;padding:20px'>❌ Database connection failed. Please try again later.</div>";
+        }
         exit;
     }
 
