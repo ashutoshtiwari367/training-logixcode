@@ -539,6 +539,11 @@ if (!defined('BASE_URL')) {
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/registration') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
       </a>
 
+      <a href="<?= BASE_URL ?>assessment" class="group relative text-sm font-semibold <?= navClass('/assessment') ?>">
+        Assessment
+        <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/assessment') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
+      </a>
+
       <a href="<?= BASE_URL ?>contact" class="group relative text-sm font-semibold <?= navClass('/contact') ?>">
         Contact
         <span class="absolute left-0 -bottom-1 h-[2px] <?= spanClass('/contact') ?> bg-[#03c4ce] transition-all duration-300 group-hover:w-full"></span>
@@ -574,6 +579,7 @@ if (!defined('BASE_URL')) {
       <a href="<?= BASE_URL ?>about" class="text-sm font-semibold text-slate-700">About</a>
       <a href="<?= BASE_URL ?>courses" class="text-sm font-semibold text-slate-700">Courses</a>
       <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-slate-700">Registration</a>
+      <a href="<?= BASE_URL ?>assessment" class="text-sm font-semibold text-slate-700">Assessment</a>
       <a href="<?= BASE_URL ?>contact" class="text-sm font-semibold text-slate-700">Contact</a>
 
       <a href="<?= BASE_URL ?>Logixcode-Brochure.pdf" download>

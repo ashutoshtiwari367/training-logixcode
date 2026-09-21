@@ -7,16 +7,16 @@
 session_start();
 require_once __DIR__ . '/../config/db.php';
 
-// Check if registration was completed
-if (!isset($_SESSION['completed_registration_id'])) {
+// Allow registration ID from session or query param for viewing
+$registrationId = $_SESSION['completed_registration_id'] ?? ($_GET['id'] ?? null);
+$paymentId      = $_SESSION['completed_payment_id'] ?? null;
+
+if (!$registrationId) {
     header('Location: index.php');
     exit;
 }
 
-$registrationId = $_SESSION['completed_registration_id'];
-$paymentId = $_SESSION['completed_payment_id'] ?? 'N/A';
-
-// Fetch registration details
+// Fetch registration & payment details
 try {
     $stmt = $pdo->prepare("
         SELECT r.*, p.payment_gateway_id, p.amount, p.status as payment_status 
@@ -28,227 +28,205 @@ try {
     $registration = $stmt->fetch();
 
     if (!$registration) {
-        throw new Exception('Registration not found');
+        throw new Exception('Registration record not found');
+    }
+
+    if (!$paymentId && !empty($registration['payment_gateway_id'])) {
+        $paymentId = $registration['payment_gateway_id'];
     }
 } catch (Exception $e) {
-    die('Error loading registration details');
+    die('Error loading registration details: ' . htmlspecialchars($e->getMessage()));
 }
 
-// Clear session data
+// Clear single-use session flags if set
 unset($_SESSION['completed_registration_id']);
 unset($_SESSION['completed_payment_id']);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Successful</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registration Successful | <?php echo INSTITUTE_NAME; ?></title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "brand-cyan": "#03c4ce",
+                "brand-dark": "#004f54",
+                "primary-container": "#03bfd3",
+              },
+              fontFamily: {
+                sans: ['Inter', 'Manrope', 'sans-serif'],
+                heading: ['Manrope', 'sans-serif'],
+              }
+            }
+          }
+        }
+    </script>
     <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 0;
-        }
-        .success-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .success-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            padding: 40px;
-        }
-        .success-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .success-icon {
-            font-size: 80px;
-            color: #28a745;
-            margin-bottom: 20px;
-        }
-        .success-header h1 {
-            color: #28a745;
-            font-weight: 700;
-        }
-        .registration-details {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 30px;
-            margin: 30px 0;
-        }
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-        .detail-label {
-            font-weight: 600;
-            color: #495057;
-        }
-        .detail-value {
-            color: #212529;
-            text-align: right;
-        }
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .highlight-box h2 {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 700;
-        }
-        .highlight-box p {
-            margin: 5px 0 0 0;
-            opacity: 0.9;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .btn-print, .btn-home {
-            padding: 12px 30px;
-            font-weight: 600;
-        }
-        .alert-info {
-            background: #e7f3ff;
-            border-left: 4px solid #0d6efd;
-        }
         @media print {
-            .action-buttons, .alert-info {
-                display: none;
+            header, footer, .no-print {
+                display: none !important;
             }
             body {
-                background: white;
+                padding-top: 0 !important;
+                background: white !important;
+            }
+            .print-card {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
             }
         }
     </style>
 </head>
-<body>
-    <div class="success-container">
-        <div class="success-card">
-            <div class="success-header">
-                <div class="success-icon">
-                    <i class="bi bi-check-circle-fill"></i>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col pt-20">
+
+    <!-- Header Navbar -->
+    <?php require_once __DIR__ . '/../includes/navbar.php'; ?>
+
+    <!-- Main Content -->
+    <main class="flex-grow py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto space-y-8">
+            
+            <!-- Success Header Banner -->
+            <div class="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 text-center relative overflow-hidden print-card">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 mb-4 animate-bounce">
+                    <span class="material-symbols-outlined text-4xl">check_circle</span>
                 </div>
-                <h1>Registration Successful!</h1>
-                <p class="text-muted">Your application has been submitted and payment confirmed</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading mb-2">
+                    Registration Confirmed!
+                </h1>
+                <p class="text-slate-600 max-w-lg mx-auto text-base">
+                    Thank you, <strong class="text-slate-900"><?php echo htmlspecialchars($registration['first_name']); ?></strong>. Your application and payment have been processed successfully.
+                </p>
             </div>
 
-            <div class="alert alert-info">
-                <i class="bi bi-info-circle-fill"></i>
-                <strong>Important:</strong> A confirmation email has been sent to <strong><?php echo htmlspecialchars($registration['email']); ?></strong>. 
-                Please save this page or take a screenshot for your records.
-            </div>
-
-            <div class="highlight-box">
-                <p>Your Registration ID</p>
-                <h2><?php echo htmlspecialchars($registrationId); ?></h2>
-            </div>
-
-            <div class="registration-details">
-                <h4 class="mb-4"><i class="bi bi-person-circle"></i> Student Information</h4>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Full Name:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['first_name'] . ' ' . $registration['last_name']); ?></span>
+            <!-- Registration ID Highlight Box -->
+            <div class="bg-gradient-to-r from-slate-900 to-[#004f54] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 print-card">
+                <div class="space-y-1 text-center sm:text-left">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#03c4ce]">Official Registration ID</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-wider font-mono text-white">
+                        <?php echo htmlspecialchars($registration['registration_id']); ?>
+                    </h2>
+                    <p class="text-xs text-slate-300">Please save this ID for all future correspondence</p>
                 </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Email:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['email']); ?></span>
-                </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Phone:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['phone']); ?></span>
-                </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Date of Birth:</span>
-                    <span class="detail-value"><?php echo date('d F Y', strtotime($registration['dob'])); ?></span>
-                </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Program:</span>
-                    <span class="detail-value"><strong><?php echo htmlspecialchars($registration['program']); ?></strong></span>
-                </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Qualification:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['qualification']); ?></span>
+                <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 text-center min-w-[160px]">
+                    <span class="block text-xs uppercase text-slate-300 font-semibold tracking-wider mb-1">Amount Paid</span>
+                    <span class="text-2xl font-extrabold text-[#03c4ce]">₹<?php echo number_format($registration['amount'] ?? REGISTRATION_FEE, 2); ?></span>
+                    <span class="block text-[10px] text-emerald-400 font-bold uppercase tracking-wide mt-0.5">● PAID ONLINE</span>
                 </div>
             </div>
 
-            <div class="registration-details">
-                <h4 class="mb-4"><i class="bi bi-credit-card-fill"></i> Payment Information</h4>
+            <!-- Detailed Receipt Card -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 space-y-8 print-card">
                 
-                <div class="detail-row">
-                    <span class="detail-label">Payment Status:</span>
-                    <span class="detail-value">
-                        <span class="badge bg-success">
-                            <i class="bi bi-check-circle"></i> <?php echo htmlspecialchars($registration['payment_status']); ?>
-                        </span>
-                    </span>
+                <!-- Section 1: Payment Metadata -->
+                <div>
+                    <div class="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100">
+                        <span class="material-symbols-outlined text-[#03c4ce]">receipt_long</span>
+                        <h3 class="text-lg font-bold text-slate-900 font-heading">Payment Information</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm bg-slate-50 p-4 sm:p-5 rounded-2xl">
+                        <div>
+                            <span class="block text-xs text-slate-500 font-semibold uppercase">Payment Gateway ID</span>
+                            <span class="font-mono font-bold text-slate-800 text-sm"><?php echo htmlspecialchars($paymentId ?? 'N/A'); ?></span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-500 font-semibold uppercase">Payment Mode</span>
+                            <span class="font-bold text-slate-800"><?php echo htmlspecialchars($registration['payment_mode'] ?? 'ONLINE'); ?></span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-500 font-semibold uppercase">Transaction Date</span>
+                            <span class="font-semibold text-slate-800"><?php echo date('d M Y, h:i A', strtotime($registration['created_at'])); ?></span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-slate-500 font-semibold uppercase">Payment Status</span>
+                            <span class="inline-flex items-center gap-1 font-bold text-emerald-600">
+                                <span class="material-symbols-outlined text-base">check</span> SUCCESS
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Payment ID:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['payment_gateway_id']); ?></span>
+
+                <!-- Section 2: Student Profile -->
+                <div>
+                    <div class="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100">
+                        <span class="material-symbols-outlined text-[#03c4ce]">person</span>
+                        <h3 class="text-lg font-bold text-slate-900 font-heading">Student & Program Details</h3>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Full Name</span>
+                            <span class="font-bold text-slate-900"><?php echo htmlspecialchars($registration['first_name'] . ' ' . $registration['last_name']); ?></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Email Address</span>
+                            <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($registration['email']); ?></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Mobile Number</span>
+                            <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($registration['phone']); ?></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Date of Birth / Gender</span>
+                            <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($registration['dob']); ?> (<?php echo htmlspecialchars(ucfirst($registration['gender'])); ?>)</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Qualification</span>
+                            <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($registration['qualification']); ?> (<?php echo htmlspecialchars($registration['percentage']); ?>)</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-100">
+                            <span class="text-slate-500">Selected Program</span>
+                            <span class="font-bold text-[#004f54]"><?php echo htmlspecialchars($registration['program']); ?></span>
+                        </div>
+                        <div class="flex justify-between items-start py-2">
+                            <span class="text-slate-500">Residential Address</span>
+                            <span class="font-medium text-slate-800 text-right max-w-xs"><?php echo htmlspecialchars($registration['address']); ?></span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Amount Paid:</span>
-                    <span class="detail-value"><strong>₹<?php echo number_format($registration['amount'], 2); ?></strong></span>
+
+                <!-- Info Notice -->
+                <div class="p-4 rounded-2xl bg-sky-50 border border-sky-100 text-sky-900 text-xs sm:text-sm space-y-1">
+                    <div class="flex items-center gap-1.5 font-bold text-sky-800">
+                        <span class="material-symbols-outlined text-base">info</span>
+                        <span>Confirmation Email Sent</span>
+                    </div>
+                    <p class="text-sky-700">
+                        A detailed receipt and confirmation message has been sent to <strong><?php echo htmlspecialchars($registration['email']); ?></strong>. Please check your inbox / spam folder.
+                    </p>
                 </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Payment Mode:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($registration['payment_mode']); ?></span>
+
+                <!-- Action Buttons -->
+                <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center no-print">
+                    <button onclick="window.print()" 
+                            class="py-3 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-all">
+                        <span class="material-symbols-outlined text-lg">print</span>
+                        <span>Print / Save Receipt PDF</span>
+                    </button>
+                    
+                    <a href="<?= BASE_URL ?>" 
+                       class="py-3 px-6 rounded-xl bg-[#03c4ce] hover:bg-[#02aab3] text-white font-bold text-sm shadow-lg shadow-[#03c4ce]/20 flex items-center justify-center gap-2 transition-all">
+                        <span class="material-symbols-outlined text-lg">home</span>
+                        <span>Return to Website</span>
+                    </a>
                 </div>
-                
-                <div class="detail-row">
-                    <span class="detail-label">Registration Date:</span>
-                    <span class="detail-value"><?php echo date('d F Y, h:i A', strtotime($registration['created_at'])); ?></span>
-                </div>
+
             </div>
 
-            <div class="alert alert-success">
-                <h5><i class="bi bi-envelope-check-fill"></i> Next Steps:</h5>
-                <ul class="mb-0">
-                    <li>You will receive a confirmation email shortly</li>
-                    <li>Keep your Registration ID safe for future reference</li>
-                    <li>Further instructions will be sent to your email</li>
-                    <li>For any queries, contact us with your Registration ID</li>
-                </ul>
-            </div>
-
-            <div class="action-buttons">
-                <button onclick="window.print()" class="btn btn-primary btn-print">
-                    <i class="bi bi-printer-fill"></i> Print this Page
-                </button>
-                <a href="../index.php" class="btn btn-outline-secondary btn-home">
-                    <i class="bi bi-house-fill"></i> Go to Home
-                </a>
-            </div>
         </div>
-    </div>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+    <?php require_once __DIR__ . '/../includes/footer.php'; ?>
+
 </body>
 </html>

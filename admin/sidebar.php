@@ -54,6 +54,14 @@ class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all
 <span class="material-symbols-outlined">key</span>
 <span>Student Assign</span>
 </a>
+<a href="assessments.php"
+class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all
+<?= ($currentPage == 'assessments.php' || $currentPage == 'add-assessment.php') 
+? 'bg-white/20 text-white font-semibold' 
+: 'hover:bg-white/10 text-white/80 hover:text-white' ?>">
+<span class="material-symbols-outlined">quiz</span>
+<span>Assessments</span>
+</a>
 </nav>
 <div class="p-4 mt-auto">
 <div class="rounded-2xl p-4 mb-4">

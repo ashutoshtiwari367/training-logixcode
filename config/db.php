@@ -29,7 +29,7 @@ if (!defined('INSTITUTE_NAME')) define('INSTITUTE_NAME', 'Logixcode It Solution'
 define('DB_CHARSET', 'utf8mb4');
 
 // Registration & Payment Configuration
-define('REGISTRATION_FEE', 500); // Amount in INR
+define('REGISTRATION_FEE', 699); // Amount in INR
 define('RAZORPAY_KEY_ID', 'rzp_live_SCsSRFlYFL6QAC');
 define('RAZORPAY_KEY_SECRET', '03oDNzeRZpfUf4q9B9CWXuxs');
 
