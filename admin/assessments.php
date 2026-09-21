@@ -13,6 +13,30 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+$msg = $_GET['msg'] ?? '';
+
+// Handle Delete Assessment
+if (isset($_GET['action']) && $_GET['action'] === 'delete_assessment') {
+    $delId = (int)($_GET['id'] ?? 0);
+    if ($delId > 0) {
+        $stmt = $pdo->prepare("DELETE FROM assessments WHERE id = ?");
+        $stmt->execute([$delId]);
+        header("Location: assessments.php?msg=deleted");
+        exit;
+    }
+}
+
+// Handle Delete Candidate Attempt
+if (isset($_GET['action']) && $_GET['action'] === 'delete_attempt') {
+    $delId = (int)($_GET['id'] ?? 0);
+    if ($delId > 0) {
+        $stmt = $pdo->prepare("DELETE FROM assessment_attempts WHERE id = ?");
+        $stmt->execute([$delId]);
+        header("Location: assessments.php?msg=attempt_deleted");
+        exit;
+    }
+}
+
 // Handle Export CSV
 if (isset($_GET['export']) && $_GET['export'] === 'csv') {
     $filterTestId = (int)($_GET['test_id'] ?? 0);
@@ -158,7 +182,7 @@ if ($filterTest > 0) {
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">Assessment Portal Dashboard</h1>
-                    <p class="text-slate-500 text-sm">View and manage online assessments, candidate results, and quiz scores.</p>
+                    <p class="text-slate-500 text-sm">View, edit, delete, and manage online assessments & candidate results.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <a href="add-assessment.php" class="px-4 py-2.5 rounded-xl bg-[#0284c7] hover:bg-[#0369a1] text-white text-sm font-semibold flex items-center gap-2 shadow-sm transition-all">
@@ -167,6 +191,18 @@ if ($filterTest > 0) {
                     </a>
                 </div>
             </div>
+
+            <?php if ($msg === 'deleted'): ?>
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2">
+                <span class="material-symbols-outlined text-emerald-600">check_circle</span>
+                <span>Assessment test deleted successfully!</span>
+            </div>
+            <?php elseif ($msg === 'attempt_deleted'): ?>
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2">
+                <span class="material-symbols-outlined text-emerald-600">check_circle</span>
+                <span>Candidate quiz attempt record deleted!</span>
+            </div>
+            <?php endif; ?>
 
             <!-- Stats Overview Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -221,9 +257,9 @@ if ($filterTest > 0) {
                     <div>
                         <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
                             <span class="material-symbols-outlined text-sky-600">assignment</span>
-                            Assessments Overview & Test Wise Data
+                            Assessments Overview & Test Wise Actions
                         </h2>
-                        <p class="text-xs text-slate-500">Each assessment data is separated and filtered per quiz test.</p>
+                        <p class="text-xs text-slate-500">Edit questions, filter submissions, or delete old assessments.</p>
                     </div>
                     <?php if ($filterTest > 0): ?>
                     <a href="assessments.php" class="text-xs font-semibold text-sky-600 hover:underline flex items-center gap-1">
@@ -239,11 +275,10 @@ if ($filterTest > 0) {
                                 <th class="p-3">Assessment Title</th>
                                 <th class="p-3">Course</th>
                                 <th class="p-3">Questions</th>
-                                <th class="p-3">Duration</th>
-                                <th class="p-3">Pass %</th>
+                                <th class="p-3">Status</th>
                                 <th class="p-3">Attempts</th>
                                 <th class="p-3">Pass Rate</th>
-                                <th class="p-3 text-right">Action</th>
+                                <th class="p-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 font-medium">
@@ -263,16 +298,38 @@ if ($filterTest > 0) {
                                     </span>
                                 </td>
                                 <td class="p-3"><?php echo $testItem['total_q']; ?> MCQs</td>
-                                <td class="p-3"><?php echo $testItem['duration_minutes']; ?> mins</td>
-                                <td class="p-3"><?php echo (int)$testItem['pass_percentage']; ?>%</td>
+                                <td class="p-3">
+                                    <?php if ($testItem['status'] === 'active'): ?>
+                                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold">Active</span>
+                                    <?php else: ?>
+                                    <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold">Inactive</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="p-3 font-bold text-slate-800"><?php echo $tAttempts; ?></td>
                                 <td class="p-3">
                                     <span class="text-xs font-bold text-emerald-600"><?php echo $tRate; ?>%</span>
                                 </td>
-                                <td class="p-3 text-right">
+                                <td class="p-3 text-right space-x-1">
+                                    <!-- View Submissions -->
                                     <a href="assessments.php?test_id=<?php echo $testItem['id']; ?>" 
-                                       class="px-3 py-1.5 rounded-lg text-xs font-semibold <?php echo $isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-sky-100 hover:text-sky-700'; ?> transition-all inline-flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-sm">visibility</span> View Submissions
+                                       title="View Submissions"
+                                       class="px-2.5 py-1.5 rounded-lg text-xs font-semibold <?php echo $isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-sky-100 hover:text-sky-700'; ?> transition-all inline-flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> View
+                                    </a>
+
+                                    <!-- Edit Assessment -->
+                                    <a href="edit-assessment.php?id=<?php echo $testItem['id']; ?>" 
+                                       title="Edit Assessment & Questions"
+                                       class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 transition-all inline-flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">edit</span> Edit
+                                    </a>
+
+                                    <!-- Delete Assessment -->
+                                    <a href="assessments.php?action=delete_assessment&id=<?php echo $testItem['id']; ?>" 
+                                       onclick="return confirm('Are you sure you want to DELETE this assessment? All its questions and candidate results will be permanently removed!');"
+                                       title="Delete Assessment"
+                                       class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-rose-100 text-rose-700 hover:bg-rose-200 transition-all inline-flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">delete</span> Delete
                                     </a>
                                 </td>
                             </tr>
@@ -334,12 +391,13 @@ if ($filterTest > 0) {
                                 <th class="p-3">Percentage</th>
                                 <th class="p-3">Status</th>
                                 <th class="p-3">Completed At</th>
+                                <th class="p-3 text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 font-medium text-xs">
                             <?php if (empty($attemptsList)): ?>
                             <tr>
-                                <td colspan="10" class="p-6 text-center text-slate-400">
+                                <td colspan="11" class="p-6 text-center text-slate-400">
                                     No assessment attempts found for the selected criteria.
                                 </td>
                             </tr>
@@ -368,6 +426,14 @@ if ($filterTest > 0) {
                                     <?php endif; ?>
                                 </td>
                                 <td class="p-3 text-slate-500 whitespace-nowrap"><?php echo date('d M Y, h:i A', strtotime($item['completed_at'])); ?></td>
+                                <td class="p-3 text-right">
+                                    <a href="assessments.php?action=delete_attempt&id=<?php echo $item['id']; ?>" 
+                                       onclick="return confirm('Are you sure you want to delete this candidate submission record?');"
+                                       class="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg inline-flex items-center"
+                                       title="Delete Candidate Record">
+                                        <span class="material-symbols-outlined text-base">delete</span>
+                                    </a>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                             <?php endif; ?>

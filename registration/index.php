@@ -402,7 +402,6 @@ define('PAYMENT_CURRENCY', 'INR');
             // Validate Phone
             const rawPhone = phoneInput.value.replace(/\D/g, '');
             if (rawPhone.length !== 10 || !/^[6-9][0-9]{9}$/.test(rawPhone)) {
-                document.getElementById('err-[#phone]').classList ? document.getElementById('err-[#phone]').classList.remove('hidden') : null;
                 document.getElementById('err-phone').classList.remove('hidden');
                 isValid = false;
             }

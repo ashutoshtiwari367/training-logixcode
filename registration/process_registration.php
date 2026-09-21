@@ -76,10 +76,13 @@ try {
         throw new Exception('Invalid gender selection');
     }
 
-    // Validate percentage
-    $percentage = trim($_POST['percentage']);
-    if (!is_numeric($percentage) || $percentage < 0 || $percentage > 100) {
-        throw new Exception('Invalid percentage value. Must be between 0 and 100');
+    // Validate percentage / CGPA
+    $rawPercentage = trim($_POST['percentage']);
+    preg_match('/[0-9]+(\.[0-9]+)?/', $rawPercentage, $matches);
+    $percentageVal = isset($matches[0]) ? (float)$matches[0] : null;
+
+    if ($percentageVal === null || $percentageVal < 0 || $percentageVal > 100) {
+        throw new Exception('Invalid percentage or CGPA value. Please enter a valid percentage (e.g. 85 or 8.5 CGPA).');
     }
 
     // Validate year of passing if provided
