@@ -90,7 +90,7 @@ define('PAYMENT_CURRENCY', 'INR');
         <div class="form-card">
             <div class="form-header">
                 <h1><i class="bi bi-mortarboard-fill text-primary"></i> Student Registration</h1>
-                <p>Please ashurosh out the form completely. All fields marked with <span class="text-danger">*</span> are mandatory.</p>
+                <p>Please fill out the form completely. All fields marked with <span class="text-danger">*</span> are mandatory.</p>
             </div>
 
             <div class="payment-info">
