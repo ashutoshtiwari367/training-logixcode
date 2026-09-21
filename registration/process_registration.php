@@ -91,11 +91,12 @@ try {
         throw new Exception('Invalid percentage or CGPA value. Please enter a valid percentage (e.g. 85 or 8.5 CGPA).');
     }
 
-    // Validate year of passing if provided
+    // Validate year of passing if provided (supports past & future graduation years e.g. 2028)
     if (!empty($_POST['yearOfPassing'])) {
         $yearOfPassing = trim($_POST['yearOfPassing']);
-        if (!preg_match('/^[0-9]{4}$/', $yearOfPassing) || (int)$yearOfPassing < 1950 || (int)$yearOfPassing > (int)date('Y')) {
-            throw new Exception('Invalid year of passing');
+        $maxAllowedYear = (int)date('Y') + 15;
+        if (!preg_match('/^[0-9]{4}$/', $yearOfPassing) || (int)$yearOfPassing < 1950 || (int)$yearOfPassing > $maxAllowedYear) {
+            throw new Exception("Invalid year of passing. Must be between 1950 and {$maxAllowedYear}.");
         }
     }
 

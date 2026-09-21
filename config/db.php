@@ -9,9 +9,9 @@
 $httpHost = $_SERVER['HTTP_HOST'] ?? '';
 $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 if ($httpHost === 'localhost' || $httpHost === '127.0.0.1' || strpos($requestUri, '/training/') !== false) {
-    // LOCAL (XAMPP)
-    // LOCAL (XAMPP)
-    define('DB_HOST', 'localhost');
+    // LOCAL (XAMPP) — MySQL running on port 3307
+    define('DB_HOST', '127.0.0.1');
+    define('DB_PORT', 3307);
     define('DB_NAME', 'training_db');
     define('DB_USER', 'root');
     define('DB_PASS', '');
@@ -19,6 +19,7 @@ if ($httpHost === 'localhost' || $httpHost === '127.0.0.1' || strpos($requestUri
 } else {
     // PRODUCTION (Hostinger)
     define('DB_HOST', 'srv2108.hstgr.io');
+    define('DB_PORT', 3306);
     define('DB_NAME', 'u447123054_institute_regi');
     define('DB_USER', 'u447123054_institute_regi');
     define('DB_PASS', 'Mu$k@n1106');
@@ -35,7 +36,7 @@ define('RAZORPAY_KEY_SECRET', '03oDNzeRZpfUf4q9B9CWXuxs');
 
 // PDO Connection
 try {
-    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+    $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
