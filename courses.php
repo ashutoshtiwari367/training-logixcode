@@ -1,243 +1,226 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html class="scroll-smooth" lang="en-IN">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Courses | LogixCode Institute</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "inverse-on-surface": "#eff1f3",
-            "surface-container": "#eceef0",
-            "on-secondary": "#ffffff",
-            "tertiary-fixed-dim": "#ffb689",
-            "error": "#ba1a1a",
-            "primary-container": "#03bfd3",
-            "error-container": "#ffdad6",
-            "surface-dim": "#d8dadc",
-            "secondary-container": "#b9ecef",
-            "inverse-primary": "#03bfd3",
-            "on-tertiary-fixed": "#311300",
-            "inverse-surface": "#2d3133",
-            "secondary-fixed": "#b9ecef",
-            "on-tertiary": "#ffffff",
-            "on-secondary-fixed": "#002022",
-            "surface-container-low": "#f2f4f6",
-            "on-primary-fixed-variant": "#004f54",
-            "on-surface": "#191c1e",
-            "tertiary-fixed": "#ffdbc8",
-            "secondary-fixed-dim": "#9ecfd3",
-            "primary-fixed-dim": "#03bfd3",
-            "on-secondary-container": "#3b6c70",
-            "on-error": "#ffffff",
-            "surface-container-high": "#e6e8ea",
-            "on-primary-fixed": "#002022",
-            "on-primary": "#ffffff",
-            "surface-container-lowest": "#ffffff",
-            "on-surface-variant": "#3c494a",
-            "surface-variant": "#e0e3e5",
-            "on-primary-container": "#004c50",
-            "secondary": "#356669",
-            "background": "#f7f9fb",
-            "surface-container-highest": "#e0e3e5",
-            "on-tertiary-fixed-variant": "#733500",
-            "on-error-container": "#93000a",
-            "surface": "#f7f9fb",
-            "tertiary": "#974801",
-            "primary-fixed": "#71f5ff",
-            "on-tertiary-container": "#6f3300",
-            "outline": "#6c7a7b",
-            "surface-bright": "#f7f9fb",
-            "on-background": "#191c1e",
-            "primary": "#03bfd3",
-            "surface-tint": "#03bfd3",
-            "tertiary-container": "#fe9852",
-            "on-secondary-fixed-variant": "#1a4e51",
-            "outline-variant": "#bbc9ca"
-          },
-          fontFamily: {
-            "headline": ["Manrope"],
-            "body": ["Inter"],
-            "label": ["Inter"]
-          },
-          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-        },
-      },
+<title>IT Courses in Kanpur with 100% Placement | LogixCode</title>
+<meta name="description" content="Explore professional IT courses in Kanpur at LogixCode. Master Python, Java, MERN Full Stack, Data Science & Android with live projects. Apply today!"/>
+<link rel="canonical" href="https://training.logixcode.com/courses/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="IT Courses in Kanpur with 100% Placement | LogixCode"/>
+<meta property="og:description" content="Explore job-oriented software training courses in Kanpur. Python, Java, MERN Stack, Data Science, and Mobile App Development."/>
+<meta property="og:url" content="https://training.logixcode.com/courses/"/>
+<meta property="og:image" content="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp"/>
+<meta name="twitter:card" content="summary_large_image"/>
+
+<!-- ItemList Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "LogixCode Training Programs in Kanpur",
+  "description": "Professional job-oriented IT training courses offered in Kanpur.",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "https://training.logixcode.com/courses/python-training-kanpur/",
+      "name": "Python Course in Kanpur with Placement"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "url": "https://training.logixcode.com/courses/full-stack-web-development-kanpur/",
+      "name": "Full Stack Web Development Course in Kanpur"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "url": "https://training.logixcode.com/courses/java-programming-kanpur/",
+      "name": "Java Training in Kanpur with Spring Boot"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "url": "https://training.logixcode.com/courses/data-science-machine-learning-kanpur/",
+      "name": "Data Science Course in Kanpur with AI & ML"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "url": "https://training.logixcode.com/courses/android-app-development-kanpur/",
+      "name": "Android App Development Course in Kanpur"
     }
+  ]
+}
 </script>
+
+<link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
+<?php include_once __DIR__ . '/includes/theme.php'; ?>
+
 <style>
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    .tab-btn {
+        min-height: 44px;
+        background-color: var(--surface);
+        color: var(--ink);
+        border: 1px solid var(--border);
+        transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
     }
-    .bg-grid-pattern {
-        background-image: radial-gradient(circle, #03bfd310 1px, transparent 1px);
-        background-size: 32px 32px;
-    }
-    .editorial-shadow {
-        box-shadow: 0 40px 60px -20px rgba(3, 191, 211, 0.06);
-    }
-    .ghost-border {
-        border: 1px solid rgba(187, 201, 202, 0.2);
-    }
-    .course-card {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .course-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 24px 48px -12px rgba(3, 191, 211, 0.18);
+    .tab-btn:hover {
+        background-color: var(--tint);
+        border-color: var(--teal);
     }
     .tab-btn.active {
-        background-color: #03bfd3;
-        color: #ffffff;
-    }
-    .tab-btn {
-        transition: all 0.25s ease;
-    }
-    .course-item {
-        transition: opacity 0.35s ease, transform 0.35s ease;
+        background-color: var(--teal);
+        color: var(--ink);
+        border-color: var(--teal);
+        font-weight: 600;
     }
     .course-item.hidden-course {
         opacity: 0;
         pointer-events: none;
         position: absolute;
     }
-    .badge-cs { background: #e0f7fa; color: #006064; }
-    .badge-ec { background: #fce4ec; color: #880e4f; }
-    .badge-web { background: #e8f5e9; color: #1b5e20; }
-    .badge-app { background: #fff3e0; color: #e65100; }
-    .badge-lang { background: #ede7f6; color: #4527a0; }
-    .badge-other { background: #f3e5f5; color: #6a1b9a; }
 </style>
 </head>
-<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white">
+<body class="bg-[var(--bg)] text-[var(--ink)] font-body">
 
 <?php include "includes/navbar.php" ?>
 
-<!-- Hero Section -->
-<header class="relative pt-40 pb-32 overflow-hidden bg-grid-pattern">
-    <div class="max-w-7xl mx-auto px-8 text-center relative z-10">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary-container/30 text-[#03bfd3] font-label text-sm font-semibold tracking-wide mb-6">
-            100+ COURSES AVAILABLE
+<!-- Hero Section (Component 2: --tint bg, </> motif, coral primary + outline secondary) -->
+<header class="bg-[var(--tint)] border-b border-[var(--border)] py-12 md:py-20">
+    <div class="lc-container text-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--teal-text)] text-sm font-medium mb-5">
+            <span>40+ job-oriented courses available</span>
+            <span class="font-mono font-bold text-[var(--teal)]" aria-hidden="true">&lt;/&gt;</span>
         </div>
-        <h1 class="text-[3.5rem] md:text-[5rem] font-extrabold font-headline leading-tight tracking-[-0.03em] mb-6">
-            Explore Our <span class="text-[#03bfd3]">Courses</span>
+        <h1 class="text-[var(--ink)] font-headline mb-4">
+            Explore our <span class="text-[var(--teal-text)]">courses</span>
         </h1>
-        <p class="text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
-            From CS fundamentals to EC electronics — find the perfect course to launch your career.
+        <p class="text-base md:text-lg text-[var(--muted)] max-w-2xl mx-auto mb-8">
+            From computer science fundamentals to full-stack web development, networking, and embedded systems — find the right course to launch your career.
         </p>
+        <div class="flex flex-wrap justify-center gap-3">
+            <a href="<?= BASE_URL ?>registration" class="btn-primary">Enroll now</a>
+            <a href="<?= BASE_URL ?>contact" class="btn-secondary">Book free demo</a>
+        </div>
     </div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-primary/5 rounded-full blur-3xl -z-10"></div>
 </header>
 
+<!-- Highlight Strip Under Hero (Component 3: --teal bg, dark ink text) -->
+<div class="bg-[var(--teal)] text-[var(--ink)] border-b border-[var(--border)]">
+    <div class="lc-container py-3 flex flex-wrap items-center justify-between gap-4 text-sm font-medium">
+        <span class="font-semibold text-[var(--ink)]">New batch starts Monday at our Kanpur campus &amp; online</span>
+        <span class="text-[var(--ink)]">Fees starting from ₹5,000 · 100% placement support · Free 1-day demo</span>
+    </div>
+</div>
+
 <!-- Filter Tabs -->
-<section class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 py-4">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex flex-wrap gap-3 justify-center">
-            <button onclick="filterCourses('all')" class="tab-btn active px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="all">
-                All Courses
+<section class="sticky top-[69px] z-30 bg-[var(--surface)] border-b border-[var(--border)] py-3">
+    <div class="lc-container">
+        <div class="flex flex-wrap gap-2 justify-center">
+            <button onclick="filterCourses('all')" class="tab-btn active px-5 py-2 rounded-full text-sm font-medium" data-filter="all">
+                All courses
             </button>
-            <button onclick="filterCourses('cs')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="cs">
-                <span class="material-symbols-outlined text-base align-middle mr-1">computer</span> CS
+            <button onclick="filterCourses('cs')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="cs">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">computer</span> CS fundamentals
             </button>
-            <button onclick="filterCourses('ec')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="ec">
-                <span class="material-symbols-outlined text-base align-middle mr-1">memory</span> EC
+            <button onclick="filterCourses('ec')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="ec">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">memory</span> Electronics (EC)
             </button>
-            <button onclick="filterCourses('web')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="web">
-                <span class="material-symbols-outlined text-base align-middle mr-1">code</span> Web Dev
+            <button onclick="filterCourses('web')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="web">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">code</span> Web development
             </button>
-            <button onclick="filterCourses('app')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="app">
-                <span class="material-symbols-outlined text-base align-middle mr-1">smartphone</span> App Dev
+            <button onclick="filterCourses('app')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="app">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">smartphone</span> App development
             </button>
-            <button onclick="filterCourses('lang')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="lang">
-                <span class="material-symbols-outlined text-base align-middle mr-1">data_object</span> Programming
+            <button onclick="filterCourses('lang')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="lang">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">data_object</span> Programming
             </button>
-            <button onclick="filterCourses('other')" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold font-label border border-outline-variant hover:bg-surface-container" data-filter="other">
-                <span class="material-symbols-outlined text-base align-middle mr-1">category</span> Other
+            <button onclick="filterCourses('other')" class="tab-btn px-5 py-2 rounded-full text-sm font-medium inline-flex items-center gap-1.5" data-filter="other">
+                <span class="material-symbols-outlined text-base text-[var(--teal-text)]">category</span> AI, cloud &amp; security
             </button>
         </div>
     </div>
 </section>
 
 <!-- CS Courses Section -->
-<section class="py-20 bg-surface" id="section-cs">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#e0f7fa] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#006064]" style="font-variation-settings:'FILL' 1">computer</span>
+<section class="lc-section bg-[var(--bg)] border-b border-[var(--border)]" id="section-cs">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">computer</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">Computer Science</h2>
-                <p class="text-sm text-on-surface-variant">Core CS fundamentals & advanced topics</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">CS STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">Computer science</h2>
+                <p class="text-sm text-[var(--muted)]">Core CS fundamentals &amp; interview preparation</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="courses-grid">
 
-            <!-- CS Card -->
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="cs">
-                <div class="h-2 bg-[#03bfd3]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e0f7fa] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#006064]" style="font-variation-settings:'FILL' 1">hub</span>
-                        </div>
-                        <span class="badge-cs text-xs font-semibold px-3 py-1 rounded-full">CS</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="cs">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">hub</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Data Structures & Algorithms</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Master arrays, trees, graphs, sorting, and problem-solving techniques for interviews.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">CS stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Data structures &amp; algorithms</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Master arrays, trees, graphs, sorting, and problem-solving techniques for technical interviews.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#03bfd3] text-[#03bfd3] text-sm font-bold hover:bg-[#03bfd3] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="cs">
-                <div class="h-2 bg-[#03bfd3]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e0f7fa] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#006064]" style="font-variation-settings:'FILL' 1">database</span>
-                        </div>
-                        <span class="badge-cs text-xs font-semibold px-3 py-1 rounded-full">CS</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="cs">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">database</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Database Management (DBMS)</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">SQL, NoSQL, normalization, indexing and real-world database design patterns.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 2 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Beginner</span>
+                    <span class="lc-chip text-xs">CS stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Database management (DBMS)</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">SQL, NoSQL, normalization, indexing, and real-world relational database design patterns.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 2 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#03bfd3] text-[#03bfd3] text-sm font-bold hover:bg-[#03bfd3] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="cs">
-                <div class="h-2 bg-[#03bfd3]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e0f7fa] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#006064]" style="font-variation-settings:'FILL' 1">security</span>
-                        </div>
-                        <span class="badge-cs text-xs font-semibold px-3 py-1 rounded-full">CS</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="cs">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">security</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Operating Systems & Networks</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Process management, memory, scheduling, TCP/IP, and network security fundamentals.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Advanced</span>
+                    <span class="lc-chip text-xs">CS stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Operating systems &amp; networks</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Process management, memory, scheduling, TCP/IP, routing, and network security fundamentals.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Advanced</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#03bfd3] text-[#03bfd3] text-sm font-bold hover:bg-[#03bfd3] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -246,77 +229,82 @@
 </section>
 
 <!-- EC Courses Section -->
-<section class="py-20 bg-surface-container-low" id="section-ec">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#fce4ec] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#880e4f]" style="font-variation-settings:'FILL' 1">memory</span>
+<section class="lc-section bg-[var(--tint)] border-b border-[var(--border)]" id="section-ec">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">memory</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">Electronics & Communication</h2>
-                <p class="text-sm text-on-surface-variant">EC fundamentals, embedded systems & IoT</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">EC STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">Electronics &amp; communication</h2>
+                <p class="text-sm text-[var(--muted)]">EC fundamentals, embedded systems &amp; IoT</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="ec">
-                <div class="h-2 bg-[#ec407a]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fce4ec] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#880e4f]" style="font-variation-settings:'FILL' 1">developer_board</span>
-                        </div>
-                        <span class="badge-ec text-xs font-semibold px-3 py-1 rounded-full">EC</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="ec">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">developer_board</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Embedded Systems & Arduino</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Hands-on microcontroller programming, sensor interfacing and real-time systems.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Beginner</span>
+                    <span class="lc-chip text-xs">EC stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Embedded systems &amp; Arduino</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Hands-on microcontroller programming, sensor interfacing, and real-time hardware systems.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ec407a] text-[#ec407a] text-sm font-bold hover:bg-[#ec407a] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="ec">
-                <div class="h-2 bg-[#ec407a]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fce4ec] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#880e4f]" style="font-variation-settings:'FILL' 1">sensors</span>
-                        </div>
-                        <span class="badge-ec text-xs font-semibold px-3 py-1 rounded-full">EC</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="ec">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">sensors</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">IoT — Internet of Things</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">ESP32, Raspberry Pi, MQTT, cloud connectivity and smart device prototyping.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 4 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">EC stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">IoT — Internet of Things</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">ESP32, Raspberry Pi, MQTT, cloud connectivity, and smart device prototyping.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ec407a] text-[#ec407a] text-sm font-bold hover:bg-[#ec407a] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="ec">
-                <div class="h-2 bg-[#ec407a]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fce4ec] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#880e4f]" style="font-variation-settings:'FILL' 1">electric_bolt</span>
-                        </div>
-                        <span class="badge-ec text-xs font-semibold px-3 py-1 rounded-full">EC</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="ec">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">electric_bolt</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Digital Electronics & VLSI</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Logic gates, flip-flops, FPGAs, HDL coding, and VLSI chip design principles.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Advanced</span>
+                    <span class="lc-chip text-xs">EC stream</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Digital electronics &amp; VLSI</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Logic gates, flip-flops, FPGAs, HDL coding, and VLSI chip design principles.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Advanced</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ec407a] text-[#ec407a] text-sm font-bold hover:bg-[#ec407a] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -325,77 +313,82 @@
 </section>
 
 <!-- Web Dev Section -->
-<section class="py-20 bg-surface" id="section-web">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#e8f5e9] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#1b5e20]" style="font-variation-settings:'FILL' 1">code</span>
+<section class="lc-section bg-[var(--bg)] border-b border-[var(--border)]" id="section-web">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">code</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">Web Development</h2>
-                <p class="text-sm text-on-surface-variant">Frontend, backend & full-stack mastery</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">WEB STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">Web development</h2>
+                <p class="text-sm text-[var(--muted)]">Frontend, backend &amp; full-stack mastery</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="web">
-                <div class="h-2 bg-[#43a047]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e8f5e9] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#1b5e20]" style="font-variation-settings:'FILL' 1">web</span>
-                        </div>
-                        <span class="badge-web text-xs font-semibold px-3 py-1 rounded-full">Web Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="web">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">web</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">HTML, CSS & JavaScript</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Build responsive websites from scratch using modern HTML5, CSS3, and vanilla JS.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 2 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Beginner</span>
+                    <span class="lc-chip text-xs">Web development</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">HTML, CSS &amp; JavaScript</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Build responsive websites from scratch using modern HTML5, CSS3, and vanilla JavaScript.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 2 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#43a047] text-[#43a047] text-sm font-bold hover:bg-[#43a047] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/full-stack-web-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="web">
-                <div class="h-2 bg-[#43a047]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e8f5e9] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#1b5e20]" style="font-variation-settings:'FILL' 1">integration_instructions</span>
-                        </div>
-                        <span class="badge-web text-xs font-semibold px-3 py-1 rounded-full">Web Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="web">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">integration_instructions</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">React.js & Node.js</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Full-stack development with React for frontend and Node/Express for REST APIs.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 4 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Web development</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">React.js &amp; Node.js (MERN)</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Full-stack development with React for frontend and Node/Express with MongoDB for REST APIs.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4–6 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#43a047] text-[#43a047] text-sm font-bold hover:bg-[#43a047] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/full-stack-web-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="web">
-                <div class="h-2 bg-[#43a047]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#e8f5e9] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#1b5e20]" style="font-variation-settings:'FILL' 1">dns</span>
-                        </div>
-                        <span class="badge-web text-xs font-semibold px-3 py-1 rounded-full">Web Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="web">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">dns</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">PHP & Laravel</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Backend web development with PHP, MySQL, and the Laravel MVC framework.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Web development</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">PHP &amp; Laravel</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Server-side web engineering with PHP, MySQL, MVC architecture, and Laravel framework.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#43a047] text-[#43a047] text-sm font-bold hover:bg-[#43a047] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/full-stack-web-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -404,77 +397,82 @@
 </section>
 
 <!-- App Dev Section -->
-<section class="py-20 bg-surface-container-low" id="section-app">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#fff3e0] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#e65100]" style="font-variation-settings:'FILL' 1">smartphone</span>
+<section class="lc-section bg-[var(--tint)] border-b border-[var(--border)]" id="section-app">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">smartphone</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">App Development</h2>
-                <p class="text-sm text-on-surface-variant">Android, iOS & cross-platform solutions</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">APP STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">App development</h2>
+                <p class="text-sm text-[var(--muted)]">Android, iOS &amp; cross-platform mobile solutions</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="app">
-                <div class="h-2 bg-[#fb8c00]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fff3e0] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#e65100]" style="font-variation-settings:'FILL' 1">flutter_dash</span>
-                        </div>
-                        <span class="badge-app text-xs font-semibold px-3 py-1 rounded-full">App Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="app">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">flutter_dash</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Flutter & Dart</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Cross-platform mobile apps for Android & iOS using Flutter with Firebase integration.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 4 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Mobile app</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Flutter &amp; Dart</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Cross-platform mobile apps for Android &amp; iOS using Flutter with Firebase integration.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#fb8c00] text-[#fb8c00] text-sm font-bold hover:bg-[#fb8c00] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/android-app-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="app">
-                <div class="h-2 bg-[#fb8c00]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fff3e0] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#e65100]" style="font-variation-settings:'FILL' 1">android</span>
-                        </div>
-                        <span class="badge-app text-xs font-semibold px-3 py-1 rounded-full">App Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="app">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">android</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Android Development (Kotlin)</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Native Android apps with Kotlin, Jetpack Compose and modern Android architecture.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Mobile app</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Android development (Kotlin)</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Native Android apps with Kotlin, Jetpack Compose, and modern Android architecture.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4–6 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#fb8c00] text-[#fb8c00] text-sm font-bold hover:bg-[#fb8c00] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/android-app-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="app">
-                <div class="h-2 bg-[#fb8c00]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#fff3e0] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#e65100]" style="font-variation-settings:'FILL' 1">devices</span>
-                        </div>
-                        <span class="badge-app text-xs font-semibold px-3 py-1 rounded-full">App Dev</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="app">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">phone_iphone</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">React Native</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Build performant cross-platform apps using React Native and Expo framework.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Advanced</span>
+                    <span class="lc-chip text-xs">Mobile app</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">React Native</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Build performant cross-platform mobile apps using React Native and Expo framework.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#fb8c00] text-[#fb8c00] text-sm font-bold hover:bg-[#fb8c00] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/android-app-development-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -483,77 +481,82 @@
 </section>
 
 <!-- Programming Languages Section -->
-<section class="py-20 bg-surface" id="section-lang">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#ede7f6] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#4527a0]" style="font-variation-settings:'FILL' 1">data_object</span>
+<section class="lc-section bg-[var(--bg)] border-b border-[var(--border)]" id="section-lang">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">data_object</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">Programming Languages</h2>
-                <p class="text-sm text-on-surface-variant">Core languages for software development</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">LANG STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">Programming languages</h2>
+                <p class="text-sm text-[var(--muted)]">Core languages for software engineering</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="lang">
-                <div class="h-2 bg-[#7e57c2]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#ede7f6] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#4527a0]" style="font-variation-settings:'FILL' 1">coffee</span>
-                        </div>
-                        <span class="badge-lang text-xs font-semibold px-3 py-1 rounded-full">Programming</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="lang">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">coffee</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Java Programming</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">OOP concepts, collections, multithreading, Spring Boot and enterprise Java.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Beginner</span>
+                    <span class="lc-chip text-xs">Programming</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Java programming</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">OOP concepts, collections, multithreading, Spring Boot, and enterprise Java development.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4–6 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner to pro</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#7e57c2] text-[#7e57c2] text-sm font-bold hover:bg-[#7e57c2] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/java-programming-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="lang">
-                <div class="h-2 bg-[#7e57c2]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#ede7f6] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#4527a0]" style="font-variation-settings:'FILL' 1">terminal</span>
-                        </div>
-                        <span class="badge-lang text-xs font-semibold px-3 py-1 rounded-full">Programming</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="lang">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">terminal</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Python Programming</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Python for automation, scripting, data analysis, and machine learning fundamentals.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 2 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Beginner</span>
+                    <span class="lc-chip text-xs">Programming</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Python programming</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Python for backend web development (Django), automation, scripting, and data analysis.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4–6 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#7e57c2] text-[#7e57c2] text-sm font-bold hover:bg-[#7e57c2] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/python-training-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="lang">
-                <div class="h-2 bg-[#7e57c2]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#ede7f6] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#4527a0]" style="font-variation-settings:'FILL' 1">memory_alt</span>
-                        </div>
-                        <span class="badge-lang text-xs font-semibold px-3 py-1 rounded-full">Programming</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col" data-category="lang">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">memory_alt</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">C / C++ Programming</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Low-level programming, pointers, memory management, OOP with C++ and STL.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 2 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Programming</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">C &amp; C++ programming</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Pointers, memory management, STL, object-oriented programming, and competitive coding.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 2 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Beginner</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#7e57c2] text-[#7e57c2] text-sm font-bold hover:bg-[#7e57c2] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -562,77 +565,82 @@
 </section>
 
 <!-- Other Courses Section -->
-<section class="py-20 bg-surface-container-low" id="section-other">
-    <div class="max-w-7xl mx-auto px-8">
-        <div class="flex items-center gap-4 mb-12">
-            <div class="w-12 h-12 rounded-xl bg-[#f3e5f5] flex items-center justify-center">
-                <span class="material-symbols-outlined text-[#6a1b9a]" style="font-variation-settings:'FILL' 1">category</span>
+<section class="lc-section bg-[var(--tint)] border-b border-[var(--border)]" id="section-other">
+    <div class="lc-container">
+        <div class="flex items-center gap-3.5 mb-8">
+            <div class="lc-icon-circle">
+                <span class="material-symbols-outlined text-[var(--ink)]">category</span>
             </div>
             <div>
-                <h2 class="text-2xl font-extrabold font-headline tracking-tight">Other Courses</h2>
-                <p class="text-sm text-on-surface-variant">AI/ML, cybersecurity, cloud & more</p>
-            </div>
-            <div class="ml-auto hidden md:flex items-center gap-2">
-                <div class="h-px w-32 bg-outline-variant/50"></div>
-                <span class="text-xs font-label text-on-surface-variant">MISC STREAM</span>
+                <h2 class="text-2xl font-bold font-headline text-[var(--ink)]">Data science, cloud &amp; security</h2>
+                <p class="text-sm text-[var(--muted)]">AI/ML, cybersecurity, cloud computing &amp; more</p>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="other">
-                <div class="h-2 bg-[#ab47bc]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#f3e5f5] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#6a1b9a]" style="font-variation-settings:'FILL' 1">smart_toy</span>
-                        </div>
-                        <span class="badge-other text-xs font-semibold px-3 py-1 rounded-full">Other</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="other">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">insights</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">AI & Machine Learning</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Supervised learning, neural networks, NLP, and deploying ML models to production.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 5 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Advanced</span>
+                    <span class="lc-chip text-xs">Data science</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Data science &amp; machine learning</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Supervised learning, Pandas, NumPy, Scikit-Learn, Power BI, and deploying ML models.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4–6 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Advanced</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ab47bc] text-[#ab47bc] text-sm font-bold hover:bg-[#ab47bc] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>courses/data-science-machine-learning-kanpur/" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="other">
-                <div class="h-2 bg-[#ab47bc]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#f3e5f5] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#6a1b9a]" style="font-variation-settings:'FILL' 1">cloud</span>
-                        </div>
-                        <span class="badge-other text-xs font-semibold px-3 py-1 rounded-full">Other</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="other">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">cloud</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Cloud Computing (AWS)</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">AWS core services, EC2, S3, Lambda, DevOps pipelines and cloud architecture.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 3 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Intermediate</span>
+                    <span class="lc-chip text-xs">Cloud</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Cloud computing (AWS)</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">AWS core services, EC2, S3, Lambda, DevOps pipelines, and cloud architecture.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 3 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Intermediate</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ab47bc] text-[#ab47bc] text-sm font-bold hover:bg-[#ab47bc] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
-            <div class="course-card course-item bg-surface-container-lowest rounded-xl editorial-shadow ghost-border overflow-hidden" data-category="other">
-                <div class="h-2 bg-[#ab47bc]"></div>
-                <div class="p-7">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-11 h-11 rounded-lg bg-[#f3e5f5] flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[#6a1b9a]" style="font-variation-settings:'FILL' 1">lock</span>
-                        </div>
-                        <span class="badge-other text-xs font-semibold px-3 py-1 rounded-full">Other</span>
+            <div class="course-card course-item lc-card p-6 flex flex-col bg-[var(--surface)]" data-category="other">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="lc-icon-circle">
+                        <span class="material-symbols-outlined text-[var(--ink)]">lock</span>
                     </div>
-                    <h3 class="text-lg font-bold font-headline mb-2">Cyber Security</h3>
-                    <p class="text-sm text-on-surface-variant leading-relaxed mb-5">Ethical hacking, penetration testing, network security, and CEH exam prep.</p>
-                    <div class="flex items-center gap-4 text-xs text-on-surface-variant mb-5">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 4 Months</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">signal_cellular_alt</span> Advanced</span>
+                    <span class="lc-chip text-xs">Security</span>
+                </div>
+                <h3 class="text-lg font-semibold font-headline mb-2 text-[var(--ink)]">Cyber security</h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 flex-1">Ethical hacking, penetration testing, network security, and security auditing.</p>
+                <div class="flex items-center gap-4 text-xs text-[var(--muted)] mb-4">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">schedule</span> 4 months</span>
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-[var(--teal-text)]">signal_cellular_alt</span> Advanced</span>
+                </div>
+                <div class="pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-[var(--muted)] block">Course fee</span>
+                        <span class="text-base font-bold text-[var(--ink)]">From ₹5,000</span>
                     </div>
-                    <a href="/registration" class="block w-full text-center py-2.5 rounded-full border-2 border-[#ab47bc] text-[#ab47bc] text-sm font-bold hover:bg-[#ab47bc] hover:text-white transition-colors">Enroll Now</a>
+                    <a href="<?= BASE_URL ?>registration" class="text-sm font-semibold text-[var(--teal-text)] hover:underline inline-flex items-center gap-1 min-h-[44px]">View syllabus →</a>
                 </div>
             </div>
 
@@ -641,21 +649,18 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-24">
-    <div class="max-w-5xl mx-auto px-8">
-        <div class="bg-surface-container-lowest p-16 rounded-xl text-center editorial-shadow relative overflow-hidden ghost-border">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-            <div class="relative z-10">
-                <h2 class="text-4xl font-extrabold font-headline mb-6 tracking-tight">Can't decide which course?</h2>
-                <p class="text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto">Talk to our counselors for free — we'll match you to the perfect course based on your goals.</p>
-                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    <a href="/registration">
-                        <button class="w-full sm:w-auto px-10 py-4 rounded-full bg-[#03bfd3] text-white font-bold text-lg hover:scale-105 active:scale-95 transition-transform shadow-xl shadow-primary/30">Apply For Admission</button>
-                    </a>
-                    <a href="/about">
-                        <button class="w-full sm:w-auto px-10 py-4 rounded-full border-2 border-outline-variant text-[#03bfd3] font-bold text-lg hover:bg-surface-container-low transition-colors">About LogixCode</button>
-                    </a>
-                </div>
+<section class="lc-section bg-[var(--bg)]">
+    <div class="lc-container">
+        <div class="lc-card p-8 md:p-12 text-center bg-[var(--surface)] max-w-4xl mx-auto">
+            <h2 class="text-[var(--ink)] mb-3">Can't decide which course is right for you?</h2>
+            <p class="text-base text-[var(--muted)] mb-8 max-w-2xl mx-auto">Talk to our counselors for free — we'll match you to the right batch and syllabus based on your career goals.</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="<?= BASE_URL ?>registration" class="btn-primary w-full sm:w-auto">
+                    Enroll now
+                </a>
+                <a href="<?= BASE_URL ?>contact" class="btn-secondary w-full sm:w-auto">
+                    Book free demo class
+                </a>
             </div>
         </div>
     </div>

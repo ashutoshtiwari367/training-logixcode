@@ -48,13 +48,6 @@ try {
         throw new Exception('Invalid email address format');
     }
 
-    // Check if email already exists
-    $stmt = $pdo->prepare("SELECT id FROM registrations WHERE email = ?");
-    $stmt->execute([$email]);
-    if ($stmt->fetch()) {
-        throw new Exception('This email is already registered. Please use a different email address.');
-    }
-
     // Validate phone number format (Support 10 digits or +91 prefix)
     $phone = trim($_POST['phone']);
     if (!preg_match('/^(\+91)?[0-9]{10}$/', $phone)) {

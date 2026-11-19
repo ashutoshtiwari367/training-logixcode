@@ -1,0 +1,32 @@
+# robots.txt for training.logixcode.com
+# Allow all major search engines and AI generative engines
+
+User-agent: *
+Allow: /
+Disallow: /config/
+Disallow: /includes/
+Disallow: /student/
+Disallow: /vendor/
+Disallow: /api/
+
+# Explicitly Allow AI Crawlers (GEO / Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# Sitemap Index
+Sitemap: https://training.logixcode.com/sitemap.xml

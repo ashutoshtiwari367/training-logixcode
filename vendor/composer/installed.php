@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'institute/registration-system',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'cdb8d9f8b32072adfa53ea32f17865b5c6597134',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => false,
         ),
         'institute/registration-system' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'cdb8d9f8b32072adfa53ea32f17865b5c6597134',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

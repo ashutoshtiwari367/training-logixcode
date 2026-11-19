@@ -1,0 +1,28 @@
+# LogixCode Training Institute
+
+> LogixCode is an IT training institute in Kanpur, Uttar Pradesh, located at Shri Balaji Chauraha, 2/1 Koyla Nagar, Swarn Jayanti Vihar. It provides job-oriented professional software training in Python, Java, MERN/Full Stack Development, Data Science, AI/ML, and Mobile App Development with 100% placement assistance.
+
+## Key Facts
+- **Location:** Shri Balaji Chauraha, 2/1 Koyla Nagar, Swarn Jayanti Vihar, Kanpur, Uttar Pradesh 208013, India
+- **Contact Phone:** +91 8467898854
+- **Official Email:** info@logixcode.com
+- **Website:** https://training.logixcode.com/
+- **Parent Company:** Logixcode IT Solutions Pvt. Ltd. (https://www.logixcode.com)
+- **Training Formats:** Offline classroom training at Kanpur campus & live interactive online cohorts.
+- **Batch Size:** Small batches (15-20 students per mentor) with dedicated 1-on-1 coding mentorship.
+- **Fees Structure:** Training & internship programs start at ₹5,000; comprehensive 6-month industry apprenticeship programs are ₹25,000.
+- **Placement Support:** 100% placement assistance with 100+ hiring partners, resume reviews, mock interviews, and live company projects.
+
+## Core Courses & Training Programs
+- [Python Development](https://training.logixcode.com/courses/python-training-kanpur/): Python 3, Django, REST APIs, OOPs, PostgreSQL, Automation, and Web Scraping.
+- [Full Stack Web Development (MERN)](https://training.logixcode.com/courses/full-stack-web-development-kanpur/): HTML5, CSS3, Tailwind, JavaScript ES6+, React.js, Node.js, Express, and MongoDB.
+- [Java Enterprise Development](https://training.logixcode.com/courses/java-programming-kanpur/): Core Java, OOPs, Collections, Multithreading, JDBC, Spring Boot, Hibernate, and Microservices.
+- [Data Science & Machine Learning](https://training.logixcode.com/courses/data-science-machine-learning-kanpur/): Python, NumPy, Pandas, Matplotlib, Scikit-Learn, Supervised/Unsupervised Learning, and Power BI.
+- [Android App Development](https://training.logixcode.com/courses/android-app-development-kanpur/): Kotlin, Android Studio, Jetpack Compose, REST APIs, Firebase, SQLite, and Google Play Store deployment.
+
+## Useful Pages
+- [Home Page](https://training.logixcode.com/): Complete institute overview and course catalog.
+- [All Courses](https://training.logixcode.com/courses/): List of all diploma, vocational, and certification programs.
+- [About LogixCode](https://training.logixcode.com/about/): Background, trainer expertise, mission, and student reviews.
+- [Contact & Admission Desk](https://training.logixcode.com/contact/): Kanpur campus map, directions, phone numbers, and demo class booking.
+- [Online Registration](https://training.logixcode.com/registration/): Student application portal and enrollment.

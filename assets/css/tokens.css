@@ -1,0 +1,420 @@
+/**
+ * LogixCode Design System — "Fresh light + coral"
+ * Global CSS Custom Properties (Tokens) & Base Component Styles
+ * assets/css/tokens.css
+ */
+
+:root {
+  --bg:          #f6fafa; /* page background */
+  --surface:     #ffffff; /* cards & inputs */
+  --tint:        #dff3f6; /* hero and soft sections */
+  --teal:        #55c4d2; /* logo teal: fills, icons, highlights, large shapes */
+  --teal-text:   #167282; /* teal links and small teal text (WCAG AA compliant) */
+  --ink:         #16343a; /* headings and body text */
+  --muted:       #4f6a70; /* secondary text */
+  --border:      #d3e3e6; /* 1px borders */
+  --coral:       #cf4326; /* primary CTA only */
+  --coral-hover: #b83a20; /* primary CTA hover */
+  --dark:        #16343a; /* dark bands: stats, testimonials, footer */
+  --on-dark:     #f6fafa; /* text on dark bands */
+  --error:       #b91c1c; /* accessible inline form error red */
+
+  /* Typography tokens */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radii tokens */
+  --radius-btn:  10px;
+  --radius-card: 12px;
+  --radius-chip: 9999px;
+
+  /* Layout tokens */
+  --max-w: 1200px;
+}
+
+/* ==========================================
+   BASE & TYPOGRAPHY SCALE
+   ========================================== */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-headline, .font-heading {
+  font-family: var(--font-heading);
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+h1 {
+  font-size: 1.95rem; /* ~31px mobile */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px mobile */
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.75rem; /* 44px desktop (40-48px scale) */
+  }
+  h2 {
+    font-size: 1.875rem; /* 30px desktop (28-32px scale) */
+  }
+}
+
+p, li {
+  line-height: 1.6;
+}
+
+small, .text-small {
+  font-size: 0.875rem; /* 14px */
+}
+
+/* Enforce sentence case (no ALL CAPS in badges/buttons) */
+.uppercase, button, a.btn-primary, a.btn-secondary, .chip {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* ==========================================
+   CONTAINER & SECTION SPACING
+   ========================================== */
+.lc-container {
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .lc-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.lc-section {
+  padding-top: 3rem;    /* 48px mobile (40-56px scale) */
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .lc-section {
+    padding-top: 5rem;  /* 80px desktop (64-96px scale) */
+    padding-bottom: 5rem;
+  }
+}
+
+/* ==========================================
+   BUTTONS & INTERACTIVE STATES
+   ========================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.5rem;
+  background-color: var(--coral);
+  color: #ffffff !important;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--coral);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--coral-hover);
+  border-color: var(--coral-hover);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.5rem;
+  background-color: transparent;
+  color: var(--teal-text) !important;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--teal-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--tint);
+  color: var(--ink) !important;
+}
+
+/* Accessible keyboard focus state */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--teal-text) !important;
+  outline-offset: 2px !important;
+}
+
+/* ==========================================
+   CARDS, CHIPS & SURFACES (FLAT ONLY)
+   ========================================== */
+.lc-card,
+.course-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.lc-card:hover,
+.course-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 4px 12px rgba(22, 52, 58, 0.05);
+  transform: translateY(-2px);
+}
+
+.lc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-chip);
+  background-color: var(--tint);
+  color: var(--teal-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+}
+
+.lc-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background-color: var(--teal);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Text on --teal (#55c4d2) must always be --ink (#16343a) */
+.bg-teal-fill {
+  background-color: var(--teal);
+  color: var(--ink) !important;
+}
+
+.bg-teal-fill * {
+  color: var(--ink);
+}
+
+/* Dark band (--dark) */
+.lc-dark-band {
+  background-color: var(--dark);
+  color: var(--on-dark);
+}
+
+.lc-dark-band h2,
+.lc-dark-band h3,
+.lc-dark-band h4 {
+  color: var(--on-dark);
+}
+
+/* Rating dots in --teal (no yellow stars) */
+.lc-rating-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.lc-rating-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background-color: var(--teal);
+  display: inline-block;
+}
+
+/* ==========================================
+   FORMS (48px height, 1px --border, 2px focus)
+   ========================================== */
+.lc-input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+select {
+  height: 48px;
+  width: 100%;
+  padding: 0 1rem;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-btn) !important;
+  color: var(--ink) !important;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  box-shadow: none !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+textarea.lc-input,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-btn) !important;
+  color: var(--ink) !important;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  box-shadow: none !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.lc-input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--teal-text) !important;
+  box-shadow: 0 0 0 2px var(--teal-text) !important;
+  outline: none !important;
+}
+
+.lc-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+.lc-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.375rem;
+}
+
+.lc-error-text {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--error);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.375rem;
+}
+
+/* ==========================================
+   LEARNING ROADMAP (Basics -> Skills -> Projects -> Job)
+   ========================================== */
+.lc-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .lc-roadmap {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lc-roadmap::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background-color: var(--teal);
+    z-index: 0;
+  }
+}
+
+.lc-roadmap-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .lc-roadmap-step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.lc-roadmap-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  background-color: var(--teal);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid var(--bg);
+}
+
+/* ==========================================
+   PREFERS REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

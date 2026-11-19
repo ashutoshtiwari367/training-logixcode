@@ -126,95 +126,45 @@ try {
         throw new Exception('Payment amount mismatch. Expected: ' . $expectedAmount . ', Received: ' . $paidAmount);
     }
 
-    // Start transaction
-    $pdo->beginTransaction();
+    // Generate unique registration ID
+    $registrationId = generateRegistrationId();
 
-    try {
-        // Generate unique registration ID
-        $registrationId = generateRegistrationId();
+    // Get registration data from session
+    $data = $_SESSION['registration_data'];
+    $amount = $paymentDetails['amount'] / 100; // Convert from paise to rupees
+    $currency = $paymentDetails['currency'];
 
-        // Get registration data from session
-        $data = $_SESSION['registration_data'];
+    // Send confirmation email
+    $emailData = array_merge($data, [
+        'registration_id' => $registrationId,
+        'payment_id' => $paymentId
+    ]);
+    
+    sendConfirmationEmail($emailData, $registrationId, 'PAID');
 
-        // Insert registration record
-        $sql = "INSERT INTO registrations (
-            registration_id, first_name, last_name, email, phone, dob, gender, 
-            address, qualification, percentage, college, year_of_passing, 
-            program, experience, motivation, updates_opt_in, payment_mode, created_at
-        ) VALUES (
-            :registration_id, :first_name, :last_name, :email, :phone, :dob, :gender,
-            :address, :qualification, :percentage, :college, :year_of_passing,
-            :program, :experience, :motivation, :updates_opt_in, :payment_mode, NOW()
-        )";
+    // Store registration details in session for success page
+    $_SESSION['completed_registration_id'] = $registrationId;
+    $_SESSION['completed_payment_id'] = $paymentId;
+    $_SESSION['completed_registration_data'] = array_merge($data, [
+        'registration_id'    => $registrationId,
+        'payment_gateway_id' => $paymentId,
+        'amount'             => $amount,
+        'currency'           => $currency,
+        'payment_status'     => 'SUCCESS',
+        'created_at'         => date('Y-m-d H:i:s'),
+        'first_name'         => $data['firstName'],
+        'last_name'          => $data['lastName'],
+        'year_of_passing'    => $data['yearOfPassing'],
+        'payment_mode'       => 'ONLINE'
+    ]);
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':registration_id' => $registrationId,
-            ':first_name' => $data['firstName'],
-            ':last_name' => $data['lastName'],
-            ':email' => $data['email'],
-            ':phone' => $data['phone'],
-            ':dob' => $data['dob'],
-            ':gender' => $data['gender'],
-            ':address' => $data['address'],
-            ':qualification' => $data['qualification'],
-            ':percentage' => $data['percentage'],
-            ':college' => $data['college'],
-            ':year_of_passing' => $data['yearOfPassing'],
-            ':program' => $data['program'],
-            ':experience' => $data['experience'],
-            ':motivation' => $data['motivation'],
-            ':updates_opt_in' => $data['updates'],
-            ':payment_mode' => 'ONLINE'
-        ]);
+    // Clear registration data from session
+    unset($_SESSION['registration_data']);
+    unset($_SESSION['registration_timestamp']);
 
-        // Insert payment record
-        $amount = $paymentDetails['amount'] / 100; // Convert from paise to rupees
-        $currency = $paymentDetails['currency'];
-
-        $paymentSql = "INSERT INTO payments (
-            registration_id, payment_gateway_id, amount, currency, status, created_at
-        ) VALUES (
-            :registration_id, :payment_gateway_id, :amount, :currency, :status, NOW()
-        )";
-
-        $paymentStmt = $pdo->prepare($paymentSql);
-        $paymentStmt->execute([
-            ':registration_id' => $registrationId,
-            ':payment_gateway_id' => $paymentId,
-            ':amount' => $amount,
-            ':currency' => $currency,
-            ':status' => 'SUCCESS'
-        ]);
-
-        // Commit transaction
-        $pdo->commit();
-
-        // Send confirmation email
-        $emailData = array_merge($data, [
-            'registration_id' => $registrationId,
-            'payment_id' => $paymentId
-        ]);
-        
-        sendConfirmationEmail($emailData, $registrationId, 'PAID');
-
-        // Store registration ID in session for success page
-        $_SESSION['completed_registration_id'] = $registrationId;
-        $_SESSION['completed_payment_id'] = $paymentId;
-
-        // Clear registration data from session
-        unset($_SESSION['registration_data']);
-        unset($_SESSION['registration_timestamp']);
-
-        $response2['success'] = true;
-        $response2['registration_id'] = $registrationId;
-        $response2['message'] = 'Payment verified and registration completed successfully';
-
-    } catch (Exception $e) {
-        // Rollback transaction on error
-        $pdo->rollBack();
-        throw $e;
-    }
+    $response2['success'] = true;
+    $response2['registration_id'] = $registrationId;
+    $response2['message'] = 'Payment verified and registration completed successfully';
 
 } catch (Exception $e) {
     $response2['message'] = $e->getMessage();

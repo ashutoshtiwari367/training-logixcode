@@ -21,37 +21,17 @@ define('PAYMENT_AMOUNT', REGISTRATION_FEE); // Using global config (699)
 define('PAYMENT_CURRENCY', 'INR');
 ?>
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html class="scroll-smooth" lang="en-IN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration | <?php echo INSTITUTE_NAME; ?></title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
-    <script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              colors: {
-                "brand-cyan": "#03c4ce",
-                "brand-dark": "#004f54",
-                "primary-container": "#03bfd3",
-              },
-              fontFamily: {
-                sans: ['Inter', 'Manrope', 'sans-serif'],
-                heading: ['Manrope', 'sans-serif'],
-              }
-            }
-          }
-        }
-    </script>
+    <?php include_once __DIR__ . '/../includes/theme.php'; ?>
     <style>
         .step-transition {
-            transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
         .step-hidden {
             display: none;
@@ -60,7 +40,7 @@ define('PAYMENT_CURRENCY', 'INR');
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col pt-20">
+<body class="bg-[var(--bg)] text-[var(--ink)] font-body antialiased min-h-screen flex flex-col">
 
     <!-- Header Navbar -->
     <?php require_once __DIR__ . '/../includes/navbar.php'; ?>
@@ -70,85 +50,82 @@ define('PAYMENT_CURRENCY', 'INR');
         <div class="max-w-4xl mx-auto">
             
             <!-- Page Header -->
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 mb-6 text-center relative overflow-hidden">
-                <div class="absolute -top-12 -right-12 w-36 h-36 bg-[#03c4ce]/10 rounded-full blur-2xl"></div>
-                <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-[#004f54]/10 rounded-full blur-2xl"></div>
-                
-                <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#03c4ce]/10 text-[#03c4ce] mb-3">
-                    <span class="material-symbols-outlined text-3xl">school</span>
+            <div class="bg-[var(--tint)] rounded-[12px] p-6 sm:p-8 border border-[var(--border)] mb-6 text-center">
+                <div class="lc-icon-circle mb-3">
+                    <span class="material-symbols-outlined text-2xl text-[var(--ink)]">school</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading mb-2">
-                    Student Registration
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--ink)] tracking-tight font-headline mb-2">
+                    Student registration
                 </h1>
-                <p class="text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
+                <p class="text-[var(--muted)] max-w-xl mx-auto text-sm sm:text-base">
                     Quick 3-step application form to enroll in training programs with <?php echo INSTITUTE_NAME; ?>.
                 </p>
             </div>
 
             <?php if (isset($_GET['error']) && $_GET['error'] === 'session_expired'): ?>
-            <div class="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-center gap-3">
-                <span class="material-symbols-outlined text-amber-600">warning</span>
+            <div class="mb-6 p-4 rounded-[10px] bg-[var(--surface)] border border-[var(--coral)] text-[var(--ink)] flex items-center gap-3">
+                <span class="material-symbols-outlined text-[var(--coral)]">warning</span>
                 <div class="text-sm">
-                    <strong>Session Expired:</strong> Your previous session timed out. Please complete the form to proceed.
+                    <strong>Session expired:</strong> Your previous session timed out. Please complete the form to proceed.
                 </div>
             </div>
             <?php endif; ?>
 
             <!-- Fee Notice Banner -->
-            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-[#004f54] text-white rounded-2xl p-4 sm:p-6 shadow-md mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="lc-dark-band rounded-[12px] p-4 sm:p-6 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3 text-center sm:text-left">
-                    <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-xl bg-[#03c4ce]/20 text-[#03c4ce]">
+                    <div class="hidden sm:flex items-center justify-center w-11 h-11 rounded-full bg-[var(--teal)] text-[var(--ink)]">
                         <span class="material-symbols-outlined text-2xl">verified</span>
                     </div>
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#03c4ce]/20 text-[#03c4ce] text-xs font-bold uppercase tracking-wider mb-1">
-                            Official Admission 2026
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--teal)] text-[var(--ink)] text-xs font-semibold mb-1">
+                            Official admission 2026
                         </div>
-                        <h3 class="text-base sm:text-lg font-bold">Fast & Easy Registration</h3>
-                        <p class="text-slate-300 text-xs sm:text-sm">Complete all 3 simple steps to secure your seat.</p>
+                        <h3 class="text-base sm:text-lg font-semibold text-[var(--on-dark)]">Fast &amp; easy registration</h3>
+                        <p class="text-[var(--on-dark)] opacity-85 text-xs sm:text-sm">Complete all 3 simple steps to secure your seat.</p>
                     </div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md px-5 py-3 rounded-xl border border-white/10 text-center min-w-[150px]">
-                    <span class="block text-[11px] uppercase text-slate-300 font-semibold tracking-wider">Registration Fee</span>
-                    <span class="text-2xl sm:text-3xl font-extrabold text-[#03c4ce]">₹<?php echo number_format(PAYMENT_AMOUNT, 2); ?></span>
+                <div class="bg-[var(--ink)] px-5 py-3 rounded-[10px] border border-[var(--teal)]/40 text-center min-w-[150px]">
+                    <span class="block text-xs text-[var(--on-dark)] font-medium">Registration fee</span>
+                    <span class="text-2xl sm:text-3xl font-bold text-[var(--teal)] font-headline">₹<?php echo number_format(PAYMENT_AMOUNT, 2); ?></span>
                 </div>
             </div>
 
             <!-- Stepper Navigation Header -->
-            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md border border-slate-100 mb-6">
+            <div class="lc-card bg-[var(--surface)] p-4 sm:p-6 mb-6">
                 <div class="relative flex items-center justify-between max-w-2xl mx-auto">
                     <!-- Step Progress Line -->
-                    <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1 bg-slate-200 z-0" style="top: 22px;"></div>
-                    <div id="stepProgressBar" class="absolute left-6 top-1/2 -translate-y-1/2 h-1 bg-[#03c4ce] transition-all duration-300 z-0" style="top: 22px; width: 0%;"></div>
+                    <div class="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1 bg-[var(--border)] z-0" style="top: 22px;"></div>
+                    <div id="stepProgressBar" class="absolute left-6 top-1/2 -translate-y-1/2 h-1 bg-[var(--teal)] transition-all duration-150 z-0" style="top: 22px; width: 0%;"></div>
 
                     <!-- Step 1 Button -->
                     <div class="relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(1)">
-                        <div id="stepDot-1" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shadow-md transition-all duration-200 bg-[#03c4ce] text-white ring-4 ring-[#03c4ce]/20">
+                        <div id="stepDot-1" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-150 bg-[var(--teal)] text-[var(--ink)]">
                             <span id="stepIcon-1" class="material-symbols-outlined text-lg">person</span>
                         </div>
-                        <span id="stepLabel-1" class="mt-2 text-xs sm:text-sm font-bold text-[#03c4ce]">1. Personal</span>
+                        <span id="stepLabel-1" class="mt-2 text-xs sm:text-sm font-semibold text-[var(--teal-text)]">1. Personal</span>
                     </div>
 
                     <!-- Step 2 Button -->
                     <div class="relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(2)">
-                        <div id="stepDot-2" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shadow-md transition-all duration-200 bg-white text-slate-400 border-2 border-slate-200">
+                        <div id="stepDot-2" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-150 bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">
                             <span id="stepIcon-2" class="material-symbols-outlined text-lg">school</span>
                         </div>
-                        <span id="stepLabel-2" class="mt-2 text-xs sm:text-sm font-semibold text-slate-500">2. Education</span>
+                        <span id="stepLabel-2" class="mt-2 text-xs sm:text-sm font-medium text-[var(--muted)]">2. Education</span>
                     </div>
 
                     <!-- Step 3 Button -->
                     <div class="relative z-10 flex flex-col items-center cursor-pointer" onclick="goToStep(3)">
-                        <div id="stepDot-3" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shadow-md transition-all duration-200 bg-white text-slate-400 border-2 border-slate-200">
+                        <div id="stepDot-3" class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-150 bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]">
                             <span id="stepIcon-3" class="material-symbols-outlined text-lg">verified</span>
                         </div>
-                        <span id="stepLabel-3" class="mt-2 text-xs sm:text-sm font-semibold text-slate-500">3. Review</span>
+                        <span id="stepLabel-3" class="mt-2 text-xs sm:text-sm font-medium text-[var(--muted)]">3. Review</span>
                     </div>
                 </div>
             </div>
 
             <!-- Registration Form Card -->
-            <div id="formCard" class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-slate-100">
+            <div id="formCard" class="lc-card bg-[var(--surface)] p-6 sm:p-8 md:p-10">
                 <form id="registrationForm" method="POST" class="space-y-6" novalidate>
                     <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 

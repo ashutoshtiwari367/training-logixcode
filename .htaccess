@@ -7,14 +7,19 @@ RewriteCond %{HTTP_HOST} !^127\.0\.0\.1$ [NC]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Allow direct access to real files, assets, and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
 RewriteRule ^$ index.php [NC,L]
-RewriteRule ^courses([/]?)$ courses.php [NC,L]
-RewriteRule ^about([/]?)$ about.php [NC,L]
-RewriteRule ^privacy-policy([/]?)$ privacy-policy.php [NC,L]
-RewriteRule ^terms-and-condition([/]?)$ terms-and-condition.php [NC,L]
-RewriteRule ^registration([/]?)$ registration/index.php [NC,L]
-RewriteRule ^contact([/]?)$ contact.php [NC,L]
+RewriteRule ^courses/?$ courses.php [NC,L]
+RewriteRule ^courses/([a-zA-Z0-9_-]+)/?$ course-detail.php?slug=$1 [NC,L,QSA]
+RewriteRule ^about/?$ about.php [NC,L]
+RewriteRule ^privacy-policy/?$ privacy-policy.php [NC,L]
+RewriteRule ^terms-and-condition/?$ terms-and-condition.php [NC,L]
+RewriteRule ^registration/?$ registration/index.php [NC,L]
+RewriteRule ^contact/?$ contact.php [NC,L]
 
 # Portal Rewrites
-RewriteRule ^admin/?$ admin/dashboard.php [NC,L]
 RewriteRule ^student/?$ student/index.php [NC,L]

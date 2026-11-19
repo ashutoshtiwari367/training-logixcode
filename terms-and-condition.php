@@ -1,216 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://res.cloudinary.com/de7mh41io/image/upload/v1749888137/logixcode-logo.webp">
-    <title>Terms and Conditions - LogixCode</title>
+    <title>Terms and Conditions | LogixCode Training Institute</title>
+    <meta name="description" content="Terms and Conditions of LogixCode Training Institute in Kanpur. Enrollment guidelines, fee policies, and student code of conduct."/>
+    <link rel="canonical" href="https://training.logixcode.com/terms-and-condition/"/>
+    <?php include_once __DIR__ . '/includes/theme.php'; ?>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffffff;
-            color: #2E2E2E;
-            line-height: 1.6;
-        }
-
-    
 
         .hero {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
-            padding: 80px 0 60px;
+            background: var(--tint);
+            border-bottom: 1px solid var(--border);
+            padding: 64px 0 48px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(3, 193, 209, 0.1) 0%, transparent 70%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            color: #1a1a1a;
-            margin-bottom: 15px;
+            color: var(--ink);
+            margin-bottom: 12px;
         }
 
         .hero .highlight {
-            background: linear-gradient(45deg, #03c1d1, #0abcd6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--teal-text);
         }
 
         .last-updated {
-            font-size: 1rem;
-            color: #555;
-            margin-top: 10px;
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-top: 8px;
         }
 
         .content-section {
-            padding: 60px 0;
-            background: #ffffff;
+            padding: 56px 0;
+            background: var(--bg);
         }
 
         .content-box {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(3, 193, 209, 0.2);
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 36px;
+            border: 1px solid var(--border);
         }
 
         .intro-text {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 40px;
+            font-size: 1rem;
+            color: var(--ink);
+            line-height: 1.6;
+            margin-bottom: 32px;
             padding: 20px;
-            background: rgba(3, 193, 209, 0.05);
-            border-left: 4px solid #03c1d1;
+            background: var(--tint);
+            border-left: 4px solid var(--teal);
             border-radius: 8px;
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .section h2 {
-            font-size: 1.8rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: #03c1d1;
-            margin-bottom: 15px;
+            color: var(--ink);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .section-number {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(45deg, #03c1d1, #0abcd6);
-            color: #ffffff;
+            width: 34px;
+            height: 34px;
+            background: var(--teal);
+            color: var(--ink);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
+            flex-shrink: 0;
         }
 
         .section p {
             font-size: 1rem;
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 15px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
         .section ul {
             list-style: none;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .section ul li {
-            padding: 10px 0 10px 30px;
+            padding: 8px 0 8px 28px;
             position: relative;
-            color: #555;
-            line-height: 1.7;
+            color: var(--muted);
+            line-height: 1.6;
         }
 
         .section ul li::before {
             content: '•';
             position: absolute;
             left: 0;
-            color: #03c1d1;
+            color: var(--teal-text);
             font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
+            background: var(--tint);
+            border-left: 4px solid var(--teal-text);
+            padding: 18px;
             border-radius: 8px;
-            margin: 20px 0;
+            margin: 16px 0;
         }
 
         .warning-box p {
-            color: #856404;
+            color: var(--ink);
             margin-bottom: 0;
         }
 
         .important-box {
-            background: rgba(220, 53, 69, 0.08);
-            border-left: 4px solid #dc3545;
-            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--coral);
+            padding: 18px;
             border-radius: 8px;
-            margin: 20px 0;
+            margin: 16px 0;
         }
 
         .important-box p {
-            color: #721c24;
+            color: var(--ink);
             margin-bottom: 0;
             font-weight: 600;
         }
 
         .contact-box {
-            background: linear-gradient(135deg, #03c1d1 0%, #0abcd6 100%);
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 40px;
+            background: var(--teal);
+            color: var(--ink);
+            padding: 28px;
+            border-radius: 12px;
+            margin-top: 32px;
             text-align: center;
         }
 
         .contact-box h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .contact-box p {
-            color: #ffffff;
+            font-size: 1.25rem;
+            color: var(--ink);
             margin-bottom: 10px;
         }
 
+        .contact-box p {
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
         .contact-box a {
-            color: #ffffff;
+            color: var(--ink);
+            font-weight: 600;
             text-decoration: underline;
         }
 
         @media (max-width: 768px) {
             .hero {
-                padding: 60px 0 40px;
+                padding: 40px 0 32px;
             }
-
             .content-section {
-                padding: 40px 0;
+                padding: 36px 0;
             }
-
             .content-box {
-                padding: 25px 20px;
-            }
-
-            .section h2 {
-                font-size: 1.5rem;
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 24px 18px;
             }
         }
     </style>
